@@ -1,9 +1,7 @@
 aid: podman
 name: Podman
 description: >-
-  Podman is a daemonless container engine for developing, managing, and running
-  OCI Containers on Linux. Containers can be run as root or rootless. The Podman
-  REST API provides programmatic access to Podman container management.
+  Podman is a daemonless, open-source container engine for developing, managing, and running OCI containers on Linux, supporting both rootful and rootless operation as a drop-in replacement for Docker.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
@@ -11,10 +9,11 @@ tags:
   - DevOps
   - OCI
   - Open Source
+  - Cloud Native
 url: >-
   https://raw.githubusercontent.com/api-evangelist/podman/refs/heads/main/apis.yml
 created: '2026-03-16'
-modified: '2026-03-16'
+modified: '2026-03-26'
 specificationVersion: '0.19'
 apis:
   - aid: podman:podman-rest-api
@@ -37,9 +36,15 @@ common:
   - type: Documentation
     url: https://docs.podman.io/
   - type: GitHub Organization
-    url: https://github.com/containers/podman
+    url: https://github.com/containers
+  - type: Blog
+    url: https://podman.io/blogs/
   - type: Community
     url: https://podman.io/community/
+  - type: Getting Started
+    url: https://podman.io/get-started
+  - type: GitHub Repository
+    url: https://github.com/containers/podman
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
