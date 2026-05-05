@@ -1,0 +1,13 @@
+{
+  "repo": "podman",
+  "feeds": [
+    {
+      "source": "https://podman.io/blogs/",
+      "feed_url": "https://podman.io/blogs/rss",
+      "saved": 10,
+      "title": "Podman Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:34:01Z"
+}
