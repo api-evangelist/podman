@@ -1,0 +1,346 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — system
+  description: 'supports a RESTful API for the Libpod library — system. 7 operations. Lead operation: Ping service. Self-contained
+    Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - system
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-system
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — system business capability. Self-contained, no shared references.
+    resources:
+    - name: libpod-_ping
+      path: /libpod/_ping
+      operations:
+      - name: systemping
+        method: GET
+        description: Ping service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: libpod-events
+      path: /libpod/events
+      operations:
+      - name: systemeventslibpod
+        method: GET
+        description: Get events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: since
+          in: query
+          type: string
+          description: start streaming events from this time
+        - name: until
+          in: query
+          type: string
+          description: stop streaming events later than this
+        - name: filters
+          in: query
+          type: string
+          description: JSON encoded map[string][]string of constraints
+        - name: stream
+          in: query
+          type: boolean
+          description: when false, do not follow events
+    - name: libpod-info
+      path: /libpod/info
+      operations:
+      - name: systeminfolibpod
+        method: GET
+        description: Get info
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: libpod-system-check
+      path: /libpod/system/check
+      operations:
+      - name: systemchecklibpod
+        method: POST
+        description: Performs consistency checks on storage, optionally removing items which fail checks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: quick
+          in: query
+          type: boolean
+          description: Skip time-consuming checks
+        - name: repair
+          in: query
+          type: boolean
+          description: Remove inconsistent images
+        - name: repair_lossy
+          in: query
+          type: boolean
+          description: Remove inconsistent containers and images
+        - name: unreferenced_layer_max_age
+          in: query
+          type: string
+          description: Maximum allowed age of unreferenced layers
+    - name: libpod-system-df
+      path: /libpod/system/df
+      operations:
+      - name: systemdatausagelibpod
+        method: GET
+        description: Show disk usage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: libpod-system-prune
+      path: /libpod/system/prune
+      operations:
+      - name: systemprunelibpod
+        method: POST
+        description: Prune unused data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: all
+          in: query
+          type: boolean
+          description: Remove all unused data, not just dangling data
+        - name: volumes
+          in: query
+          type: boolean
+          description: Prune volumes
+        - name: external
+          in: query
+          type: boolean
+          description: Remove images used by external containers (e.g., build containers)
+        - name: build
+          in: query
+          type: boolean
+          description: Remove build cache
+        - name: filters
+          in: query
+          type: string
+          description: JSON encoded value of filters (a map[string][]string) to match data against before pruning.
+    - name: libpod-version
+      path: /libpod/version
+      operations:
+      - name: systemversionlibpod
+        method: GET
+        description: Component Version information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: podman-system-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — system. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/libpod/ping
+      name: libpod-ping
+      description: REST surface for libpod-_ping.
+      operations:
+      - method: GET
+        name: systemping
+        description: Ping service
+        call: podman-system.systemping
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/events
+      name: libpod-events
+      description: REST surface for libpod-events.
+      operations:
+      - method: GET
+        name: systemeventslibpod
+        description: Get events
+        call: podman-system.systemeventslibpod
+        with:
+          since: rest.since
+          until: rest.until
+          filters: rest.filters
+          stream: rest.stream
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/info
+      name: libpod-info
+      description: REST surface for libpod-info.
+      operations:
+      - method: GET
+        name: systeminfolibpod
+        description: Get info
+        call: podman-system.systeminfolibpod
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/system/check
+      name: libpod-system-check
+      description: REST surface for libpod-system-check.
+      operations:
+      - method: POST
+        name: systemchecklibpod
+        description: Performs consistency checks on storage, optionally removing items which fail checks
+        call: podman-system.systemchecklibpod
+        with:
+          quick: rest.quick
+          repair: rest.repair
+          repair_lossy: rest.repair_lossy
+          unreferenced_layer_max_age: rest.unreferenced_layer_max_age
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/system/df
+      name: libpod-system-df
+      description: REST surface for libpod-system-df.
+      operations:
+      - method: GET
+        name: systemdatausagelibpod
+        description: Show disk usage
+        call: podman-system.systemdatausagelibpod
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/system/prune
+      name: libpod-system-prune
+      description: REST surface for libpod-system-prune.
+      operations:
+      - method: POST
+        name: systemprunelibpod
+        description: Prune unused data
+        call: podman-system.systemprunelibpod
+        with:
+          all: rest.all
+          volumes: rest.volumes
+          external: rest.external
+          build: rest.build
+          filters: rest.filters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/version
+      name: libpod-version
+      description: REST surface for libpod-version.
+      operations:
+      - method: GET
+        name: systemversionlibpod
+        description: Component Version information
+        call: podman-system.systemversionlibpod
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-system-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — system. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: ping-service
+      description: Ping service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system.systemping
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-events
+      description: Get events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system.systemeventslibpod
+      with:
+        since: tools.since
+        until: tools.until
+        filters: tools.filters
+        stream: tools.stream
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-info
+      description: Get info
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system.systeminfolibpod
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: performs-consistency-checks-storage-optionally
+      description: Performs consistency checks on storage, optionally removing items which fail checks
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-system.systemchecklibpod
+      with:
+        quick: tools.quick
+        repair: tools.repair
+        repair_lossy: tools.repair_lossy
+        unreferenced_layer_max_age: tools.unreferenced_layer_max_age
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: show-disk-usage
+      description: Show disk usage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system.systemdatausagelibpod
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: prune-unused-data
+      description: Prune unused data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-system.systemprunelibpod
+      with:
+        all: tools.all
+        volumes: tools.volumes
+        external: tools.external
+        build: tools.build
+        filters: tools.filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: component-version-information
+      description: Component Version information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system.systemversionlibpod
+      outputParameters:
+      - type: object
+        mapping: $.

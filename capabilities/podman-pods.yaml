@@ -1,0 +1,1129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — pods
+  description: 'supports a RESTful API for the Libpod library — pods. 19 operations. Lead operation: Generate a Kubernetes
+    YAML file.. Self-contained Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - pods
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-pods
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — pods business capability. Self-contained, no shared references.
+    resources:
+    - name: libpod-generate-kube
+      path: /libpod/generate/kube
+      operations:
+      - name: generatekubelibpod
+        method: GET
+        description: Generate a Kubernetes YAML file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: names
+          in: query
+          type: array
+          description: Name or ID of the container or pod.
+          required: true
+        - name: service
+          in: query
+          type: boolean
+          description: Generate YAML for a Kubernetes service object.
+        - name: type
+          in: query
+          type: string
+          description: Generate YAML for the given Kubernetes kind.
+        - name: replicas
+          in: query
+          type: integer
+          description: Set the replica number for Deployment kind.
+        - name: noTrunc
+          in: query
+          type: boolean
+          description: don't truncate annotations to the Kubernetes maximum length of 63 characters
+        - name: podmanOnly
+          in: query
+          type: boolean
+          description: add podman-only reserved annotations in generated YAML file (cannot be used by Kubernetes)
+    - name: libpod-generate-name-systemd
+      path: /libpod/generate/{name}/systemd
+      operations:
+      - name: generatesystemdlibpod
+        method: GET
+        description: Generate Systemd Units
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Name or ID of the container or pod.
+          required: true
+        - name: useName
+          in: query
+          type: boolean
+          description: Use container/pod names instead of IDs.
+        - name: new
+          in: query
+          type: boolean
+          description: Create a new container instead of starting an existing one.
+        - name: noHeader
+          in: query
+          type: boolean
+          description: Do not generate the header including the Podman version and the timestamp.
+        - name: startTimeout
+          in: query
+          type: integer
+          description: Start timeout in seconds.
+        - name: stopTimeout
+          in: query
+          type: integer
+          description: Stop timeout in seconds.
+        - name: restartPolicy
+          in: query
+          type: string
+          description: Systemd restart-policy.
+        - name: containerPrefix
+          in: query
+          type: string
+          description: Systemd unit name prefix for containers.
+        - name: podPrefix
+          in: query
+          type: string
+          description: Systemd unit name prefix for pods.
+        - name: separator
+          in: query
+          type: string
+          description: Systemd unit name separator between name/id and prefix.
+        - name: restartSec
+          in: query
+          type: integer
+          description: Configures the time to sleep before restarting a service.
+        - name: wants
+          in: query
+          type: array
+          description: Systemd Wants list for the container or pods.
+        - name: after
+          in: query
+          type: array
+          description: Systemd After list for the container or pods.
+        - name: requires
+          in: query
+          type: array
+          description: Systemd Requires list for the container or pods.
+        - name: additionalEnvVariables
+          in: query
+          type: array
+          description: Set environment variables to the systemd unit files.
+        - name: templateUnitFile
+          in: query
+          type: boolean
+          description: Add template specifier for the systemd unit file names.
+    - name: libpod-kube-apply
+      path: /libpod/kube/apply
+      operations:
+      - name: kubeapplylibpod
+        method: POST
+        description: Apply a podman workload or Kubernetes YAML file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: caCertFile
+          in: query
+          type: string
+          description: Path to the CA cert file for the Kubernetes cluster.
+        - name: kubeConfig
+          in: query
+          type: string
+          description: Path to the kubeconfig file for the Kubernetes cluster.
+        - name: namespace
+          in: query
+          type: string
+          description: The namespace to deploy the workload to on the Kubernetes cluster.
+        - name: service
+          in: query
+          type: boolean
+          description: Create a service object for the container being deployed.
+        - name: file
+          in: query
+          type: string
+          description: Path to the Kubernetes yaml file to deploy.
+        - name: request
+          in: body
+          type: string
+          description: Kubernetes YAML file.
+    - name: libpod-play-kube
+      path: /libpod/play/kube
+      operations:
+      - name: playkubedownlibpod
+        method: DELETE
+        description: Remove resources created from kube play
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: force
+          in: query
+          type: boolean
+          description: Remove volumes.
+      - name: playkubelibpod
+        method: POST
+        description: Play a Kubernetes YAML file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Content-Type
+          in: header
+          type: string
+        - name: annotations
+          in: query
+          type: string
+          description: JSON encoded value of annotations (a map[string]string).
+        - name: logDriver
+          in: query
+          type: string
+          description: Logging driver for the containers in the pod.
+        - name: logOptions
+          in: query
+          type: array
+          description: logging driver options
+        - name: network
+          in: query
+          type: array
+          description: USe the network mode or specify an array of networks.
+        - name: noHosts
+          in: query
+          type: boolean
+          description: do not setup /etc/hosts file in container
+        - name: noTrunc
+          in: query
+          type: boolean
+          description: use annotations that are not truncated to the Kubernetes maximum length of 63 characters
+        - name: publishPorts
+          in: query
+          type: array
+          description: publish a container's port, or a range of ports, to the host
+        - name: publishAllPorts
+          in: query
+          type: boolean
+          description: Whether to publish all ports defined in the K8S YAML file (containerPort, hostPort), if false only
+            hostPort will be published
+        - name: replace
+          in: query
+          type: boolean
+          description: replace existing pods and containers
+        - name: serviceContainer
+          in: query
+          type: boolean
+          description: Starts a service container before all pods.
+        - name: start
+          in: query
+          type: boolean
+          description: Start the pod after creating it.
+        - name: staticIPs
+          in: query
+          type: array
+          description: Static IPs used for the pods.
+        - name: staticMACs
+          in: query
+          type: array
+          description: Static MACs used for the pods.
+        - name: tlsVerify
+          in: query
+          type: boolean
+          description: Require HTTPS and verify signatures when contacting registries.
+        - name: userns
+          in: query
+          type: string
+          description: Set the user namespace mode for the pods.
+        - name: wait
+          in: query
+          type: boolean
+          description: Clean up all objects created when a SIGTERM is received or pods exit.
+        - name: build
+          in: query
+          type: boolean
+          description: Build the images with corresponding context.
+        - name: request
+          in: body
+          type: string
+          description: Kubernetes YAML file.
+    - name: libpod-pods-create
+      path: /libpod/pods/create
+      operations:
+      - name: podcreatelibpod
+        method: POST
+        description: Create a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: create
+          in: body
+          type: string
+          description: attributes for creating a pod
+    - name: libpod-pods-json
+      path: /libpod/pods/json
+      operations:
+      - name: podlistlibpod
+        method: GET
+        description: List pods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+          description: 'JSON encoded value of the filters (a map[string][]string) to process on the pods list. Available filters:'
+    - name: libpod-pods-prune
+      path: /libpod/pods/prune
+      operations:
+      - name: podprunelibpod
+        method: POST
+        description: Prune unused pods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: libpod-pods-stats
+      path: /libpod/pods/stats
+      operations:
+      - name: podstatsalllibpod
+        method: GET
+        description: Statistics for one or more pods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: all
+          in: query
+          type: boolean
+          description: Provide statistics for all running pods.
+        - name: namesOrIDs
+          in: query
+          type: array
+          description: Names or IDs of pods.
+        - name: stream
+          in: query
+          type: boolean
+          description: Stream the output
+        - name: delay
+          in: query
+          type: integer
+          description: Time in seconds between stats reports
+    - name: libpod-pods-name
+      path: /libpod/pods/{name}
+      operations:
+      - name: poddeletelibpod
+        method: DELETE
+        description: Remove pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+        - name: force
+          in: query
+          type: boolean
+          description: force removal of a running pod by first stopping all containers, then removing all containers in the
+            pod
+        - name: timeout
+          in: query
+          type: integer
+          description: number of seconds to wait before killing containers in pod
+    - name: libpod-pods-name-exists
+      path: /libpod/pods/{name}/exists
+      operations:
+      - name: podexistslibpod
+        method: GET
+        description: Pod exists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+    - name: libpod-pods-name-json
+      path: /libpod/pods/{name}/json
+      operations:
+      - name: podinspectlibpod
+        method: GET
+        description: Inspect pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+    - name: libpod-pods-name-kill
+      path: /libpod/pods/{name}/kill
+      operations:
+      - name: podkilllibpod
+        method: POST
+        description: Kill a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+        - name: signal
+          in: query
+          type: string
+          description: signal to be sent to pod
+    - name: libpod-pods-name-pause
+      path: /libpod/pods/{name}/pause
+      operations:
+      - name: podpauselibpod
+        method: POST
+        description: Pause a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+    - name: libpod-pods-name-restart
+      path: /libpod/pods/{name}/restart
+      operations:
+      - name: podrestartlibpod
+        method: POST
+        description: Restart a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+    - name: libpod-pods-name-start
+      path: /libpod/pods/{name}/start
+      operations:
+      - name: podstartlibpod
+        method: POST
+        description: Start a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+    - name: libpod-pods-name-stop
+      path: /libpod/pods/{name}/stop
+      operations:
+      - name: podstoplibpod
+        method: POST
+        description: Stop a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+        - name: t
+          in: query
+          type: integer
+          description: timeout
+    - name: libpod-pods-name-top
+      path: /libpod/pods/{name}/top
+      operations:
+      - name: podtoplibpod
+        method: GET
+        description: List processes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Name of pod to query for processes
+          required: true
+        - name: stream
+          in: query
+          type: boolean
+          description: when true, repeatedly stream the latest output (As of version 4.0)
+        - name: delay
+          in: query
+          type: integer
+          description: if streaming, delay in seconds between updates. Must be >1. (As of version 4.0)
+        - name: ps_args
+          in: query
+          type: string
+          description: arguments to pass to ps such as aux.
+    - name: libpod-pods-name-unpause
+      path: /libpod/pods/{name}/unpause
+      operations:
+      - name: podunpauselibpod
+        method: POST
+        description: Unpause a pod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the pod
+          required: true
+  exposes:
+  - type: rest
+    namespace: podman-pods-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — pods. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/libpod/generate/kube
+      name: libpod-generate-kube
+      description: REST surface for libpod-generate-kube.
+      operations:
+      - method: GET
+        name: generatekubelibpod
+        description: Generate a Kubernetes YAML file.
+        call: podman-pods.generatekubelibpod
+        with:
+          names: rest.names
+          service: rest.service
+          type: rest.type
+          replicas: rest.replicas
+          noTrunc: rest.noTrunc
+          podmanOnly: rest.podmanOnly
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/generate/{name}/systemd
+      name: libpod-generate-name-systemd
+      description: REST surface for libpod-generate-name-systemd.
+      operations:
+      - method: GET
+        name: generatesystemdlibpod
+        description: Generate Systemd Units
+        call: podman-pods.generatesystemdlibpod
+        with:
+          name: rest.name
+          useName: rest.useName
+          new: rest.new
+          noHeader: rest.noHeader
+          startTimeout: rest.startTimeout
+          stopTimeout: rest.stopTimeout
+          restartPolicy: rest.restartPolicy
+          containerPrefix: rest.containerPrefix
+          podPrefix: rest.podPrefix
+          separator: rest.separator
+          restartSec: rest.restartSec
+          wants: rest.wants
+          after: rest.after
+          requires: rest.requires
+          additionalEnvVariables: rest.additionalEnvVariables
+          templateUnitFile: rest.templateUnitFile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/kube/apply
+      name: libpod-kube-apply
+      description: REST surface for libpod-kube-apply.
+      operations:
+      - method: POST
+        name: kubeapplylibpod
+        description: Apply a podman workload or Kubernetes YAML file.
+        call: podman-pods.kubeapplylibpod
+        with:
+          caCertFile: rest.caCertFile
+          kubeConfig: rest.kubeConfig
+          namespace: rest.namespace
+          service: rest.service
+          file: rest.file
+          request: rest.request
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/play/kube
+      name: libpod-play-kube
+      description: REST surface for libpod-play-kube.
+      operations:
+      - method: DELETE
+        name: playkubedownlibpod
+        description: Remove resources created from kube play
+        call: podman-pods.playkubedownlibpod
+        with:
+          force: rest.force
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: playkubelibpod
+        description: Play a Kubernetes YAML file.
+        call: podman-pods.playkubelibpod
+        with:
+          Content-Type: rest.Content-Type
+          annotations: rest.annotations
+          logDriver: rest.logDriver
+          logOptions: rest.logOptions
+          network: rest.network
+          noHosts: rest.noHosts
+          noTrunc: rest.noTrunc
+          publishPorts: rest.publishPorts
+          publishAllPorts: rest.publishAllPorts
+          replace: rest.replace
+          serviceContainer: rest.serviceContainer
+          start: rest.start
+          staticIPs: rest.staticIPs
+          staticMACs: rest.staticMACs
+          tlsVerify: rest.tlsVerify
+          userns: rest.userns
+          wait: rest.wait
+          build: rest.build
+          request: rest.request
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/create
+      name: libpod-pods-create
+      description: REST surface for libpod-pods-create.
+      operations:
+      - method: POST
+        name: podcreatelibpod
+        description: Create a pod
+        call: podman-pods.podcreatelibpod
+        with:
+          create: rest.create
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/json
+      name: libpod-pods-json
+      description: REST surface for libpod-pods-json.
+      operations:
+      - method: GET
+        name: podlistlibpod
+        description: List pods
+        call: podman-pods.podlistlibpod
+        with:
+          filters: rest.filters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/prune
+      name: libpod-pods-prune
+      description: REST surface for libpod-pods-prune.
+      operations:
+      - method: POST
+        name: podprunelibpod
+        description: Prune unused pods
+        call: podman-pods.podprunelibpod
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/stats
+      name: libpod-pods-stats
+      description: REST surface for libpod-pods-stats.
+      operations:
+      - method: GET
+        name: podstatsalllibpod
+        description: Statistics for one or more pods
+        call: podman-pods.podstatsalllibpod
+        with:
+          all: rest.all
+          namesOrIDs: rest.namesOrIDs
+          stream: rest.stream
+          delay: rest.delay
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}
+      name: libpod-pods-name
+      description: REST surface for libpod-pods-name.
+      operations:
+      - method: DELETE
+        name: poddeletelibpod
+        description: Remove pod
+        call: podman-pods.poddeletelibpod
+        with:
+          name: rest.name
+          force: rest.force
+          timeout: rest.timeout
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/exists
+      name: libpod-pods-name-exists
+      description: REST surface for libpod-pods-name-exists.
+      operations:
+      - method: GET
+        name: podexistslibpod
+        description: Pod exists
+        call: podman-pods.podexistslibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/json
+      name: libpod-pods-name-json
+      description: REST surface for libpod-pods-name-json.
+      operations:
+      - method: GET
+        name: podinspectlibpod
+        description: Inspect pod
+        call: podman-pods.podinspectlibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/kill
+      name: libpod-pods-name-kill
+      description: REST surface for libpod-pods-name-kill.
+      operations:
+      - method: POST
+        name: podkilllibpod
+        description: Kill a pod
+        call: podman-pods.podkilllibpod
+        with:
+          name: rest.name
+          signal: rest.signal
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/pause
+      name: libpod-pods-name-pause
+      description: REST surface for libpod-pods-name-pause.
+      operations:
+      - method: POST
+        name: podpauselibpod
+        description: Pause a pod
+        call: podman-pods.podpauselibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/restart
+      name: libpod-pods-name-restart
+      description: REST surface for libpod-pods-name-restart.
+      operations:
+      - method: POST
+        name: podrestartlibpod
+        description: Restart a pod
+        call: podman-pods.podrestartlibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/start
+      name: libpod-pods-name-start
+      description: REST surface for libpod-pods-name-start.
+      operations:
+      - method: POST
+        name: podstartlibpod
+        description: Start a pod
+        call: podman-pods.podstartlibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/stop
+      name: libpod-pods-name-stop
+      description: REST surface for libpod-pods-name-stop.
+      operations:
+      - method: POST
+        name: podstoplibpod
+        description: Stop a pod
+        call: podman-pods.podstoplibpod
+        with:
+          name: rest.name
+          t: rest.t
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/top
+      name: libpod-pods-name-top
+      description: REST surface for libpod-pods-name-top.
+      operations:
+      - method: GET
+        name: podtoplibpod
+        description: List processes
+        call: podman-pods.podtoplibpod
+        with:
+          name: rest.name
+          stream: rest.stream
+          delay: rest.delay
+          ps_args: rest.ps_args
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/pods/{name}/unpause
+      name: libpod-pods-name-unpause
+      description: REST surface for libpod-pods-name-unpause.
+      operations:
+      - method: POST
+        name: podunpauselibpod
+        description: Unpause a pod
+        call: podman-pods.podunpauselibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-pods-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — pods. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: generate-kubernetes-yaml-file
+      description: Generate a Kubernetes YAML file.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.generatekubelibpod
+      with:
+        names: tools.names
+        service: tools.service
+        type: tools.type
+        replicas: tools.replicas
+        noTrunc: tools.noTrunc
+        podmanOnly: tools.podmanOnly
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-systemd-units
+      description: Generate Systemd Units
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.generatesystemdlibpod
+      with:
+        name: tools.name
+        useName: tools.useName
+        new: tools.new
+        noHeader: tools.noHeader
+        startTimeout: tools.startTimeout
+        stopTimeout: tools.stopTimeout
+        restartPolicy: tools.restartPolicy
+        containerPrefix: tools.containerPrefix
+        podPrefix: tools.podPrefix
+        separator: tools.separator
+        restartSec: tools.restartSec
+        wants: tools.wants
+        after: tools.after
+        requires: tools.requires
+        additionalEnvVariables: tools.additionalEnvVariables
+        templateUnitFile: tools.templateUnitFile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apply-podman-workload-kubernetes-yaml
+      description: Apply a podman workload or Kubernetes YAML file.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.kubeapplylibpod
+      with:
+        caCertFile: tools.caCertFile
+        kubeConfig: tools.kubeConfig
+        namespace: tools.namespace
+        service: tools.service
+        file: tools.file
+        request: tools.request
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-resources-created-kube-play
+      description: Remove resources created from kube play
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: podman-pods.playkubedownlibpod
+      with:
+        force: tools.force
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: play-kubernetes-yaml-file
+      description: Play a Kubernetes YAML file.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.playkubelibpod
+      with:
+        Content-Type: tools.Content-Type
+        annotations: tools.annotations
+        logDriver: tools.logDriver
+        logOptions: tools.logOptions
+        network: tools.network
+        noHosts: tools.noHosts
+        noTrunc: tools.noTrunc
+        publishPorts: tools.publishPorts
+        publishAllPorts: tools.publishAllPorts
+        replace: tools.replace
+        serviceContainer: tools.serviceContainer
+        start: tools.start
+        staticIPs: tools.staticIPs
+        staticMACs: tools.staticMACs
+        tlsVerify: tools.tlsVerify
+        userns: tools.userns
+        wait: tools.wait
+        build: tools.build
+        request: tools.request
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-pod
+      description: Create a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podcreatelibpod
+      with:
+        create: tools.create
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-pods
+      description: List pods
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.podlistlibpod
+      with:
+        filters: tools.filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: prune-unused-pods
+      description: Prune unused pods
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podprunelibpod
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: statistics-one-more-pods
+      description: Statistics for one or more pods
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.podstatsalllibpod
+      with:
+        all: tools.all
+        namesOrIDs: tools.namesOrIDs
+        stream: tools.stream
+        delay: tools.delay
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-pod
+      description: Remove pod
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: podman-pods.poddeletelibpod
+      with:
+        name: tools.name
+        force: tools.force
+        timeout: tools.timeout
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: pod-exists
+      description: Pod exists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.podexistslibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inspect-pod
+      description: Inspect pod
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.podinspectlibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kill-pod
+      description: Kill a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podkilllibpod
+      with:
+        name: tools.name
+        signal: tools.signal
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: pause-pod
+      description: Pause a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podpauselibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restart-pod
+      description: Restart a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podrestartlibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-pod
+      description: Start a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podstartlibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stop-pod
+      description: Stop a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podstoplibpod
+      with:
+        name: tools.name
+        t: tools.t
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-processes
+      description: List processes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-pods.podtoplibpod
+      with:
+        name: tools.name
+        stream: tools.stream
+        delay: tools.delay
+        ps_args: tools.ps_args
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unpause-pod
+      description: Unpause a pod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-pods.podunpauselibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.

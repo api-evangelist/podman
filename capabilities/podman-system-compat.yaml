@@ -1,0 +1,258 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — system (compat)
+  description: 'supports a RESTful API for the Libpod library — system (compat). 6 operations. Lead operation: Check auth
+    configuration. Self-contained Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - system (compat)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-system-compat
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — system (compat) business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: auth
+      path: /auth
+      operations:
+      - name: systemauth
+        method: POST
+        description: Check auth configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: authConfig
+          in: body
+          type: string
+          description: Authentication to check
+    - name: events
+      path: /events
+      operations:
+      - name: systemevents
+        method: GET
+        description: Get events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: since
+          in: query
+          type: string
+          description: start streaming events from this time
+        - name: until
+          in: query
+          type: string
+          description: stop streaming events later than this
+        - name: filters
+          in: query
+          type: string
+          description: JSON encoded map[string][]string of constraints
+    - name: info
+      path: /info
+      operations:
+      - name: systeminfo
+        method: GET
+        description: Get info
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: libpod-_ping
+      path: /libpod/_ping
+      operations:
+      - name: systemping
+        method: GET
+        description: Ping service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: system-df
+      path: /system/df
+      operations:
+      - name: systemdatausage
+        method: GET
+        description: Show disk usage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: version
+      path: /version
+      operations:
+      - name: systemversion
+        method: GET
+        description: Component Version information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: podman-system-compat-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — system (compat). One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/auth
+      name: auth
+      description: REST surface for auth.
+      operations:
+      - method: POST
+        name: systemauth
+        description: Check auth configuration
+        call: podman-system-compat.systemauth
+        with:
+          authConfig: rest.authConfig
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/events
+      name: events
+      description: REST surface for events.
+      operations:
+      - method: GET
+        name: systemevents
+        description: Get events
+        call: podman-system-compat.systemevents
+        with:
+          since: rest.since
+          until: rest.until
+          filters: rest.filters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/info
+      name: info
+      description: REST surface for info.
+      operations:
+      - method: GET
+        name: systeminfo
+        description: Get info
+        call: podman-system-compat.systeminfo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/ping
+      name: libpod-ping
+      description: REST surface for libpod-_ping.
+      operations:
+      - method: GET
+        name: systemping
+        description: Ping service
+        call: podman-system-compat.systemping
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/system/df
+      name: system-df
+      description: REST surface for system-df.
+      operations:
+      - method: GET
+        name: systemdatausage
+        description: Show disk usage
+        call: podman-system-compat.systemdatausage
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/version
+      name: version
+      description: REST surface for version.
+      operations:
+      - method: GET
+        name: systemversion
+        description: Component Version information
+        call: podman-system-compat.systemversion
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-system-compat-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — system (compat). One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: check-auth-configuration
+      description: Check auth configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: podman-system-compat.systemauth
+      with:
+        authConfig: tools.authConfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-events
+      description: Get events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system-compat.systemevents
+      with:
+        since: tools.since
+        until: tools.until
+        filters: tools.filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-info
+      description: Get info
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system-compat.systeminfo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ping-service
+      description: Ping service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system-compat.systemping
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: show-disk-usage
+      description: Show disk usage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system-compat.systemdatausage
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: component-version-information
+      description: Component Version information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-system-compat.systemversion
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,233 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — exec
+  description: 'supports a RESTful API for the Libpod library — exec. 4 operations. Lead operation: Create an exec instance.
+    Self-contained Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - exec
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-exec
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — exec business capability. Self-contained, no shared references.
+    resources:
+    - name: libpod-containers-name-exec
+      path: /libpod/containers/{name}/exec
+      operations:
+      - name: containerexeclibpod
+        method: POST
+        description: Create an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: name of container
+          required: true
+        - name: control
+          in: body
+          type: object
+          description: Attributes for create
+    - name: libpod-exec-id-json
+      path: /libpod/exec/{id}/json
+      operations:
+      - name: execinspectlibpod
+        method: GET
+        description: Inspect an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+    - name: libpod-exec-id-resize
+      path: /libpod/exec/{id}/resize
+      operations:
+      - name: execresizelibpod
+        method: POST
+        description: Resize an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+        - name: h
+          in: query
+          type: integer
+          description: Height of the TTY session in characters
+        - name: w
+          in: query
+          type: integer
+          description: Width of the TTY session in characters
+        - name: running
+          in: query
+          type: boolean
+          description: Ignore containers not running errors
+    - name: libpod-exec-id-start
+      path: /libpod/exec/{id}/start
+      operations:
+      - name: execstartlibpod
+        method: POST
+        description: Start an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+        - name: control
+          in: body
+          type: object
+          description: Attributes for start
+  exposes:
+  - type: rest
+    namespace: podman-exec-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — exec. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/libpod/containers/{name}/exec
+      name: libpod-containers-name-exec
+      description: REST surface for libpod-containers-name-exec.
+      operations:
+      - method: POST
+        name: containerexeclibpod
+        description: Create an exec instance
+        call: podman-exec.containerexeclibpod
+        with:
+          name: rest.name
+          control: rest.control
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/exec/{id}/json
+      name: libpod-exec-id-json
+      description: REST surface for libpod-exec-id-json.
+      operations:
+      - method: GET
+        name: execinspectlibpod
+        description: Inspect an exec instance
+        call: podman-exec.execinspectlibpod
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/exec/{id}/resize
+      name: libpod-exec-id-resize
+      description: REST surface for libpod-exec-id-resize.
+      operations:
+      - method: POST
+        name: execresizelibpod
+        description: Resize an exec instance
+        call: podman-exec.execresizelibpod
+        with:
+          id: rest.id
+          h: rest.h
+          w: rest.w
+          running: rest.running
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/exec/{id}/start
+      name: libpod-exec-id-start
+      description: REST surface for libpod-exec-id-start.
+      operations:
+      - method: POST
+        name: execstartlibpod
+        description: Start an exec instance
+        call: podman-exec.execstartlibpod
+        with:
+          id: rest.id
+          control: rest.control
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-exec-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — exec. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: create-exec-instance
+      description: Create an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec.containerexeclibpod
+      with:
+        name: tools.name
+        control: tools.control
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inspect-exec-instance
+      description: Inspect an exec instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-exec.execinspectlibpod
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resize-exec-instance
+      description: Resize an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec.execresizelibpod
+      with:
+        id: tools.id
+        h: tools.h
+        w: tools.w
+        running: tools.running
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-exec-instance
+      description: Start an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec.execstartlibpod
+      with:
+        id: tools.id
+        control: tools.control
+      outputParameters:
+      - type: object
+        mapping: $.

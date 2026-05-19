@@ -1,0 +1,1852 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — images
+  description: 'supports a RESTful API for the Libpod library — images. 23 operations. Lead operation: Build image. Self-contained
+    Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - images
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-images
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — images business capability. Self-contained, no shared references.
+    resources:
+    - name: libpod-build
+      path: /libpod/build
+      operations:
+      - name: imagebuildlibpod
+        method: POST
+        description: Build image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Content-Type
+          in: header
+          type: string
+        - name: X-Registry-Config
+          in: header
+          type: string
+        - name: dockerfile
+          in: query
+          type: string
+          description: Path within the build context to the `Dockerfile`.
+        - name: t
+          in: query
+          type: string
+          description: A name and optional tag to apply to the image in the `name:tag` format.  If you omit the tag, the default
+            latest value is assumed. You can provide several t par
+        - name: allplatforms
+          in: query
+          type: boolean
+          description: Instead of building for a set of platforms specified using the platform option, inspect the build's
+            base images,
+        - name: additionalbuildcontexts
+          in: query
+          type: array
+          description: Additional build contexts for builds that require more than one context.
+        - name: extrahosts
+          in: query
+          type: string
+          description: TBD Extra hosts to add to /etc/hosts
+        - name: nohosts
+          in: query
+          type: boolean
+          description: Not to create /etc/hosts when building the image
+        - name: remote
+          in: query
+          type: string
+          description: A Git repository URI or HTTP/HTTPS context URI.
+        - name: q
+          in: query
+          type: boolean
+          description: Suppress verbose build output
+        - name: compatvolumes
+          in: query
+          type: boolean
+          description: Contents of volume locations to be modified on ADD or COPY only
+        - name: createdannotation
+          in: query
+          type: boolean
+          description: Add an "org.opencontainers.image.created" annotation to the
+        - name: sourcedateepoch
+          in: query
+          type: number
+          description: Timestamp to use for newly-added history entries and the image's
+        - name: rewritetimestamp
+          in: query
+          type: boolean
+          description: If sourcedateepoch is set, force new content added in layers to
+        - name: timestamp
+          in: query
+          type: number
+          description: Timestamp to use for newly-added history entries, the image's
+        - name: inheritlabels
+          in: query
+          type: boolean
+          description: Inherit the labels from the base image or base stages
+        - name: inheritannotations
+          in: query
+          type: boolean
+          description: Inherit the annotations from the base image or base stages
+        - name: nocache
+          in: query
+          type: boolean
+          description: Do not use the cache when building the image
+        - name: cachefrom
+          in: query
+          type: string
+          description: JSON array of images used to build cache resolution
+        - name: pull
+          in: query
+          type: boolean
+          description: Attempt to pull the image even if an older image exists locally
+        - name: rm
+          in: query
+          type: boolean
+          description: Remove intermediate containers after a successful build
+        - name: forcerm
+          in: query
+          type: boolean
+          description: Always remove intermediate containers, even upon failure
+        - name: memory
+          in: query
+          type: integer
+          description: Memory is the upper limit (in bytes) on how much memory running containers can use
+        - name: memswap
+          in: query
+          type: integer
+          description: MemorySwap limits the amount of memory and swap together
+        - name: cpushares
+          in: query
+          type: integer
+          description: CPUShares (relative weight
+        - name: cpusetcpus
+          in: query
+          type: string
+          description: CPUSetCPUs in which to allow execution (0-3, 0,1)
+        - name: cpuperiod
+          in: query
+          type: integer
+          description: CPUPeriod limits the CPU CFS (Completely Fair Scheduler) period
+        - name: cpuquota
+          in: query
+          type: integer
+          description: CPUQuota limits the CPU CFS (Completely Fair Scheduler) quota
+        - name: buildargs
+          in: query
+          type: string
+          description: JSON map of string pairs denoting build-time variables.
+        - name: shmsize
+          in: query
+          type: integer
+          description: ShmSize is the "size" value to use when mounting an shmfs on the container's /dev/shm directory.
+        - name: squash
+          in: query
+          type: boolean
+          description: Silently ignored.
+        - name: labels
+          in: query
+          type: string
+          description: JSON map of key, value pairs to set as labels on the new image
+        - name: layerLabel
+          in: query
+          type: array
+          description: Add an intermediate image *label* (e.g. label=*value*) to the intermediate image metadata.
+        - name: layers
+          in: query
+          type: boolean
+          description: Cache intermediate layers during build.
+        - name: networkmode
+          in: query
+          type: string
+          description: Sets the networking mode for the run commands during build.
+        - name: platform
+          in: query
+          type: string
+          description: Platform format os[/arch[/variant]]
+        - name: target
+          in: query
+          type: string
+          description: Target build stage
+        - name: outputs
+          in: query
+          type: string
+          description: output configuration TBD
+        - name: httpproxy
+          in: query
+          type: boolean
+          description: Inject http proxy environment variables into container
+        - name: unsetenv
+          in: query
+          type: array
+          description: Unset environment variables from the final image.
+        - name: unsetlabel
+          in: query
+          type: array
+          description: Unset the image label, causing the label not to be inherited from the base image.
+        - name: unsetannotation
+          in: query
+          type: array
+          description: Unset the image annotation, causing the annotation not to be inherited from the base image.
+        - name: volume
+          in: query
+          type: array
+          description: Extra volumes that should be mounted in the build container.
+        - name: manifest
+          in: query
+          type: string
+          description: Add the image to the specified manifest list. Creates a manifest list if it does not exist.
+    - name: libpod-images-export
+      path: /libpod/images/export
+      operations:
+      - name: imageexportlibpod
+        method: GET
+        description: Export multiple images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: format
+          in: query
+          type: string
+          description: format for exported image (only docker-archive is supported)
+        - name: references
+          in: query
+          type: array
+          description: references to images to export
+        - name: compress
+          in: query
+          type: boolean
+          description: use compression on image
+        - name: ociAcceptUncompressedLayers
+          in: query
+          type: boolean
+          description: accept uncompressed layers when copying OCI images
+    - name: libpod-images-import
+      path: /libpod/images/import
+      operations:
+      - name: imageimportlibpod
+        method: POST
+        description: Import image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Content-Type
+          in: header
+          type: string
+        - name: changes
+          in: query
+          type: array
+          description: 'Apply the following possible instructions to the created image: CMD | ENTRYPOINT | ENV | EXPOSE |
+            LABEL | STOPSIGNAL | USER | VOLUME | WORKDIR.  JSON encoded st'
+        - name: message
+          in: query
+          type: string
+          description: Set commit message for imported image
+        - name: reference
+          in: query
+          type: string
+          description: Optional Name[:TAG] for the image
+        - name: url
+          in: query
+          type: string
+          description: Load image from the specified URL
+        - name: upload
+          in: body
+          type: string
+          description: tarball for imported image
+          required: true
+    - name: libpod-images-json
+      path: /libpod/images/json
+      operations:
+      - name: imagelistlibpod
+        method: GET
+        description: List Images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: all
+          in: query
+          type: boolean
+          description: Show all images. Only images from a final layer (no children) are shown by default.
+        - name: filters
+          in: query
+          type: string
+          description: 'JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available
+            filters:'
+    - name: libpod-images-load
+      path: /libpod/images/load
+      operations:
+      - name: imageloadlibpod
+        method: POST
+        description: Load image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: upload
+          in: body
+          type: string
+          description: tarball of container image
+          required: true
+    - name: libpod-images-prune
+      path: /libpod/images/prune
+      operations:
+      - name: imageprunelibpod
+        method: POST
+        description: Prune unused images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: all
+          in: query
+          type: boolean
+          description: Remove all images not in use by containers, not just dangling ones
+        - name: external
+          in: query
+          type: boolean
+          description: Remove images even when they are used by external containers (e.g, by build containers)
+        - name: buildcache
+          in: query
+          type: boolean
+          description: Remove persistent build cache created by build instructions such as `--mount=type=cache`.
+        - name: filters
+          in: query
+          type: string
+          description: 'filters to apply to image pruning, encoded as JSON (map[string][]string). Available filters:'
+    - name: libpod-images-pull
+      path: /libpod/images/pull
+      operations:
+      - name: imagepulllibpod
+        method: POST
+        description: Pull images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: reference
+          in: query
+          type: string
+          description: Mandatory reference to the image (e.g., quay.io/image/name:tag)
+        - name: quiet
+          in: query
+          type: boolean
+          description: Silence extra stream data on pull. Cannot be used with 'compatMode' or 'pullProgress'.
+        - name: compatMode
+          in: query
+          type: boolean
+          description: Return the same JSON payload as the Docker-compat endpoint. Cannot be used with 'pullProgress' or 'quiet'.
+        - name: pullProgress
+          in: query
+          type: boolean
+          description: Send reports about the progress of the pull. Cannot be used with 'compatMode' or 'quiet'.
+        - name: Arch
+          in: query
+          type: string
+          description: Pull image for the specified architecture.
+        - name: OS
+          in: query
+          type: string
+          description: Pull image for the specified operating system.
+        - name: Variant
+          in: query
+          type: string
+          description: Pull image for the specified variant.
+        - name: policy
+          in: query
+          type: string
+          description: Pull policy, "always" (default), "missing", "newer", "never".
+        - name: tlsVerify
+          in: query
+          type: boolean
+          description: Require TLS verification.
+        - name: allTags
+          in: query
+          type: boolean
+          description: Pull all tagged images in the repository.
+        - name: X-Registry-Auth
+          in: header
+          type: string
+          description: 'base-64 encoded auth config. Must include the following four values: username, password, email and
+            server address OR simply just an identity token.'
+    - name: libpod-images-remove
+      path: /libpod/images/remove
+      operations:
+      - name: imagedeletealllibpod
+        method: DELETE
+        description: Remove one or more images from the storage.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: images
+          in: query
+          type: array
+          description: Images IDs or names to remove.
+        - name: all
+          in: query
+          type: boolean
+          description: Remove all images.
+        - name: force
+          in: query
+          type: boolean
+          description: Force image removal (including containers using the images).
+        - name: ignore
+          in: query
+          type: boolean
+          description: Ignore if a specified image does not exist and do not throw an error.
+        - name: lookupManifest
+          in: query
+          type: boolean
+          description: Resolves to manifest list instead of image.
+    - name: libpod-images-scp-name
+      path: /libpod/images/scp/{name}
+      operations:
+      - name: imagescplibpod
+        method: POST
+        description: Copy an image from one host to another
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: source connection/image
+          required: true
+        - name: destination
+          in: query
+          type: string
+          description: dest connection/image
+        - name: quiet
+          in: query
+          type: boolean
+          description: quiet output
+    - name: libpod-images-search
+      path: /libpod/images/search
+      operations:
+      - name: imagesearchlibpod
+        method: GET
+        description: Search images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: term
+          in: query
+          type: string
+          description: term to search
+        - name: limit
+          in: query
+          type: integer
+          description: maximum number of results
+        - name: filters
+          in: query
+          type: string
+          description: 'JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available
+            filters:'
+        - name: tlsVerify
+          in: query
+          type: boolean
+          description: Require HTTPS and verify signatures when contacting registries.
+        - name: listTags
+          in: query
+          type: boolean
+          description: list the available tags in the repository
+    - name: libpod-images-name
+      path: /libpod/images/{name}
+      operations:
+      - name: imagedeletelibpod
+        method: DELETE
+        description: Remove an image from the local storage.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: name or ID of image to remove
+          required: true
+        - name: force
+          in: query
+          type: boolean
+          description: remove the image even if used by containers or has other tags
+        - name: ignore
+          in: query
+          type: boolean
+          description: Ignore if a specified image does not exist and do not throw an error.
+        - name: lookupManifest
+          in: query
+          type: boolean
+          description: Resolve to a manifest list instead of an image.
+    - name: libpod-images-name-changes
+      path: /libpod/images/{name}/changes
+      operations:
+      - name: imagechangeslibpod
+        method: GET
+        description: Report on changes to images's filesystem; adds, deletes or modifications.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or id of the image
+          required: true
+        - name: parent
+          in: query
+          type: string
+          description: specify a second layer which is used to compare against it instead of the parent layer
+        - name: diffType
+          in: query
+          type: string
+          description: select what you want to match, default is all
+    - name: libpod-images-name-exists
+      path: /libpod/images/{name}/exists
+      operations:
+      - name: imageexistslibpod
+        method: GET
+        description: Image exists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+    - name: libpod-images-name-get
+      path: /libpod/images/{name}/get
+      operations:
+      - name: imagegetlibpod
+        method: GET
+        description: Export an image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: format for exported image
+        - name: compress
+          in: query
+          type: boolean
+          description: use compression on image
+    - name: libpod-images-name-history
+      path: /libpod/images/{name}/history
+      operations:
+      - name: imagehistorylibpod
+        method: GET
+        description: History of an image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+    - name: libpod-images-name-json
+      path: /libpod/images/{name}/json
+      operations:
+      - name: imageinspectlibpod
+        method: GET
+        description: Inspect an image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+    - name: libpod-images-name-push
+      path: /libpod/images/{name}/push
+      operations:
+      - name: imagepushlibpod
+        method: POST
+        description: Push Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Name of image to push.
+          required: true
+        - name: destination
+          in: query
+          type: string
+          description: Allows for pushing the image to a different destination than the image refers to.
+        - name: forceCompressionFormat
+          in: query
+          type: boolean
+          description: Enforce compressing the layers with the specified --compression and do not reuse differently compressed
+            blobs on the registry.
+        - name: compressionFormat
+          in: query
+          type: string
+          description: Compression format used to compress image layers.
+        - name: compressionLevel
+          in: query
+          type: integer
+          description: Compression level used to compress image layers.
+        - name: tlsVerify
+          in: query
+          type: boolean
+          description: Require TLS verification.
+        - name: quiet
+          in: query
+          type: boolean
+          description: Silences extra stream data on push.
+        - name: format
+          in: query
+          type: string
+          description: Manifest type (oci, v2s1, or v2s2) to use when pushing an image. Default is manifest type of source,
+            with fallbacks.
+        - name: all
+          in: query
+          type: boolean
+          description: All indicates whether to push all images related to the image list.
+        - name: removeSignatures
+          in: query
+          type: boolean
+          description: Discard any pre-existing signatures in the image.
+        - name: retry
+          in: query
+          type: integer
+          description: Number of times to retry push in case of failure.
+        - name: retryDelay
+          in: query
+          type: string
+          description: Delay between retries in case of push failures. Duration format such as "412ms", or "3.5h".
+        - name: X-Registry-Auth
+          in: header
+          type: string
+          description: A base64-encoded auth configuration.
+    - name: libpod-images-name-resolve
+      path: /libpod/images/{name}/resolve
+      operations:
+      - name: imageresolvelibpod
+        method: GET
+        description: Resolve an image (short) name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the (short) name to resolve
+          required: true
+    - name: libpod-images-name-tag
+      path: /libpod/images/{name}/tag
+      operations:
+      - name: imagetaglibpod
+        method: POST
+        description: Tag an image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+        - name: repo
+          in: query
+          type: string
+          description: the repository to tag in
+        - name: tag
+          in: query
+          type: string
+          description: the name of the new tag
+    - name: libpod-images-name-tree
+      path: /libpod/images/{name}/tree
+      operations:
+      - name: imagetreelibpod
+        method: GET
+        description: Image tree
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+        - name: whatrequires
+          in: query
+          type: boolean
+          description: show all child images and layers of the specified image
+    - name: libpod-images-name-untag
+      path: /libpod/images/{name}/untag
+      operations:
+      - name: imageuntaglibpod
+        method: POST
+        description: Untag an image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: the name or ID of the container
+          required: true
+        - name: repo
+          in: query
+          type: string
+          description: the repository to untag
+        - name: tag
+          in: query
+          type: string
+          description: the name of the tag to untag
+    - name: libpod-local-build
+      path: /libpod/local/build
+      operations:
+      - name: localbuildlibpod
+        method: POST
+        description: Create image from local build context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: X-Registry-Config
+          in: header
+          type: string
+        - name: localcontextdir
+          in: query
+          type: string
+          description: Absolute path to the build context directory on the server filesystem.
+          required: true
+        - name: dockerfile
+          in: query
+          type: string
+          description: Absolute path within the build context to the `Dockerfile`.
+        - name: t
+          in: query
+          type: string
+          description: A name and optional tag to apply to the image in the `name:tag` format.  If you omit the tag, the default
+            latest value is assumed. You can provide several t par
+        - name: allplatforms
+          in: query
+          type: boolean
+          description: Instead of building for a set of platforms specified using the platform option, inspect the build's
+            base images,
+        - name: additionalbuildcontexts
+          in: query
+          type: array
+          description: Additional build contexts for builds that require more than one context.
+        - name: extrahosts
+          in: query
+          type: string
+          description: TBD Extra hosts to add to /etc/hosts
+        - name: nohosts
+          in: query
+          type: boolean
+          description: Not to create /etc/hosts when building the image
+        - name: remote
+          in: query
+          type: string
+          description: A Git repository URI or HTTP/HTTPS context URI.
+        - name: q
+          in: query
+          type: boolean
+          description: Suppress verbose build output
+        - name: compatvolumes
+          in: query
+          type: boolean
+          description: Contents of volume locations to be modified on ADD or COPY only
+        - name: createdannotation
+          in: query
+          type: boolean
+          description: Add an "org.opencontainers.image.created" annotation to the
+        - name: sourcedateepoch
+          in: query
+          type: number
+          description: Timestamp to use for newly-added history entries and the image's
+        - name: rewritetimestamp
+          in: query
+          type: boolean
+          description: If sourcedateepoch is set, force new content added in layers to
+        - name: timestamp
+          in: query
+          type: number
+          description: Timestamp to use for newly-added history entries, the image's
+        - name: inheritlabels
+          in: query
+          type: boolean
+          description: Inherit the labels from the base image or base stages
+        - name: inheritannotations
+          in: query
+          type: boolean
+          description: Inherit the annotations from the base image or base stages
+        - name: nocache
+          in: query
+          type: boolean
+          description: Do not use the cache when building the image
+        - name: cachefrom
+          in: query
+          type: string
+          description: JSON array of images used to build cache resolution
+        - name: pull
+          in: query
+          type: boolean
+          description: Attempt to pull the image even if an older image exists locally
+        - name: rm
+          in: query
+          type: boolean
+          description: Remove intermediate containers after a successful build
+        - name: forcerm
+          in: query
+          type: boolean
+          description: Always remove intermediate containers, even upon failure
+        - name: memory
+          in: query
+          type: integer
+          description: Memory is the upper limit (in bytes) on how much memory running containers can use
+        - name: memswap
+          in: query
+          type: integer
+          description: MemorySwap limits the amount of memory and swap together
+        - name: cpushares
+          in: query
+          type: integer
+          description: CPUShares (relative weight
+        - name: cpusetcpus
+          in: query
+          type: string
+          description: CPUSetCPUs in which to allow execution (0-3, 0,1)
+        - name: cpuperiod
+          in: query
+          type: integer
+          description: CPUPeriod limits the CPU CFS (Completely Fair Scheduler) period
+        - name: cpuquota
+          in: query
+          type: integer
+          description: CPUQuota limits the CPU CFS (Completely Fair Scheduler) quota
+        - name: buildargs
+          in: query
+          type: string
+          description: JSON map of string pairs denoting build-time variables.
+        - name: shmsize
+          in: query
+          type: integer
+          description: ShmSize is the "size" value to use when mounting an shmfs on the container's /dev/shm directory.
+        - name: squash
+          in: query
+          type: boolean
+          description: Silently ignored.
+        - name: labels
+          in: query
+          type: string
+          description: JSON map of key, value pairs to set as labels on the new image
+        - name: layerLabel
+          in: query
+          type: array
+          description: Add an intermediate image *label* (e.g. label=*value*) to the intermediate image metadata.
+        - name: layers
+          in: query
+          type: boolean
+          description: Cache intermediate layers during build.
+        - name: networkmode
+          in: query
+          type: string
+          description: Sets the networking mode for the run commands during build.
+        - name: platform
+          in: query
+          type: string
+          description: Platform format os[/arch[/variant]]
+        - name: target
+          in: query
+          type: string
+          description: Target build stage
+        - name: outputs
+          in: query
+          type: string
+          description: output configuration TBD
+        - name: httpproxy
+          in: query
+          type: boolean
+          description: Inject http proxy environment variables into container
+        - name: unsetenv
+          in: query
+          type: array
+          description: Unset environment variables from the final image.
+        - name: unsetlabel
+          in: query
+          type: array
+          description: Unset the image label, causing the label not to be inherited from the base image.
+        - name: unsetannotation
+          in: query
+          type: array
+          description: Unset the image annotation, causing the annotation not to be inherited from the base image.
+        - name: volume
+          in: query
+          type: array
+          description: Extra volumes that should be mounted in the build container.
+        - name: manifest
+          in: query
+          type: string
+          description: Add the image to the specified manifest list. Creates a manifest list if it does not exist.
+    - name: libpod-local-images-load
+      path: /libpod/local/images/load
+      operations:
+      - name: localimageslibpod
+        method: POST
+        description: Load image from local path
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: query
+          type: string
+          description: Absolute path to the image archive file on the server filesystem
+          required: true
+  exposes:
+  - type: rest
+    namespace: podman-images-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — images. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/libpod/build
+      name: libpod-build
+      description: REST surface for libpod-build.
+      operations:
+      - method: POST
+        name: imagebuildlibpod
+        description: Build image
+        call: podman-images.imagebuildlibpod
+        with:
+          Content-Type: rest.Content-Type
+          X-Registry-Config: rest.X-Registry-Config
+          dockerfile: rest.dockerfile
+          t: rest.t
+          allplatforms: rest.allplatforms
+          additionalbuildcontexts: rest.additionalbuildcontexts
+          extrahosts: rest.extrahosts
+          nohosts: rest.nohosts
+          remote: rest.remote
+          q: rest.q
+          compatvolumes: rest.compatvolumes
+          createdannotation: rest.createdannotation
+          sourcedateepoch: rest.sourcedateepoch
+          rewritetimestamp: rest.rewritetimestamp
+          timestamp: rest.timestamp
+          inheritlabels: rest.inheritlabels
+          inheritannotations: rest.inheritannotations
+          nocache: rest.nocache
+          cachefrom: rest.cachefrom
+          pull: rest.pull
+          rm: rest.rm
+          forcerm: rest.forcerm
+          memory: rest.memory
+          memswap: rest.memswap
+          cpushares: rest.cpushares
+          cpusetcpus: rest.cpusetcpus
+          cpuperiod: rest.cpuperiod
+          cpuquota: rest.cpuquota
+          buildargs: rest.buildargs
+          shmsize: rest.shmsize
+          squash: rest.squash
+          labels: rest.labels
+          layerLabel: rest.layerLabel
+          layers: rest.layers
+          networkmode: rest.networkmode
+          platform: rest.platform
+          target: rest.target
+          outputs: rest.outputs
+          httpproxy: rest.httpproxy
+          unsetenv: rest.unsetenv
+          unsetlabel: rest.unsetlabel
+          unsetannotation: rest.unsetannotation
+          volume: rest.volume
+          manifest: rest.manifest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/export
+      name: libpod-images-export
+      description: REST surface for libpod-images-export.
+      operations:
+      - method: GET
+        name: imageexportlibpod
+        description: Export multiple images
+        call: podman-images.imageexportlibpod
+        with:
+          format: rest.format
+          references: rest.references
+          compress: rest.compress
+          ociAcceptUncompressedLayers: rest.ociAcceptUncompressedLayers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/import
+      name: libpod-images-import
+      description: REST surface for libpod-images-import.
+      operations:
+      - method: POST
+        name: imageimportlibpod
+        description: Import image
+        call: podman-images.imageimportlibpod
+        with:
+          Content-Type: rest.Content-Type
+          changes: rest.changes
+          message: rest.message
+          reference: rest.reference
+          url: rest.url
+          upload: rest.upload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/json
+      name: libpod-images-json
+      description: REST surface for libpod-images-json.
+      operations:
+      - method: GET
+        name: imagelistlibpod
+        description: List Images
+        call: podman-images.imagelistlibpod
+        with:
+          all: rest.all
+          filters: rest.filters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/load
+      name: libpod-images-load
+      description: REST surface for libpod-images-load.
+      operations:
+      - method: POST
+        name: imageloadlibpod
+        description: Load image
+        call: podman-images.imageloadlibpod
+        with:
+          upload: rest.upload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/prune
+      name: libpod-images-prune
+      description: REST surface for libpod-images-prune.
+      operations:
+      - method: POST
+        name: imageprunelibpod
+        description: Prune unused images
+        call: podman-images.imageprunelibpod
+        with:
+          all: rest.all
+          external: rest.external
+          buildcache: rest.buildcache
+          filters: rest.filters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/pull
+      name: libpod-images-pull
+      description: REST surface for libpod-images-pull.
+      operations:
+      - method: POST
+        name: imagepulllibpod
+        description: Pull images
+        call: podman-images.imagepulllibpod
+        with:
+          reference: rest.reference
+          quiet: rest.quiet
+          compatMode: rest.compatMode
+          pullProgress: rest.pullProgress
+          Arch: rest.Arch
+          OS: rest.OS
+          Variant: rest.Variant
+          policy: rest.policy
+          tlsVerify: rest.tlsVerify
+          allTags: rest.allTags
+          X-Registry-Auth: rest.X-Registry-Auth
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/remove
+      name: libpod-images-remove
+      description: REST surface for libpod-images-remove.
+      operations:
+      - method: DELETE
+        name: imagedeletealllibpod
+        description: Remove one or more images from the storage.
+        call: podman-images.imagedeletealllibpod
+        with:
+          images: rest.images
+          all: rest.all
+          force: rest.force
+          ignore: rest.ignore
+          lookupManifest: rest.lookupManifest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/scp/{name}
+      name: libpod-images-scp-name
+      description: REST surface for libpod-images-scp-name.
+      operations:
+      - method: POST
+        name: imagescplibpod
+        description: Copy an image from one host to another
+        call: podman-images.imagescplibpod
+        with:
+          name: rest.name
+          destination: rest.destination
+          quiet: rest.quiet
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/search
+      name: libpod-images-search
+      description: REST surface for libpod-images-search.
+      operations:
+      - method: GET
+        name: imagesearchlibpod
+        description: Search images
+        call: podman-images.imagesearchlibpod
+        with:
+          term: rest.term
+          limit: rest.limit
+          filters: rest.filters
+          tlsVerify: rest.tlsVerify
+          listTags: rest.listTags
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}
+      name: libpod-images-name
+      description: REST surface for libpod-images-name.
+      operations:
+      - method: DELETE
+        name: imagedeletelibpod
+        description: Remove an image from the local storage.
+        call: podman-images.imagedeletelibpod
+        with:
+          name: rest.name
+          force: rest.force
+          ignore: rest.ignore
+          lookupManifest: rest.lookupManifest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/changes
+      name: libpod-images-name-changes
+      description: REST surface for libpod-images-name-changes.
+      operations:
+      - method: GET
+        name: imagechangeslibpod
+        description: Report on changes to images's filesystem; adds, deletes or modifications.
+        call: podman-images.imagechangeslibpod
+        with:
+          name: rest.name
+          parent: rest.parent
+          diffType: rest.diffType
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/exists
+      name: libpod-images-name-exists
+      description: REST surface for libpod-images-name-exists.
+      operations:
+      - method: GET
+        name: imageexistslibpod
+        description: Image exists
+        call: podman-images.imageexistslibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/get
+      name: libpod-images-name-get
+      description: REST surface for libpod-images-name-get.
+      operations:
+      - method: GET
+        name: imagegetlibpod
+        description: Export an image
+        call: podman-images.imagegetlibpod
+        with:
+          name: rest.name
+          format: rest.format
+          compress: rest.compress
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/history
+      name: libpod-images-name-history
+      description: REST surface for libpod-images-name-history.
+      operations:
+      - method: GET
+        name: imagehistorylibpod
+        description: History of an image
+        call: podman-images.imagehistorylibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/json
+      name: libpod-images-name-json
+      description: REST surface for libpod-images-name-json.
+      operations:
+      - method: GET
+        name: imageinspectlibpod
+        description: Inspect an image
+        call: podman-images.imageinspectlibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/push
+      name: libpod-images-name-push
+      description: REST surface for libpod-images-name-push.
+      operations:
+      - method: POST
+        name: imagepushlibpod
+        description: Push Image
+        call: podman-images.imagepushlibpod
+        with:
+          name: rest.name
+          destination: rest.destination
+          forceCompressionFormat: rest.forceCompressionFormat
+          compressionFormat: rest.compressionFormat
+          compressionLevel: rest.compressionLevel
+          tlsVerify: rest.tlsVerify
+          quiet: rest.quiet
+          format: rest.format
+          all: rest.all
+          removeSignatures: rest.removeSignatures
+          retry: rest.retry
+          retryDelay: rest.retryDelay
+          X-Registry-Auth: rest.X-Registry-Auth
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/resolve
+      name: libpod-images-name-resolve
+      description: REST surface for libpod-images-name-resolve.
+      operations:
+      - method: GET
+        name: imageresolvelibpod
+        description: Resolve an image (short) name
+        call: podman-images.imageresolvelibpod
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/tag
+      name: libpod-images-name-tag
+      description: REST surface for libpod-images-name-tag.
+      operations:
+      - method: POST
+        name: imagetaglibpod
+        description: Tag an image
+        call: podman-images.imagetaglibpod
+        with:
+          name: rest.name
+          repo: rest.repo
+          tag: rest.tag
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/tree
+      name: libpod-images-name-tree
+      description: REST surface for libpod-images-name-tree.
+      operations:
+      - method: GET
+        name: imagetreelibpod
+        description: Image tree
+        call: podman-images.imagetreelibpod
+        with:
+          name: rest.name
+          whatrequires: rest.whatrequires
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/images/{name}/untag
+      name: libpod-images-name-untag
+      description: REST surface for libpod-images-name-untag.
+      operations:
+      - method: POST
+        name: imageuntaglibpod
+        description: Untag an image
+        call: podman-images.imageuntaglibpod
+        with:
+          name: rest.name
+          repo: rest.repo
+          tag: rest.tag
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/local/build
+      name: libpod-local-build
+      description: REST surface for libpod-local-build.
+      operations:
+      - method: POST
+        name: localbuildlibpod
+        description: Create image from local build context
+        call: podman-images.localbuildlibpod
+        with:
+          X-Registry-Config: rest.X-Registry-Config
+          localcontextdir: rest.localcontextdir
+          dockerfile: rest.dockerfile
+          t: rest.t
+          allplatforms: rest.allplatforms
+          additionalbuildcontexts: rest.additionalbuildcontexts
+          extrahosts: rest.extrahosts
+          nohosts: rest.nohosts
+          remote: rest.remote
+          q: rest.q
+          compatvolumes: rest.compatvolumes
+          createdannotation: rest.createdannotation
+          sourcedateepoch: rest.sourcedateepoch
+          rewritetimestamp: rest.rewritetimestamp
+          timestamp: rest.timestamp
+          inheritlabels: rest.inheritlabels
+          inheritannotations: rest.inheritannotations
+          nocache: rest.nocache
+          cachefrom: rest.cachefrom
+          pull: rest.pull
+          rm: rest.rm
+          forcerm: rest.forcerm
+          memory: rest.memory
+          memswap: rest.memswap
+          cpushares: rest.cpushares
+          cpusetcpus: rest.cpusetcpus
+          cpuperiod: rest.cpuperiod
+          cpuquota: rest.cpuquota
+          buildargs: rest.buildargs
+          shmsize: rest.shmsize
+          squash: rest.squash
+          labels: rest.labels
+          layerLabel: rest.layerLabel
+          layers: rest.layers
+          networkmode: rest.networkmode
+          platform: rest.platform
+          target: rest.target
+          outputs: rest.outputs
+          httpproxy: rest.httpproxy
+          unsetenv: rest.unsetenv
+          unsetlabel: rest.unsetlabel
+          unsetannotation: rest.unsetannotation
+          volume: rest.volume
+          manifest: rest.manifest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/libpod/local/images/load
+      name: libpod-local-images-load
+      description: REST surface for libpod-local-images-load.
+      operations:
+      - method: POST
+        name: localimageslibpod
+        description: Load image from local path
+        call: podman-images.localimageslibpod
+        with:
+          path: rest.path
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-images-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — images. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: build-image
+      description: Build image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imagebuildlibpod
+      with:
+        Content-Type: tools.Content-Type
+        X-Registry-Config: tools.X-Registry-Config
+        dockerfile: tools.dockerfile
+        t: tools.t
+        allplatforms: tools.allplatforms
+        additionalbuildcontexts: tools.additionalbuildcontexts
+        extrahosts: tools.extrahosts
+        nohosts: tools.nohosts
+        remote: tools.remote
+        q: tools.q
+        compatvolumes: tools.compatvolumes
+        createdannotation: tools.createdannotation
+        sourcedateepoch: tools.sourcedateepoch
+        rewritetimestamp: tools.rewritetimestamp
+        timestamp: tools.timestamp
+        inheritlabels: tools.inheritlabels
+        inheritannotations: tools.inheritannotations
+        nocache: tools.nocache
+        cachefrom: tools.cachefrom
+        pull: tools.pull
+        rm: tools.rm
+        forcerm: tools.forcerm
+        memory: tools.memory
+        memswap: tools.memswap
+        cpushares: tools.cpushares
+        cpusetcpus: tools.cpusetcpus
+        cpuperiod: tools.cpuperiod
+        cpuquota: tools.cpuquota
+        buildargs: tools.buildargs
+        shmsize: tools.shmsize
+        squash: tools.squash
+        labels: tools.labels
+        layerLabel: tools.layerLabel
+        layers: tools.layers
+        networkmode: tools.networkmode
+        platform: tools.platform
+        target: tools.target
+        outputs: tools.outputs
+        httpproxy: tools.httpproxy
+        unsetenv: tools.unsetenv
+        unsetlabel: tools.unsetlabel
+        unsetannotation: tools.unsetannotation
+        volume: tools.volume
+        manifest: tools.manifest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: export-multiple-images
+      description: Export multiple images
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imageexportlibpod
+      with:
+        format: tools.format
+        references: tools.references
+        compress: tools.compress
+        ociAcceptUncompressedLayers: tools.ociAcceptUncompressedLayers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: import-image
+      description: Import image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imageimportlibpod
+      with:
+        Content-Type: tools.Content-Type
+        changes: tools.changes
+        message: tools.message
+        reference: tools.reference
+        url: tools.url
+        upload: tools.upload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-images
+      description: List Images
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagelistlibpod
+      with:
+        all: tools.all
+        filters: tools.filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: load-image
+      description: Load image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imageloadlibpod
+      with:
+        upload: tools.upload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: prune-unused-images
+      description: Prune unused images
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imageprunelibpod
+      with:
+        all: tools.all
+        external: tools.external
+        buildcache: tools.buildcache
+        filters: tools.filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: pull-images
+      description: Pull images
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imagepulllibpod
+      with:
+        reference: tools.reference
+        quiet: tools.quiet
+        compatMode: tools.compatMode
+        pullProgress: tools.pullProgress
+        Arch: tools.Arch
+        OS: tools.OS
+        Variant: tools.Variant
+        policy: tools.policy
+        tlsVerify: tools.tlsVerify
+        allTags: tools.allTags
+        X-Registry-Auth: tools.X-Registry-Auth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-one-more-images-storage
+      description: Remove one or more images from the storage.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: podman-images.imagedeletealllibpod
+      with:
+        images: tools.images
+        all: tools.all
+        force: tools.force
+        ignore: tools.ignore
+        lookupManifest: tools.lookupManifest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: copy-image-one-host-another
+      description: Copy an image from one host to another
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imagescplibpod
+      with:
+        name: tools.name
+        destination: tools.destination
+        quiet: tools.quiet
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-images
+      description: Search images
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagesearchlibpod
+      with:
+        term: tools.term
+        limit: tools.limit
+        filters: tools.filters
+        tlsVerify: tools.tlsVerify
+        listTags: tools.listTags
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-image-local-storage
+      description: Remove an image from the local storage.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: podman-images.imagedeletelibpod
+      with:
+        name: tools.name
+        force: tools.force
+        ignore: tools.ignore
+        lookupManifest: tools.lookupManifest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: report-changes-images-s-filesystem-adds
+      description: Report on changes to images's filesystem; adds, deletes or modifications.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagechangeslibpod
+      with:
+        name: tools.name
+        parent: tools.parent
+        diffType: tools.diffType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: image-exists
+      description: Image exists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imageexistslibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: export-image
+      description: Export an image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagegetlibpod
+      with:
+        name: tools.name
+        format: tools.format
+        compress: tools.compress
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: history-image
+      description: History of an image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagehistorylibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inspect-image
+      description: Inspect an image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imageinspectlibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: push-image
+      description: Push Image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imagepushlibpod
+      with:
+        name: tools.name
+        destination: tools.destination
+        forceCompressionFormat: tools.forceCompressionFormat
+        compressionFormat: tools.compressionFormat
+        compressionLevel: tools.compressionLevel
+        tlsVerify: tools.tlsVerify
+        quiet: tools.quiet
+        format: tools.format
+        all: tools.all
+        removeSignatures: tools.removeSignatures
+        retry: tools.retry
+        retryDelay: tools.retryDelay
+        X-Registry-Auth: tools.X-Registry-Auth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resolve-image-short-name
+      description: Resolve an image (short) name
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imageresolvelibpod
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: tag-image
+      description: Tag an image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imagetaglibpod
+      with:
+        name: tools.name
+        repo: tools.repo
+        tag: tools.tag
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: image-tree
+      description: Image tree
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-images.imagetreelibpod
+      with:
+        name: tools.name
+        whatrequires: tools.whatrequires
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: untag-image
+      description: Untag an image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.imageuntaglibpod
+      with:
+        name: tools.name
+        repo: tools.repo
+        tag: tools.tag
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-image-local-build-context
+      description: Create image from local build context
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.localbuildlibpod
+      with:
+        X-Registry-Config: tools.X-Registry-Config
+        localcontextdir: tools.localcontextdir
+        dockerfile: tools.dockerfile
+        t: tools.t
+        allplatforms: tools.allplatforms
+        additionalbuildcontexts: tools.additionalbuildcontexts
+        extrahosts: tools.extrahosts
+        nohosts: tools.nohosts
+        remote: tools.remote
+        q: tools.q
+        compatvolumes: tools.compatvolumes
+        createdannotation: tools.createdannotation
+        sourcedateepoch: tools.sourcedateepoch
+        rewritetimestamp: tools.rewritetimestamp
+        timestamp: tools.timestamp
+        inheritlabels: tools.inheritlabels
+        inheritannotations: tools.inheritannotations
+        nocache: tools.nocache
+        cachefrom: tools.cachefrom
+        pull: tools.pull
+        rm: tools.rm
+        forcerm: tools.forcerm
+        memory: tools.memory
+        memswap: tools.memswap
+        cpushares: tools.cpushares
+        cpusetcpus: tools.cpusetcpus
+        cpuperiod: tools.cpuperiod
+        cpuquota: tools.cpuquota
+        buildargs: tools.buildargs
+        shmsize: tools.shmsize
+        squash: tools.squash
+        labels: tools.labels
+        layerLabel: tools.layerLabel
+        layers: tools.layers
+        networkmode: tools.networkmode
+        platform: tools.platform
+        target: tools.target
+        outputs: tools.outputs
+        httpproxy: tools.httpproxy
+        unsetenv: tools.unsetenv
+        unsetlabel: tools.unsetlabel
+        unsetannotation: tools.unsetannotation
+        volume: tools.volume
+        manifest: tools.manifest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: load-image-local-path
+      description: Load image from local path
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-images.localimageslibpod
+      with:
+        path: tools.path
+      outputParameters:
+      - type: object
+        mapping: $.

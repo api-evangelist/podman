@@ -1,0 +1,234 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: supports a RESTful API for the Libpod library — exec (compat)
+  description: 'supports a RESTful API for the Libpod library — exec (compat). 4 operations. Lead operation: Create an exec
+    instance. Self-contained Naftiko capability covering one Podman business surface.'
+  tags:
+  - Podman
+  - exec (compat)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PODMAN_API_KEY: PODMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: podman-exec-compat
+    baseUri: http://podman.io
+    description: supports a RESTful API for the Libpod library — exec (compat) business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: containers-name-exec
+      path: /containers/{name}/exec
+      operations:
+      - name: containerexec
+        method: POST
+        description: Create an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: name of container
+          required: true
+        - name: control
+          in: body
+          type: object
+          description: Attributes for create
+    - name: exec-id-json
+      path: /exec/{id}/json
+      operations:
+      - name: execinspect
+        method: GET
+        description: Inspect an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+    - name: exec-id-resize
+      path: /exec/{id}/resize
+      operations:
+      - name: execresize
+        method: POST
+        description: Resize an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+        - name: h
+          in: query
+          type: integer
+          description: Height of the TTY session in characters
+        - name: w
+          in: query
+          type: integer
+          description: Width of the TTY session in characters
+        - name: running
+          in: query
+          type: boolean
+          description: Ignore containers not running errors
+    - name: exec-id-start
+      path: /exec/{id}/start
+      operations:
+      - name: execstart
+        method: POST
+        description: Start an exec instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Exec instance ID
+          required: true
+        - name: control
+          in: body
+          type: object
+          description: Attributes for start
+  exposes:
+  - type: rest
+    namespace: podman-exec-compat-rest
+    port: 8080
+    description: REST adapter for supports a RESTful API for the Libpod library — exec (compat). One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/containers/{name}/exec
+      name: containers-name-exec
+      description: REST surface for containers-name-exec.
+      operations:
+      - method: POST
+        name: containerexec
+        description: Create an exec instance
+        call: podman-exec-compat.containerexec
+        with:
+          name: rest.name
+          control: rest.control
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exec/{id}/json
+      name: exec-id-json
+      description: REST surface for exec-id-json.
+      operations:
+      - method: GET
+        name: execinspect
+        description: Inspect an exec instance
+        call: podman-exec-compat.execinspect
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exec/{id}/resize
+      name: exec-id-resize
+      description: REST surface for exec-id-resize.
+      operations:
+      - method: POST
+        name: execresize
+        description: Resize an exec instance
+        call: podman-exec-compat.execresize
+        with:
+          id: rest.id
+          h: rest.h
+          w: rest.w
+          running: rest.running
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/exec/{id}/start
+      name: exec-id-start
+      description: REST surface for exec-id-start.
+      operations:
+      - method: POST
+        name: execstart
+        description: Start an exec instance
+        call: podman-exec-compat.execstart
+        with:
+          id: rest.id
+          control: rest.control
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: podman-exec-compat-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for supports a RESTful API for the Libpod library — exec (compat). One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: create-exec-instance
+      description: Create an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec-compat.containerexec
+      with:
+        name: tools.name
+        control: tools.control
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inspect-exec-instance
+      description: Inspect an exec instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: podman-exec-compat.execinspect
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resize-exec-instance
+      description: Resize an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec-compat.execresize
+      with:
+        id: tools.id
+        h: tools.h
+        w: tools.w
+        running: tools.running
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-exec-instance
+      description: Start an exec instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: podman-exec-compat.execstart
+      with:
+        id: tools.id
+        control: tools.control
+      outputParameters:
+      - type: object
+        mapping: $.
