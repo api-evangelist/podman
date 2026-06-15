@@ -2,8 +2,8 @@
   "repo": "podman",
   "feeds": [
     {
-      "source": "https://podman.io/blogs/rss",
-      "feed_url": "https://podman.io/blogs/rss",
+      "source": "https://blog.podman.io/feed/",
+      "feed_url": "https://blog.podman.io/feed/",
       "title": "",
       "saved": 0,
       "method": "feed"
@@ -17,5 +17,5 @@
     }
   ],
   "post_count": 35,
-  "fetched": "2026-06-01T23:35:02Z"
+  "fetched": "2026-06-14T20:42:17Z"
 }
