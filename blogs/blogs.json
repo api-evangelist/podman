@@ -5,7 +5,7 @@
       "source": "https://blog.podman.io/feed/",
       "feed_url": "https://blog.podman.io/feed/",
       "title": "",
-      "saved": 0,
+      "saved": 1,
       "method": "feed"
     },
     {
@@ -16,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 35,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 36,
+  "fetched": "2026-06-27T12:03:07Z"
 }
