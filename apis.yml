@@ -40,6 +40,8 @@ apis:
       - type: OpenAPI
         url: openapi/podman-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/podman-agentic-access.yml
   - type: DomainSecurity
     url: security/podman-domain-security.yml
   - type: Website
