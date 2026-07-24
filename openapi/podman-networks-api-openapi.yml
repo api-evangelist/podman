@@ -1,0 +1,669 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts networks API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to networks
+  name: networks
+paths:
+  /libpod/networks/{name}:
+    delete:
+      description: Remove a configured network
+      operationId: NetworkDeleteLibpod
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: remove containers associated with network
+        in: query
+        name: force
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkRmResponse'
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove a network
+      tags:
+      - networks
+  /libpod/networks/{name}/connect:
+    post:
+      description: Connect a container to a network.
+      operationId: NetworkConnectLibpod
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for connecting a container to a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkConnectRequestLibpod'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Connect container to network
+      tags:
+      - networks
+  /libpod/networks/{name}/disconnect:
+    post:
+      description: Disconnect a container from a network.
+      operationId: NetworkDisconnectLibpod
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for disconnecting a container from a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkDisconnectRequest'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Disconnect container from network
+      tags:
+      - networks
+  /libpod/networks/{name}/exists:
+    get:
+      description: Check if network exists
+      operationId: NetworkExistsLibpod
+      parameters:
+      - description: the name or ID of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: network exists
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Network exists
+      tags:
+      - networks
+  /libpod/networks/{name}/json:
+    get:
+      description: 'Display configuration for a network.
+
+        '
+      operationId: NetworkInspectLibpod
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkInspectResponse'
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect a network
+      tags:
+      - networks
+  /libpod/networks/{name}/update:
+    post:
+      description: Update existing podman network
+      operationId: NetworkUpdateLibpod
+      parameters:
+      - description: the name or ID of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for updating a netavark network
+        in: body
+        name: update
+        schema:
+          $ref: '#/definitions/networkUpdateRequestLibpod'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Update existing podman network
+      tags:
+      - networks
+  /libpod/networks/create:
+    post:
+      description: Create a new network configuration
+      operationId: NetworkCreateLibpod
+      parameters:
+      - description: attributes for creating a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkCreateLibpod'
+      - default: false
+        description: Ignore the request if a network with the same name already exists.
+        in: query
+        name: ignoreIfExists
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkCreateResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '409':
+          $ref: '#/responses/conflictError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create network
+      tags:
+      - networks
+  /libpod/networks/json:
+    get:
+      description: "Display summary of network configurations.\n  - In a 200 response, all of the fields named Bytes are returned as a Base64 encoded string.\n"
+      operationId: NetworkListLibpod
+      parameters:
+      - description: "JSON encoded value of the filters (a `map[string][]string`) to process on the network list. Available filters:\n  - `name=[name]` Matches network name (accepts regex).\n  - `id=[id]` Matches for full or partial ID.\n  - `driver=[driver]` Only bridge is supported.\n  - `label=[key]` or `label=[key=value]` Matches networks based on the presence of a label alone or a label and a value.\n  - `until=[timestamp]` Matches all networks that were created before the given timestamp.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkListLibpod'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List networks
+      tags:
+      - networks
+  /libpod/networks/prune:
+    post:
+      description: Remove networks that do not have containers
+      operationId: NetworkPruneLibpod
+      parameters:
+      - description: "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).\nAvailable filters:\n  - `until=<timestamp>` Prune networks created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkPruneResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Delete unused networks
+      tags:
+      - networks
+definitions:
+  NetworkInspectReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  NetworkPruneReport:
+    description: 'NetworkPruneReport containers the name of network and an error
+
+      associated in its pruning (removal)'
+    properties:
+      Error:
+        type: string
+        x-go-type: error
+      Name:
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+  NetworkUpdateOptions:
+    description: NetworkUpdateOptions describes options to update a network
+    properties:
+      adddnsservers:
+        items:
+          type: string
+        type: array
+        x-go-name: AddDNSServers
+      removednsservers:
+        items:
+          type: string
+        type: array
+        x-go-name: RemoveDNSServers
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  networkConnectRequestLibpod:
+    $ref: '#/definitions/NetworkConnectOptions'
+    description: Network connect
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  Route:
+    properties:
+      destination:
+        description: Destination for this route in CIDR form.
+        format: string
+        type: string
+        x-go-name: Destination
+      gateway:
+        description: Gateway IP for this route. Required for unicast routes, must be empty for blackhole/unreachable/prohibit.
+        format: string
+        type: string
+        x-go-name: Gateway
+        x-go-type: net.IP
+      metric:
+        description: Metric for this route. Optional.
+        format: uint32
+        type: integer
+        x-go-name: Metric
+      route_type:
+        $ref: '#/definitions/RouteType'
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+  LeaseRange:
+    properties:
+      end_ip:
+        description: EndIP last IP in the subnet which should be used to assign ips.
+        format: string
+        type: string
+        x-go-name: EndIP
+        x-go-type: net.IP
+      start_ip:
+        description: StartIP first IP in the subnet which should be used to assign ips.
+        format: string
+        type: string
+        x-go-name: StartIP
+        x-go-type: net.IP
+    title: LeaseRange contains the range where IP are leased.
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+  DisconnectRequest:
+    properties:
+      Container:
+        description: The ID or name of the container to disconnect from the network.
+        example: 3613f73ba0e4
+        type: string
+      Force:
+        description: Force the container to disconnect from the network.
+        example: false
+        type: boolean
+    required:
+    - Container
+    title: DisconnectRequest NetworkDisconnectRequest represents the data to be used to disconnect a container from a network.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Subnet:
+    properties:
+      gateway:
+        description: Gateway IP for this Network.
+        format: string
+        type: string
+        x-go-name: Gateway
+        x-go-type: net.IP
+      lease_range:
+        $ref: '#/definitions/LeaseRange'
+      subnet:
+        description: Subnet for this Network in CIDR form.
+        format: string
+        type: string
+        x-go-name: Subnet
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+  networkUpdateRequestLibpod:
+    $ref: '#/definitions/NetworkUpdateOptions'
+    description: Network update
+  RouteType:
+    title: RouteType represents the type of a route.
+    type: string
+    x-go-package: go.podman.io/common/libnetwork/types
+  NetworkConnectOptions:
+    description: 'NetworkConnectOptions describes options for connecting
+
+      a container to a network'
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  networkCreateLibpod:
+    description: Network create
+    properties:
+      created:
+        description: Created contains the timestamp when this network was created.
+        format: date-time
+        type: string
+        x-go-name: Created
+      dns_enabled:
+        description: 'DNSEnabled is whether name resolution is active for container on
+
+          this Network. Only supported with the bridge driver.'
+        type: boolean
+        x-go-name: DNSEnabled
+      driver:
+        description: Driver for this Network, e.g. bridge, macvlan...
+        type: string
+        x-go-name: Driver
+      id:
+        description: ID of the Network.
+        type: string
+        x-go-name: ID
+      internal:
+        description: 'Internal is whether the Network should not have external routes
+
+          to public or other Networks.'
+        type: boolean
+        x-go-name: Internal
+      ipam_options:
+        additionalProperties:
+          type: string
+        description: IPAMOptions contains options used for the ip assignment.
+        type: object
+        x-go-name: IPAMOptions
+      ipv6_enabled:
+        description: IPv6Enabled if set to true an ipv6 subnet should be created for this net.
+        type: boolean
+        x-go-name: IPv6Enabled
+      labels:
+        additionalProperties:
+          type: string
+        description: 'Labels is a set of key-value labels that have been applied to the
+
+          Network.'
+        type: object
+        x-go-name: Labels
+      name:
+        description: Name of the Network.
+        type: string
+        x-go-name: Name
+      network_dns_servers:
+        description: 'List of custom DNS server for podman''s DNS resolver at network level,
+
+          all the containers attached to this network will consider resolvers
+
+          configured at network level.'
+        items:
+          type: string
+        type: array
+        x-go-name: NetworkDNSServers
+      network_interface:
+        description: NetworkInterface is the network interface name on the host.
+        type: string
+        x-go-name: NetworkInterface
+      options:
+        additionalProperties:
+          type: string
+        description: 'Options is a set of key-value options that have been applied to
+
+          the Network.'
+        type: object
+        x-go-name: Options
+      routes:
+        description: Routes to use for this network.
+        items:
+          $ref: '#/definitions/Route'
+        type: array
+        x-go-name: Routes
+      subnets:
+        description: Subnets to use for this network.
+        items:
+          $ref: '#/definitions/Subnet'
+        type: array
+        x-go-name: Subnets
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
+  networkDisconnectRequest:
+    $ref: '#/definitions/DisconnectRequest'
+    description: Network disconnect
+  NetworkRmReport:
+    description: NetworkRmReport describes the results of network removal
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  Network:
+    properties:
+      created:
+        description: Created contains the timestamp when this network was created.
+        format: date-time
+        type: string
+        x-go-name: Created
+      dns_enabled:
+        description: 'DNSEnabled is whether name resolution is active for container on
+
+          this Network. Only supported with the bridge driver.'
+        type: boolean
+        x-go-name: DNSEnabled
+      driver:
+        description: Driver for this Network, e.g. bridge, macvlan...
+        type: string
+        x-go-name: Driver
+      id:
+        description: ID of the Network.
+        type: string
+        x-go-name: ID
+      internal:
+        description: 'Internal is whether the Network should not have external routes
+
+          to public or other Networks.'
+        type: boolean
+        x-go-name: Internal
+      ipam_options:
+        additionalProperties:
+          type: string
+        description: IPAMOptions contains options used for the ip assignment.
+        type: object
+        x-go-name: IPAMOptions
+      ipv6_enabled:
+        description: IPv6Enabled if set to true an ipv6 subnet should be created for this net.
+        type: boolean
+        x-go-name: IPv6Enabled
+      labels:
+        additionalProperties:
+          type: string
+        description: 'Labels is a set of key-value labels that have been applied to the
+
+          Network.'
+        type: object
+        x-go-name: Labels
+      name:
+        description: Name of the Network.
+        type: string
+        x-go-name: Name
+      network_dns_servers:
+        description: 'List of custom DNS server for podman''s DNS resolver at network level,
+
+          all the containers attached to this network will consider resolvers
+
+          configured at network level.'
+        items:
+          type: string
+        type: array
+        x-go-name: NetworkDNSServers
+      network_interface:
+        description: NetworkInterface is the network interface name on the host.
+        type: string
+        x-go-name: NetworkInterface
+      options:
+        additionalProperties:
+          type: string
+        description: 'Options is a set of key-value options that have been applied to
+
+          the Network.'
+        type: object
+        x-go-name: Options
+      routes:
+        description: Routes to use for this network.
+        items:
+          $ref: '#/definitions/Route'
+        type: array
+        x-go-name: Routes
+      subnets:
+        description: Subnets to use for this network.
+        items:
+          $ref: '#/definitions/Subnet'
+        type: array
+        x-go-name: Subnets
+    title: Network describes the Network attributes.
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+responses:
+  networkPruneResponse:
+    description: Network prune
+    schema:
+      items:
+        $ref: '#/definitions/NetworkPruneReport'
+      type: array
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  networkRmResponse:
+    description: Network Delete
+    schema:
+      items:
+        $ref: '#/definitions/NetworkRmReport'
+      type: array
+  networkCreateResponse:
+    description: Network create
+    schema:
+      $ref: '#/definitions/Network'
+  networkInspectResponse:
+    description: Network inspect
+    schema:
+      $ref: '#/definitions/NetworkInspectReport'
+  networkListLibpod:
+    description: Network list
+    schema:
+      items:
+        $ref: '#/definitions/Network'
+      type: array
+  networkNotFound:
+    description: No such network
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  conflictError:
+    description: Conflict error in operation
+    schema:
+      $ref: '#/definitions/ErrorModel'

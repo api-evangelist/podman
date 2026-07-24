@@ -1,0 +1,799 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts system API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to Podman engine
+  name: system
+paths:
+  /libpod/_ping:
+    get:
+      description: 'Return protocol information in response headers.
+
+        `HEAD /libpod/_ping` is also supported.
+
+        `/_ping` is available for compatibility with other engines.
+
+        The ''_ping'' endpoints are not versioned.
+
+        '
+      operationId: SystemPing
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: Success
+          headers:
+            API-Version:
+              description: Max compatibility API Version the server supports
+              type: string
+            BuildKit-Version:
+              description: Default version of docker image builder
+              type: string
+            Cache-Control:
+              description: always no-cache
+              type: string
+            Docker-Experimental:
+              description: If the server is running with experimental mode enabled, always true
+              type: boolean
+            Libpod-API-Version:
+              description: 'Max Podman API Version the server supports.
+
+                Available if service is backed by Podman, therefore may be used to
+
+                determine if talking to Podman engine or another engine
+
+                '
+              type: string
+            Libpod-Buildah-Version:
+              description: "Default version of libpod image builder.\n  Available if service is backed by Podman, therefore may be used to\n  determine if talking to Podman engine or another engine\n"
+              type: string
+            Pragma:
+              description: always no-cache
+              type: string
+          schema:
+            description: OK
+            example: OK
+            type: string
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Ping service
+      tags:
+      - system
+  /libpod/events:
+    get:
+      description: Returns events filtered on query parameters
+      operationId: SystemEventsLibpod
+      parameters:
+      - description: start streaming events from this time
+        in: query
+        name: since
+        type: string
+      - description: stop streaming events later than this
+        in: query
+        name: until
+        type: string
+      - description: JSON encoded map[string][]string of constraints
+        in: query
+        name: filters
+        type: string
+      - default: true
+        description: when false, do not follow events
+        in: query
+        name: stream
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: returns a string of json data describing an event
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get events
+      tags:
+      - system
+  /libpod/info:
+    get:
+      description: Returns information on the system and libpod configuration
+      operationId: SystemInfoLibpod
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/infoResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get info
+      tags:
+      - system
+  /libpod/system/check:
+    post:
+      operationId: SystemCheckLibpod
+      parameters:
+      - description: Skip time-consuming checks
+        in: query
+        name: quick
+        type: boolean
+      - description: Remove inconsistent images
+        in: query
+        name: repair
+        type: boolean
+      - description: Remove inconsistent containers and images
+        in: query
+        name: repair_lossy
+        type: boolean
+      - default: 24h0m0s
+        description: Maximum allowed age of unreferenced layers
+        in: query
+        name: unreferenced_layer_max_age
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/systemCheckResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Performs consistency checks on storage, optionally removing items which fail checks
+      tags:
+      - system
+  /libpod/system/df:
+    get:
+      description: Return information about disk usage for containers, images, and volumes
+      operationId: SystemDataUsageLibpod
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/systemDiskUsage'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Show disk usage
+      tags:
+      - system
+  /libpod/system/prune:
+    post:
+      operationId: SystemPruneLibpod
+      parameters:
+      - description: Remove all unused data, not just dangling data
+        in: query
+        name: all
+        type: boolean
+      - description: Prune volumes
+        in: query
+        name: volumes
+        type: boolean
+      - description: Remove images used by external containers (e.g., build containers)
+        in: query
+        name: external
+        type: boolean
+      - description: Remove build cache
+        in: query
+        name: build
+        type: boolean
+      - description: "JSON encoded value of filters (a map[string][]string) to match data against before pruning.\nAvailable filters:\n  - `until=<timestamp>` Prune data created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine's time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune data with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/systemPruneResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Prune unused data
+      tags:
+      - system
+  /libpod/version:
+    get:
+      operationId: SystemVersionLibpod
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/versionResponse'
+      summary: Component Version information
+      tags:
+      - system
+definitions:
+  RemoteSocket:
+    description: RemoteSocket describes information about the API socket
+    properties:
+      exists:
+        type: boolean
+        x-go-name: Exists
+      path:
+        type: string
+        x-go-name: Path
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  StoreInfo:
+    description: 'StoreInfo describes the container storage and its
+
+      attributes'
+    properties:
+      containerStore:
+        $ref: '#/definitions/ContainerStore'
+      graphDriverName:
+        type: string
+        x-go-name: GraphDriverName
+      graphOptions:
+        additionalProperties: {}
+        type: object
+        x-go-name: GraphOptions
+      graphRoot:
+        type: string
+        x-go-name: GraphRoot
+      graphRootAllocated:
+        description: GraphRootAllocated is how much space the graphroot has in bytes
+        format: uint64
+        type: integer
+        x-go-name: GraphRootAllocated
+      graphRootUsed:
+        description: GraphRootUsed is how much of graphroot is used in bytes
+        format: uint64
+        type: integer
+        x-go-name: GraphRootUsed
+      graphStatus:
+        additionalProperties:
+          type: string
+        type: object
+        x-go-name: GraphStatus
+      imageCopyTmpDir:
+        type: string
+        x-go-name: ImageCopyTmpDir
+      imageStore:
+        $ref: '#/definitions/ImageStore'
+      runRoot:
+        type: string
+        x-go-name: RunRoot
+      transientStore:
+        type: boolean
+        x-go-name: TransientStore
+      volumePath:
+        type: string
+        x-go-name: VolumePath
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  HostInfo:
+    description: HostInfo describes the libpod host
+    properties:
+      arch:
+        type: string
+        x-go-name: Arch
+      buildahVersion:
+        type: string
+        x-go-name: BuildahVersion
+      cgroupControllers:
+        items:
+          type: string
+        type: array
+        x-go-name: CgroupControllers
+      cgroupManager:
+        type: string
+        x-go-name: CgroupManager
+      cgroupVersion:
+        type: string
+        x-go-name: CgroupsVersion
+      conmon:
+        $ref: '#/definitions/ConmonInfo'
+      cpuUtilization:
+        $ref: '#/definitions/CPUUsage'
+      cpus:
+        format: int64
+        type: integer
+        x-go-name: CPUs
+      databaseBackend:
+        type: string
+        x-go-name: DatabaseBackend
+      distribution:
+        $ref: '#/definitions/DistributionInfo'
+      emulatedArchitectures:
+        items:
+          type: string
+        type: array
+        x-go-name: EmulatedArchitectures
+      eventLogger:
+        type: string
+        x-go-name: EventLogger
+      freeLocks:
+        format: uint32
+        type: integer
+        x-go-name: FreeLocks
+      hostname:
+        type: string
+        x-go-name: Hostname
+      idMappings:
+        $ref: '#/definitions/IDMappings'
+      kernel:
+        type: string
+        x-go-name: Kernel
+      linkmode:
+        type: string
+        x-go-name: Linkmode
+      logDriver:
+        type: string
+        x-go-name: LogDriver
+      memFree:
+        format: int64
+        type: integer
+        x-go-name: MemFree
+      memTotal:
+        format: int64
+        type: integer
+        x-go-name: MemTotal
+      networkBackend:
+        type: string
+        x-go-name: NetworkBackend
+      networkBackendInfo:
+        $ref: '#/definitions/NetworkInfo'
+      ociRuntime:
+        $ref: '#/definitions/OCIRuntimeInfo'
+      os:
+        type: string
+        x-go-name: OS
+      pasta:
+        $ref: '#/definitions/PastaInfo'
+      remoteSocket:
+        $ref: '#/definitions/RemoteSocket'
+      rootlessNetworkCmd:
+        description: RootlessNetworkCmd returns the default rootless network command (pasta)
+        type: string
+        x-go-name: RootlessNetworkCmd
+      runtimeInfo:
+        additionalProperties: {}
+        type: object
+        x-go-name: RuntimeInfo
+      security:
+        $ref: '#/definitions/SecurityInfo'
+      serviceIsRemote:
+        description: ServiceIsRemote is true when the podman/libpod service is remote to the client
+        type: boolean
+        x-go-name: ServiceIsRemote
+      swapFree:
+        format: int64
+        type: integer
+        x-go-name: SwapFree
+      swapTotal:
+        format: int64
+        type: integer
+        x-go-name: SwapTotal
+      uptime:
+        type: string
+        x-go-name: Uptime
+      variant:
+        type: string
+        x-go-name: Variant
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  SystemDfReport:
+    description: ServiceOptions provides the input for starting an API and sidecar pprof services
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  PastaInfo:
+    description: PastaInfo describes the pasta executable that is being used
+    properties:
+      executable:
+        type: string
+        x-go-name: Executable
+      package:
+        type: string
+        x-go-name: Package
+      version:
+        type: string
+        x-go-name: Version
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  Version:
+    description: Version is an output struct for API
+    properties:
+      APIVersion:
+        type: string
+      BuildOrigin:
+        type: string
+      Built:
+        format: int64
+        type: integer
+      BuiltTime:
+        type: string
+      GitCommit:
+        type: string
+      GoVersion:
+        type: string
+      Os:
+        type: string
+      OsArch:
+        type: string
+      Version:
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  ContainerStore:
+    description: 'ContainerStore describes the quantity of containers in the
+
+      store by status'
+    properties:
+      number:
+        format: int64
+        type: integer
+        x-go-name: Number
+      paused:
+        format: int64
+        type: integer
+        x-go-name: Paused
+      running:
+        format: int64
+        type: integer
+        x-go-name: Running
+      stopped:
+        format: int64
+        type: integer
+        x-go-name: Stopped
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  IDMappings:
+    description: IDMappings describe the GID and UID mappings
+    properties:
+      gidmap:
+        items:
+          $ref: '#/definitions/IDMap'
+        type: array
+        x-go-name: GIDMap
+      uidmap:
+        items:
+          $ref: '#/definitions/IDMap'
+        type: array
+        x-go-name: UIDMap
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  ConmonInfo:
+    description: ConmonInfo describes the conmon executable being used
+    properties:
+      package:
+        type: string
+        x-go-name: Package
+      path:
+        type: string
+        x-go-name: Path
+      version:
+        type: string
+        x-go-name: Version
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  DistributionInfo:
+    description: DistributionInfo describes the host distribution for libpod
+    properties:
+      codename:
+        type: string
+        x-go-name: Codename
+      distribution:
+        type: string
+        x-go-name: Distribution
+      variant:
+        type: string
+        x-go-name: Variant
+      version:
+        type: string
+        x-go-name: Version
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  OCIRuntimeInfo:
+    description: 'OCIRuntimeInfo describes the runtime (crun or runc) being
+
+      used with podman'
+    properties:
+      name:
+        type: string
+        x-go-name: Name
+      package:
+        type: string
+        x-go-name: Package
+      path:
+        type: string
+        x-go-name: Path
+      version:
+        type: string
+        x-go-name: Version
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  SystemPruneReport:
+    description: ServiceOptions provides the input for starting an API and sidecar pprof services
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  CPUUsage:
+    properties:
+      idlePercent:
+        format: double
+        type: number
+        x-go-name: IdlePercent
+      systemPercent:
+        format: double
+        type: number
+        x-go-name: SystemPercent
+      userPercent:
+        format: double
+        type: number
+        x-go-name: UserPercent
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  Plugins:
+    properties:
+      authorization:
+        description: Authorization is provided for compatibility, will always be nil as Podman has no daemon
+        items:
+          type: string
+        type: array
+        x-go-name: Authorization
+      log:
+        items:
+          type: string
+        type: array
+        x-go-name: Log
+      network:
+        items:
+          type: string
+        type: array
+        x-go-name: Network
+      volume:
+        items:
+          type: string
+        type: array
+        x-go-name: Volume
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  DNSNetworkInfo:
+    properties:
+      package:
+        type: string
+        x-go-name: Package
+      path:
+        type: string
+        x-go-name: Path
+      version:
+        type: string
+        x-go-name: Version
+    title: DNSNetworkInfo contains the DNS information.
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+  NetworkInfo:
+    properties:
+      backend:
+        $ref: '#/definitions/NetworkBackend'
+      defaultNetwork:
+        type: string
+        x-go-name: DefaultNetwork
+      dns:
+        $ref: '#/definitions/DNSNetworkInfo'
+      package:
+        type: string
+        x-go-name: Package
+      path:
+        type: string
+        x-go-name: Path
+      version:
+        type: string
+        x-go-name: Version
+    title: NetworkInfo contains the network information.
+    type: object
+    x-go-package: go.podman.io/common/libnetwork/types
+  ComponentVersion:
+    description: ServiceOptions provides the input for starting an API and sidecar pprof services
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  NetworkBackend:
+    type: string
+    x-go-package: go.podman.io/common/libnetwork/types
+  IDMap:
+    description: 'IDMap contains a single entry for user namespace range remapping. An array
+
+      of IDMap entries represents the structure that will be provided to the Linux
+
+      kernel for creating a user namespace.'
+    properties:
+      container_id:
+        format: int64
+        type: integer
+        x-go-name: ContainerID
+      host_id:
+        format: int64
+        type: integer
+        x-go-name: HostID
+      size:
+        format: int64
+        type: integer
+        x-go-name: Size
+    type: object
+    x-go-package: go.podman.io/storage/pkg/idtools
+  SystemCheckReport:
+    description: ServiceOptions provides the input for starting an API and sidecar pprof services
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  SecurityInfo:
+    description: SecurityInfo describes the libpod host
+    properties:
+      apparmorEnabled:
+        type: boolean
+        x-go-name: AppArmorEnabled
+      capabilities:
+        type: string
+        x-go-name: DefaultCapabilities
+      rootless:
+        type: boolean
+        x-go-name: Rootless
+      seccompEnabled:
+        type: boolean
+        x-go-name: SECCOMPEnabled
+      seccompProfilePath:
+        type: string
+        x-go-name: SECCOMPProfilePath
+      selinuxEnabled:
+        type: boolean
+        x-go-name: SELinuxEnabled
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  LibpodInfo:
+    description: 'Info is the overall struct that describes the host system
+
+      running libpod/podman'
+    properties:
+      host:
+        $ref: '#/definitions/HostInfo'
+      plugins:
+        $ref: '#/definitions/Plugins'
+      registries:
+        additionalProperties: {}
+        type: object
+        x-go-name: Registries
+      store:
+        $ref: '#/definitions/StoreInfo'
+      version:
+        $ref: '#/definitions/Version'
+    type: object
+    x-go-name: Info
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  ImageStore:
+    description: 'ImageStore describes the image store.  Right now only the number
+
+      of images present'
+    properties:
+      number:
+        format: int64
+        type: integer
+        x-go-name: Number
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+responses:
+  infoResponse:
+    description: Info
+    schema:
+      $ref: '#/definitions/LibpodInfo'
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  systemCheckResponse:
+    description: Check
+    schema:
+      $ref: '#/definitions/SystemCheckReport'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  versionResponse:
+    description: Version
+    schema:
+      $ref: '#/definitions/ComponentVersion'
+  systemDiskUsage:
+    description: Disk usage
+    schema:
+      $ref: '#/definitions/SystemDfReport'
+  systemPruneResponse:
+    description: System Prune results
+    schema:
+      $ref: '#/definitions/SystemPruneReport'

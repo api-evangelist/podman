@@ -1,0 +1,531 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to artifacts
+  name: artifacts
+paths:
+  /libpod/artifacts/{name}:
+    delete:
+      description: Remove a single artifact from local storage by name or ID.
+      operationId: ArtifactDeleteLibpod
+      parameters:
+      - description: Name or ID of the artifact to remove
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/artifactRemoveResponse'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/{name}/extract:
+    get:
+      description: Extract the files of an OCI artifact to the local filesystem as a tar archive.
+      operationId: ArtifactExtractLibpod
+      parameters:
+      - description: Name or digest of the artifact
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Only extract the file with the given title
+        in: query
+        name: title
+        type: string
+      - description: Only extract the file with the given digest
+        in: query
+        name: digest
+        type: string
+      - description: 'When extracting a single file from an artifact, don''t use the files title as the file name in the tar archive
+
+          '
+        in: query
+        name: excludeTitle
+        type: boolean
+      produces:
+      - application/x-tar
+      responses:
+        '200':
+          description: Extract successful
+          schema:
+            type: file
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Extract an artifacts contents
+      tags:
+      - artifacts
+  /libpod/artifacts/{name}/json:
+    get:
+      description: 'Retrieve detailed information about a specific OCI artifact by name or ID.
+
+        '
+      operationId: ArtifactInspectLibpod
+      parameters:
+      - description: Name or ID of the artifact
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/inspectArtifactResponse'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/{name}/push:
+    post:
+      description: Push an OCI artifact from local storage to a remote image registry.
+      operationId: ArtifactPushLibpod
+      parameters:
+      - description: Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: 3
+        description: Number of times to retry in case of failure when performing pull
+        in: query
+        name: retry
+        type: integer
+      - default: 1s
+        description: Delay between retries in case of pull failures (e.g., 10s)
+        in: query
+        name: retryDelay
+        type: string
+      - default: true
+        description: Require TLS verification
+        in: query
+        name: tlsVerify
+        type: boolean
+      - description: 'base-64 encoded auth config.
+
+          Must include the following four values: username, password, email and server address
+
+          OR simply just an identity token.
+
+          '
+        in: header
+        name: X-Registry-Auth
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/artifactPushResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '401':
+          $ref: '#/responses/artifactBadAuth'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Push an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/add:
+    post:
+      consumes:
+      - application/octet-stream
+      description: 'Add a file as a new OCI artifact, or append to an existing artifact if ''append'' is true.
+
+        '
+      operationId: ArtifactAddLibpod
+      parameters:
+      - description: Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: Path of the file to be added
+        in: query
+        name: fileName
+        required: true
+        type: string
+      - description: Optionally set the type of file
+        in: query
+        name: fileMIMEType
+        type: string
+      - description: Array of annotation strings e.g "test=true"
+        in: query
+        items:
+          type: string
+        name: annotations
+        type: array
+      - description: Use type to describe an artifact
+        in: query
+        name: artifactMIMEType
+        type: string
+      - default: false
+        description: Append files to an existing artifact
+        in: query
+        name: append
+        type: boolean
+      - default: false
+        description: Replace an existing artifact with the same name
+        in: query
+        name: replace
+        type: boolean
+      - description: Binary stream of the file to add to an artifact
+        in: body
+        name: inputStream
+        schema:
+          format: binary
+          type: string
+      produces:
+      - application/json
+      responses:
+        '201':
+          $ref: '#/responses/artifactAddResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Add a file as an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/json:
+    get:
+      description: Return a list of all OCI artifacts in local storage.
+      operationId: ArtifactListLibpod
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/artifactListResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List artifacts
+      tags:
+      - artifacts
+  /libpod/artifacts/local/add:
+    post:
+      description: 'Add a file from the local filesystem as a new OCI artifact, or append to an existing artifact if ''append'' is true.
+
+        '
+      operationId: ArtifactLocalLibpod
+      parameters:
+      - description: Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: Absolute path to the local file on the server filesystem to be added
+        in: query
+        name: path
+        required: true
+        type: string
+      - description: Name/title of the file within the artifact
+        in: query
+        name: fileName
+        required: true
+        type: string
+      - description: Optionally set the MIME type of the file
+        in: query
+        name: fileMIMEType
+        type: string
+      - description: Array of annotation strings e.g "test=true"
+        in: query
+        items:
+          type: string
+        name: annotations
+        type: array
+      - description: Use type to describe an artifact
+        in: query
+        name: artifactMIMEType
+        type: string
+      - default: false
+        description: Append files to an existing artifact
+        in: query
+        name: append
+        type: boolean
+      - default: false
+        description: Replace an existing artifact with the same name
+        in: query
+        name: replace
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '201':
+          $ref: '#/responses/artifactAddResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Add a local file as an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/pull:
+    post:
+      description: Pull an OCI artifact from a remote registry to local storage.
+      operationId: ArtifactPullLibpod
+      parameters:
+      - description: Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)
+        in: query
+        name: name
+        required: true
+        type: string
+      - default: 3
+        description: Number of times to retry in case of failure when performing pull
+        in: query
+        name: retry
+        type: integer
+      - default: 1s
+        description: Delay between retries in case of pull failures (e.g., 10s)
+        in: query
+        name: retryDelay
+        type: string
+      - default: true
+        description: Require TLS verification
+        in: query
+        name: tlsVerify
+        type: boolean
+      - description: 'base-64 encoded auth config.
+
+          Must include the following four values: username, password, email and server address
+
+          OR simply just an identity token.
+
+          '
+        in: header
+        name: X-Registry-Auth
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/artifactPullResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '401':
+          $ref: '#/responses/artifactBadAuth'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Pull an artifact
+      tags:
+      - artifacts
+  /libpod/artifacts/remove:
+    delete:
+      description: 'Remove one or more OCI artifacts from local storage.
+
+        Can be filtered by name/ID or all artifacts can be removed.
+
+        '
+      operationId: ArtifactDeleteAllLibpod
+      parameters:
+      - description: List of artifact names/IDs to remove
+        in: query
+        items:
+          type: string
+        name: artifacts
+        type: array
+      - description: Remove all artifacts
+        in: query
+        name: all
+        type: boolean
+      - description: Ignore errors if artifact does not exist
+        in: query
+        name: ignore
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/artifactRemoveResponse'
+        '404':
+          $ref: '#/responses/artifactNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove one or more artifacts
+      tags:
+      - artifacts
+definitions:
+  ArtifactPushReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ArtifactAddReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  ArtifactPullReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ArtifactInspectReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ArtifactRemoveReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ArtifactListReport:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+responses:
+  artifactBadAuth:
+    description: error in authentication
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  artifactListResponse:
+    description: Artifact list
+    schema:
+      items:
+        $ref: '#/definitions/ArtifactListReport'
+      type: array
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  artifactAddResponse:
+    description: Artifact Add
+    schema:
+      $ref: '#/definitions/ArtifactAddReport'
+  artifactRemoveResponse:
+    description: Artifact Remove
+    schema:
+      $ref: '#/definitions/ArtifactRemoveReport'
+  artifactPushResponse:
+    description: Artifact Push
+    schema:
+      $ref: '#/definitions/ArtifactPushReport'
+  artifactPullResponse:
+    description: Artifact Pull
+    schema:
+      $ref: '#/definitions/ArtifactPullReport'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  inspectArtifactResponse:
+    description: Inspect Artifact
+    schema:
+      $ref: '#/definitions/ArtifactInspectReport'
+  artifactNotFound:
+    description: No such artifact
+    schema:
+      $ref: '#/definitions/ErrorModel'

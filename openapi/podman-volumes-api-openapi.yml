@@ -1,0 +1,371 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts volumes API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to volumes
+  name: volumes
+paths:
+  /libpod/volumes/{name}:
+    delete:
+      operationId: VolumeDeleteLibpod
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: force removal
+        in: query
+        name: force
+        type: boolean
+      - description: timeout before forcibly killing any containers using the volume
+        in: query
+        name: timeout
+        type: integer
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '409':
+          description: Volume is in use and cannot be removed
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove volume
+      tags:
+      - volumes
+  /libpod/volumes/{name}/exists:
+    get:
+      description: Check if a volume exists
+      operationId: VolumeExistsLibpod
+      parameters:
+      - description: the name of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: volume exists
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Volume exists
+      tags:
+      - volumes
+  /libpod/volumes/{name}/export:
+    get:
+      operationId: VolumeExportLibpod
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/x-tar
+      responses:
+        '200':
+          description: no error
+          schema:
+            format: binary
+            type: string
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Export a volume
+      tags:
+      - volumes
+  /libpod/volumes/{name}/import:
+    post:
+      operationId: VolumeImportLibpod
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 'An uncompressed tar archive
+
+          '
+        in: body
+        name: inputStream
+        schema:
+          format: binary
+          type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: Successful import
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Populate a volume by importing provided tar
+      tags:
+      - volumes
+  /libpod/volumes/{name}/json:
+    get:
+      operationId: VolumeInspectLibpod
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumeCreateResponse'
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect volume
+      tags:
+      - volumes
+  /libpod/volumes/create:
+    post:
+      operationId: VolumeCreateLibpod
+      parameters:
+      - description: attributes for creating a volume
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/VolumeCreateOptions'
+      produces:
+      - application/json
+      responses:
+        '201':
+          $ref: '#/responses/volumeCreateResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create a volume
+      tags:
+      - volumes
+  /libpod/volumes/json:
+    get:
+      description: Returns a list of volumes
+      operationId: VolumeListLibpod
+      parameters:
+      - description: "JSON encoded value of the filters (a map[string][]string) to process on the volumes list. Available filters:\n  - driver=<volume-driver-name> Matches volumes based on their driver.\n  - label=<key> or label=<key>:<value> Matches volumes based on the presence of a label alone or a label and a value.\n  - name=<volume-name> Matches all of volume name.\n  - opt=<driver-option> Matches a storage driver options\n  - `until=<timestamp>` List volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumeListLibpod'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List volumes
+      tags:
+      - volumes
+  /libpod/volumes/prune:
+    post:
+      operationId: VolumePruneLibpod
+      parameters:
+      - description: "JSON encoded value of filters (a map[string][]string) to match volumes against before pruning.\nAvailable filters:\n  - `all` When true, prune all unused volumes; when false or unset, only anonymous unused volumes.\n  - `anonymous` When true/false, restrict to anonymous or named volumes only.\n  - `until=<timestamp>` Prune volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumePruneLibpod'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Prune volumes
+      tags:
+      - volumes
+definitions:
+  VolumeConfigResponse:
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  VolumeCreateOptions:
+    properties:
+      Driver:
+        description: Volume driver to use
+        type: string
+      GID:
+        description: GID that the volume will be created as
+        format: int64
+        type: integer
+      IgnoreIfExists:
+        description: Ignore existing volumes
+        type: boolean
+      Label:
+        additionalProperties:
+          type: string
+        description: User-defined key/value metadata. Provided for compatibility
+        type: object
+      Labels:
+        additionalProperties:
+          type: string
+        description: User-defined key/value metadata. Preferred field, will override Label
+        type: object
+      Name:
+        description: New volume's name. Can be left blank
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        description: Mapping of driver options and values.
+        type: object
+      UID:
+        description: UID that the volume will be created as
+        format: int64
+        type: integer
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+  PruneReport:
+    description: POST "/volumes/prune"
+    properties:
+      Err:
+        type: string
+        x-go-type: error
+      Id:
+        type: string
+      Size:
+        format: uint64
+        type: integer
+    title: 'PruneReport contains the response for Engine API:'
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+responses:
+  volumePruneLibpod:
+    description: Volume Prune
+    schema:
+      items:
+        $ref: '#/definitions/PruneReport'
+      type: array
+  volumeNotFound:
+    description: No such volume
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  volumeListLibpod:
+    description: Volume list
+    schema:
+      items:
+        $ref: '#/definitions/VolumeConfigResponse'
+      type: array
+  volumeCreateResponse:
+    description: Volume details
+    schema:
+      $ref: '#/definitions/VolumeConfigResponse'

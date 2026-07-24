@@ -1,0 +1,392 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts quadlets API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- name: quadlets
+paths:
+  /libpod/quadlets:
+    delete:
+      description: 'Remove one or more quadlet files. Supports removing specific quadlets by name or all quadlets
+
+        for the current user. Can force removal of running quadlets and control systemd reload behavior.
+
+        '
+      operationId: QuadletDeleteAllLibpod
+      parameters:
+      - description: Names of quadlets to remove (e.g., "myapp.container"). Required unless all=true
+        in: query
+        items:
+          type: string
+        name: quadlets
+        type: array
+      - default: false
+        description: Remove all quadlets for the current user
+        in: query
+        name: all
+        type: boolean
+      - default: false
+        description: Remove running quadlets by stopping them first
+        in: query
+        name: force
+        type: boolean
+      - default: false
+        description: Do not error for quadlets that do not exist
+        in: query
+        name: ignore
+        type: boolean
+      - default: true
+        description: Reload systemd after removing quadlets
+        in: query
+        name: reload-systemd
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/quadletRemoveResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove quadlet files (batch operation)
+      tags:
+      - quadlets
+    post:
+      consumes:
+      - application/x-tar
+      - multipart/form-data
+      description: 'Install one or more files for a quadlet application. Each request should contain a single quadlet file
+
+        and optionally more files such as containerfile, kube yaml or configuration files. Supports both tar
+
+        archives and multipart form data uploads.
+
+        '
+      operationId: QuadletInstallLibpod
+      parameters:
+      - default: false
+        description: Replace the installation files even if the files already exists
+        in: query
+        name: replace
+        type: boolean
+      - default: true
+        description: Reload systemd after installing quadlets
+        in: query
+        name: reload-systemd
+        type: boolean
+      - description: 'Quadlet files to install. Can be provided as:
+
+          - application/x-tar: A tar archive containing one quadlet file and optionally additional files
+
+          - multipart/form-data: One quadlet file as form data and optionally additional files
+
+          '
+        in: body
+        name: request
+        schema:
+          format: binary
+          type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Quadlet installation report
+          schema:
+            properties:
+              InstalledQuadlets:
+                additionalProperties:
+                  type: string
+                description: Map of source path to installed path for successfully installed quadlets
+                type: object
+              QuadletErrors:
+                additionalProperties:
+                  type: string
+                description: Map of source path to error message for failed installations
+                type: object
+            type: object
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Install quadlet files
+      tags:
+      - quadlets
+  /libpod/quadlets/{name}:
+    delete:
+      description: 'Remove a quadlet file by name. Can force removal of running quadlets and control systemd reload behavior.
+
+        '
+      operationId: QuadletDeleteLibpod
+      parameters:
+      - description: the name of the quadlet with extension (e.g., "myapp.container")
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: false
+        description: Remove running quadlet by stopping it first
+        in: query
+        name: force
+        type: boolean
+      - default: false
+        description: Do not error if the quadlet does not exist
+        in: query
+        name: ignore
+        type: boolean
+      - default: true
+        description: Reload systemd after removing the quadlet
+        in: query
+        name: reload-systemd
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/quadletRemoveResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/quadletNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove a quadlet file
+      tags:
+      - quadlets
+  /libpod/quadlets/{name}/exists:
+    get:
+      description: Check if a quadlet exists by name
+      operationId: QuadletExistsLibpod
+      parameters:
+      - description: the name of the quadlet with extension (e.g., "myapp.container")
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: quadlet exists
+        '404':
+          $ref: '#/responses/quadletNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Check if quadlet exists
+      tags:
+      - quadlets
+  /libpod/quadlets/{name}/file:
+    get:
+      description: Get the contents of a Quadlet, displaying the file including all comments
+      operationId: QuadletFileLibpod
+      parameters:
+      - description: the name of the quadlet with extension (e.g., "myapp.container")
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        '200':
+          $ref: '#/responses/quadletFileResponse'
+        '404':
+          $ref: '#/responses/quadletNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get quadlet file
+      tags:
+      - quadlets
+  /libpod/quadlets/json:
+    get:
+      description: Return a list of all quadlets.
+      operationId: QuadletListLibpod
+      parameters:
+      - description: "JSON encoded value of the filters (a map[string][]string).\nSupported filters:\n  - name=<quadlet-name> Filter by quadlet name\n  - pod=<pod-quadlet> Filter by Pod= value (container quadlets only)\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/quadletListResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List quadlets
+      tags:
+      - quadlets
+definitions:
+  QuadletRemoveReport:
+    description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
+    properties:
+      Errors:
+        additionalProperties:
+          type: string
+          x-go-type: error
+        description: Errors is a map of Quadlet name to error that occurred during removal.
+        type: object
+      Removed:
+        description: Removed is a list of quadlets that were successfully removed
+        items:
+          type: string
+        type: array
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  ListQuadlet:
+    description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
+    properties:
+      App:
+        description: 'If multiple quadlets were installed together they will belong
+
+          to common App.'
+        type: string
+      Name:
+        description: Name is the name of the Quadlet file
+        type: string
+      Path:
+        description: Path to the Quadlet on disk
+        type: string
+      Pod:
+        description: 'Pod is the pod Quadlet file referenced by Pod= in [Container]
+
+          Empty for quadlet types that do not support Pod='
+        type: string
+      Status:
+        description: 'What is the status of the Quadlet - if present in systemd, will be a
+
+          systemd status, else will mention if the Quadlet has syntax errors'
+        type: string
+      UnitName:
+        description: 'UnitName is the name of the systemd unit created from the Quadlet.
+
+          May be empty if systemd has not be reloaded since it was installed.'
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+responses:
+  quadletNotFound:
+    description: No such quadlet
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  quadletListResponse:
+    description: Quadlet list
+    schema:
+      items:
+        $ref: '#/definitions/ListQuadlet'
+      type: array
+  quadletFileResponse:
+    description: Quadlet file
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  quadletRemoveResponse:
+    description: Quadlet remove
+    schema:
+      $ref: '#/definitions/QuadletRemoveReport'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'

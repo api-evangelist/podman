@@ -1,0 +1,1263 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts networks (compat) API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to networks for the compatibility endpoints
+  name: networks (compat)
+paths:
+  /networks:
+    get:
+      description: Display summary of network configurations
+      operationId: NetworkList
+      parameters:
+      - description: "JSON encoded value of the filters (a `map[string][]string`) to process on the network list. Currently available filters:\n  - `name=[name]` Matches network name (accepts regex).\n  - `id=[id]` Matches for full or partial ID.\n  - `driver=[driver]` Only bridge is supported.\n  - `label=[key]` or `label=[key=value]` Matches networks based on the presence of a label alone or a label and a value.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkListCompat'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List networks
+      tags:
+      - networks (compat)
+  /networks/{name}:
+    delete:
+      description: Remove a network
+      operationId: NetworkDelete
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: false
+        description: Remove containers associated with the network.
+        in: query
+        name: force
+        type: boolean
+      - description: Seconds to wait for container removal when force is set.
+        in: query
+        name: timeout
+        type: integer
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove a network
+      tags:
+      - networks (compat)
+    get:
+      description: Display low level configuration network
+      operationId: NetworkInspect
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Detailed inspect output for troubleshooting
+        in: query
+        name: verbose
+        type: boolean
+      - description: Filter the network by scope (swarm, global, or local)
+        in: query
+        name: scope
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/networkInspectCompat'
+        '404':
+          $ref: '#/responses/networkNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect a network
+      tags:
+      - networks (compat)
+  /networks/{name}/connect:
+    post:
+      description: Connect a container to a network
+      operationId: NetworkConnect
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for connecting a container to a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkConnectRequest'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/badParamError'
+        '403':
+          $ref: '#/responses/networkConnectedError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Connect container to network
+      tags:
+      - networks (compat)
+  /networks/{name}/disconnect:
+    post:
+      description: Disconnect a container from a network
+      operationId: NetworkDisconnect
+      parameters:
+      - description: the name of the network
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for disconnecting a container from a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkDisconnectRequest'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Disconnect container from network
+      tags:
+      - networks (compat)
+  /networks/create:
+    post:
+      description: Create a network configuration
+      operationId: NetworkCreate
+      parameters:
+      - description: attributes for creating a network
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/networkCreate'
+      produces:
+      - application/json
+      responses:
+        '201':
+          description: network created
+          schema:
+            properties:
+              Id:
+                type: string
+              Warning:
+                type: string
+            type: object
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create network
+      tags:
+      - networks (compat)
+  /networks/prune:
+    post:
+      description: Remove networks that do not have containers
+      operationId: NetworkPrune
+      parameters:
+      - description: "Filters to process on the prune list, encoded as JSON (a map[string][]string).\nAvailable filters:\n  - `until=<timestamp>` Prune networks created before this timestamp. The <timestamp> can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              NetworksDeleted:
+                items:
+                  type: string
+                type: array
+            type: object
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Delete unused networks
+      tags:
+      - networks (compat)
+definitions:
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  Descriptor:
+    description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
+
+      when marshalled to JSON.'
+    properties:
+      annotations:
+        additionalProperties:
+          type: string
+        description: Annotations contains arbitrary metadata relating to the targeted content.
+        type: object
+        x-go-name: Annotations
+      artifactType:
+        description: ArtifactType is the IANA media type of this artifact.
+        type: string
+        x-go-name: ArtifactType
+      data:
+        description: 'Data is an embedding of the targeted content. This is encoded as a base64
+
+          string when marshalled to JSON (automatically, by encoding/json). If
+
+          present, Data can be used directly to avoid fetching the targeted content.'
+        items:
+          format: uint8
+          type: integer
+        type: array
+        x-go-name: Data
+      digest:
+        $ref: '#/definitions/Digest'
+      mediaType:
+        description: MediaType is the media type of the object this schema refers to.
+        type: string
+        x-go-name: MediaType
+      platform:
+        $ref: '#/definitions/Platform'
+      size:
+        description: Size specifies the size in bytes of the blob.
+        format: int64
+        type: integer
+        x-go-name: Size
+      urls:
+        description: URLs specifies a list of URLs from which this object MAY be downloaded
+        items:
+          type: string
+        type: array
+        x-go-name: URLs
+    title: Descriptor describes the disposition of targeted content.
+    type: object
+    x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+  SignatureIdentity:
+    properties:
+      DockerReference:
+        description: 'DockerReference is the Docker image reference associated with the signature.
+
+          This is an optional field only present in older hashedrecord signatures.'
+        type: string
+      Error:
+        description: 'Error contains error information if signature verification failed.
+
+          Other fields will be empty in this case.'
+        type: string
+      KnownSigner:
+        $ref: '#/definitions/KnownSignerIdentity'
+      Name:
+        description: Name is a textual description summarizing the type of signature.
+        type: string
+      SignatureType:
+        $ref: '#/definitions/SignatureType'
+      Signer:
+        $ref: '#/definitions/SignerIdentity'
+      Timestamps:
+        description: Timestamps contains a list of verified signed timestamps for the signature.
+        items:
+          $ref: '#/definitions/SignatureTimestamp'
+        type: array
+      Warnings:
+        description: 'Warnings contains any warnings that occurred during signature verification.
+
+          For example, if there was no internet connectivity and cached trust roots were used.
+
+          Warning does not indicate a failed verification but may point to configuration issues.'
+        items:
+          type: string
+        type: array
+    title: SignatureIdentity contains the properties of verified signatures for the image.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  IPAM:
+    description: IPAM represents IP Address Management
+    properties:
+      Config:
+        items:
+          $ref: '#/definitions/IPAMConfig'
+        type: array
+      Driver:
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  SignatureType:
+    title: SignatureType is the type of signature format.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/image
+  SignerIdentity:
+    description: '[certificate.Summary]: https://pkg.go.dev/github.com/sigstore/sigstore-go/pkg/fulcio/certificate#Summary'
+    properties:
+      BuildConfigDigest:
+        description: Immutable reference to the specific version of the top-level/initiating build instructions.
+        type: string
+      BuildConfigURI:
+        description: Build Config URL to the top-level/initiating build instructions.
+        type: string
+      BuildSignerDigest:
+        description: Immutable reference to the specific version of the build instructions that is responsible for signing.
+        type: string
+      BuildSignerURI:
+        description: Reference to specific build instructions that are responsible for signing.
+        type: string
+      BuildTrigger:
+        description: Event or action that initiated the build.
+        type: string
+      CertificateIssuer:
+        type: string
+      Issuer:
+        description: 'The OIDC issuer. Should match `iss` claim of ID token or, in the case of
+
+          a federated login like Dex it should match the issuer URL of the
+
+          upstream issuer. The issuer is not set the extensions are invalid and
+
+          will fail to render.'
+        type: string
+      RunInvocationURI:
+        description: Run Invocation URL to uniquely identify the build execution.
+        type: string
+      RunnerEnvironment:
+        description: Specifies whether the build took place in platform-hosted cloud infrastructure or customer/self-hosted infrastructure.
+        type: string
+      SourceRepositoryDigest:
+        description: Immutable reference to a specific version of the source code that the build was based upon.
+        type: string
+      SourceRepositoryIdentifier:
+        description: Immutable identifier for the source repository the workflow was based upon.
+        type: string
+      SourceRepositoryOwnerIdentifier:
+        description: Immutable identifier for the owner of the source repository that the workflow was based upon.
+        type: string
+      SourceRepositoryOwnerURI:
+        description: Source repository owner URL of the owner of the source repository that the build was based on.
+        type: string
+      SourceRepositoryRef:
+        description: Source Repository Ref that the build run was based upon.
+        type: string
+      SourceRepositoryURI:
+        description: Source repository URL that the build was based on.
+        type: string
+      SourceRepositoryVisibilityAtSigning:
+        description: Source repository visibility at the time of signing the certificate.
+        type: string
+      SubjectAlternativeName:
+        type: string
+    title: 'SignerIdentity contains information about the signer certificate used to sign the image.
+
+      This is [certificate.Summary] with deprecated fields removed and keys in Moby uppercase style.'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  EndpointResource:
+    properties:
+      EndpointID:
+        description: endpoint ID
+        example: 628cadb8bcb92de107b2a1e516cbffe463e321f548feb37697cce00ad694f21a
+        type: string
+      IPv4Address:
+        description: IPv4 address
+        example: 172.19.0.2/16
+        type: string
+        x-go-type: net/netip.Prefix
+      IPv6Address:
+        description: IPv6 address
+        type: string
+        x-go-type: net/netip.Prefix
+      MacAddress:
+        description: mac address
+        example: 02:42:ac:13:00:02
+        type: string
+        x-go-type: github.com/moby/moby/api/types/network.HardwareAddr
+      Name:
+        description: name
+        example: container_1
+        type: string
+    title: EndpointResource contains network resources allocated and used for a container in a network.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Summary:
+    properties:
+      Containers:
+        description: 'Number of containers using this image. Includes both stopped and running
+
+          containers.
+
+
+          This size is not calculated by default, and depends on which API endpoint
+
+          is used. `-1` indicates that the value has not been set / calculated.'
+        format: int64
+        type: integer
+      Created:
+        description: 'Date and time at which the image was created as a Unix timestamp
+
+          (number of seconds since EPOCH).'
+        format: int64
+        type: integer
+      Descriptor:
+        $ref: '#/definitions/Descriptor'
+      Id:
+        description: 'ID is the content-addressable ID of an image.
+
+
+          This identifier is a content-addressable digest calculated from the
+
+          image''s configuration (which includes the digests of layers used by
+
+          the image).
+
+
+          Note that this digest differs from the `RepoDigests` below, which
+
+          holds digests of image manifests that reference the image.'
+        type: string
+        x-go-name: ID
+      Labels:
+        additionalProperties:
+          type: string
+        description: User-defined key/value metadata.
+        type: object
+      Manifests:
+        description: 'Manifests is a list of image manifests available in this image.  It
+
+          provides a more detailed view of the platform-specific image manifests or
+
+          other image-attached data like build attestations.
+
+
+          WARNING: This is experimental and may change at any time without any backward
+
+          compatibility.'
+        items:
+          $ref: '#/definitions/ManifestSummary'
+        type: array
+      ParentId:
+        description: 'ID of the parent image.
+
+
+          Depending on how the image was created, this field may be empty and
+
+          is only set for images that were built/created locally. This field
+
+          is empty if the image was pulled from an image registry.'
+        type: string
+        x-go-name: ParentID
+      RepoDigests:
+        description: 'List of content-addressable digests of locally available image manifests
+
+          that the image is referenced from. Multiple manifests can refer to the
+
+          same image.
+
+
+          These digests are usually only available if the image was either pulled
+
+          from a registry, or if the image was pushed to a registry, which is when
+
+          the manifest is generated and its digest calculated.'
+        items:
+          type: string
+        type: array
+      RepoTags:
+        description: 'List of image names/tags in the local image cache that reference this
+
+          image.
+
+
+          Multiple image tags can refer to the same image, and this list may be
+
+          empty if no tags reference the image, in which case the image is
+
+          "untagged", in which case it can still be referenced by its ID.'
+        items:
+          type: string
+        type: array
+      SharedSize:
+        description: 'Total size of image layers that are shared between this image and other
+
+          images.
+
+
+          This size is not calculated by default. `-1` indicates that the value
+
+          has not been set / calculated.'
+        format: int64
+        type: integer
+      Size:
+        description: Total size of the image including all layers it is composed of.
+        format: int64
+        type: integer
+    required:
+    - Containers
+    - Created
+    - Id
+    - Labels
+    - ParentId
+    - RepoDigests
+    - RepoTags
+    - SharedSize
+    - Size
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  DisconnectRequest:
+    properties:
+      Container:
+        description: The ID or name of the container to disconnect from the network.
+        example: 3613f73ba0e4
+        type: string
+      Force:
+        description: Force the container to disconnect from the network.
+        example: false
+        type: boolean
+    required:
+    - Container
+    title: DisconnectRequest NetworkDisconnectRequest represents the data to be used to disconnect a container from a network.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  AttestationProperties:
+    properties:
+      For:
+        $ref: '#/definitions/Digest'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  networkConnectRequest:
+    $ref: '#/definitions/ConnectRequest'
+    description: Network connect
+  Task:
+    description: Task carries the information about one backend task
+    properties:
+      EndpointID:
+        description: endpoint ID
+        type: string
+      EndpointIP:
+        description: endpoint IP
+        type: string
+        x-go-type: net/netip.Addr
+      Info:
+        additionalProperties:
+          type: string
+        description: info
+        type: object
+      Name:
+        description: name
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  PullIdentity:
+    description: If image was pulled via mirror, this contains the original repository location.
+    properties:
+      Repository:
+        description: Repository is the remote repository location the image was pulled from.
+        type: string
+    title: PullIdentity contains remote location information if image was created via pull.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  EndpointSettings:
+    description: EndpointSettings stores the network endpoint details
+    properties:
+      Aliases:
+        items:
+          type: string
+        type: array
+      DNSNames:
+        description: 'DNSNames holds all the (non fully qualified) DNS names associated to this
+
+          endpoint. The first entry is used to generate PTR records.'
+        items:
+          type: string
+        type: array
+      DriverOpts:
+        additionalProperties:
+          type: string
+        type: object
+      EndpointID:
+        type: string
+      Gateway:
+        type: string
+        x-go-type: net/netip.Addr
+      GlobalIPv6Address:
+        type: string
+        x-go-type: net/netip.Addr
+      GlobalIPv6PrefixLen:
+        format: int64
+        type: integer
+      GwPriority:
+        description: 'GwPriority determines which endpoint will provide the default gateway
+
+          for the container. The endpoint with the highest priority will be used.
+
+          If multiple endpoints have the same priority, they are lexicographically
+
+          sorted based on their network name, and the one that sorts first is picked.'
+        format: int64
+        type: integer
+      IPAMConfig:
+        $ref: '#/definitions/EndpointIPAMConfig'
+      IPAddress:
+        type: string
+        x-go-type: net/netip.Addr
+      IPPrefixLen:
+        format: int64
+        type: integer
+      IPv6Gateway:
+        type: string
+        x-go-type: net/netip.Addr
+      Links:
+        items:
+          type: string
+        type: array
+      MacAddress:
+        description: 'MacAddress may be used to specify a MAC address when the container is created.
+
+          Once the container is running, it becomes operational data (it may contain a
+
+          generated address).'
+        type: string
+        x-go-type: github.com/moby/moby/api/types/network.HardwareAddr
+      NetworkID:
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Inspect:
+    properties:
+      Attachable:
+        description: 'Whether a global / swarm scope network is manually attachable by regular
+
+          containers from workers in swarm mode.'
+        example: false
+        type: boolean
+      ConfigFrom:
+        $ref: '#/definitions/ConfigReference'
+      ConfigOnly:
+        description: 'Whether the network is a config-only network. Config-only networks are
+
+          placeholder networks for network configurations to be used by other
+
+          networks. Config-only networks cannot be used directly to run containers
+
+          or services.'
+        type: boolean
+      Containers:
+        additionalProperties:
+          $ref: '#/definitions/EndpointResource'
+        description: Contains endpoints attached to the network.
+        example:
+          19a4d5d687db25203351ed79d478946f861258f018fe384f229f2efa4b23513c:
+            EndpointID: 628cadb8bcb92de107b2a1e516cbffe463e321f548feb37697cce00ad694f21a
+            IPv4Address: 172.19.0.2/16
+            IPv6Address: ''
+            MacAddress: 02:42:ac:13:00:02
+            Name: test
+        type: object
+      Created:
+        description: 'Date and time at which the network was created in
+
+          [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.'
+        example: '2016-10-19T04:33:30.360899459Z'
+        format: date-time
+        type: string
+      Driver:
+        description: 'The name of the driver used to create the network (e.g. `bridge`,
+
+          `overlay`).'
+        example: overlay
+        type: string
+      EnableIPv4:
+        description: Whether the network was created with IPv4 enabled.
+        example: true
+        type: boolean
+      EnableIPv6:
+        description: Whether the network was created with IPv6 enabled.
+        example: false
+        type: boolean
+      IPAM:
+        $ref: '#/definitions/IPAM'
+      Id:
+        description: ID that uniquely identifies a network on a single machine.
+        example: 7d86d31b1478e7cca9ebed7e73aa0fdeec46c5ca29497431d3007d2d9e15ed99
+        type: string
+        x-go-name: ID
+      Ingress:
+        description: Whether the network is providing the routing-mesh for the swarm cluster.
+        example: false
+        type: boolean
+      Internal:
+        description: 'Whether the network is created to only allow internal networking
+
+          connectivity.'
+        example: false
+        type: boolean
+      Labels:
+        additionalProperties:
+          type: string
+        description: Metadata specific to the network being created.
+        example:
+          com.example.some-label: some-value
+          com.example.some-other-label: some-other-value
+        type: object
+      Name:
+        description: Name of the network.
+        example: my_network
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        description: Network-specific options uses when creating the network.
+        example:
+          com.docker.network.bridge.default_bridge: 'true'
+          com.docker.network.bridge.enable_icc: 'true'
+          com.docker.network.bridge.enable_ip_masquerade: 'true'
+          com.docker.network.bridge.host_binding_ipv4: 0.0.0.0
+          com.docker.network.bridge.name: docker0
+          com.docker.network.driver.mtu: '1500'
+        type: object
+      Peers:
+        description: 'List of peer nodes for an overlay network. This field is only present
+
+          for overlay networks, and omitted for other network types.'
+        items:
+          $ref: '#/definitions/PeerInfo'
+        type: array
+      Scope:
+        description: 'The level at which the network exists (e.g. `swarm` for cluster-wide
+
+          or `local` for machine level)'
+        example: local
+        type: string
+      Services:
+        additionalProperties:
+          $ref: '#/definitions/ServiceInfo'
+        description: 'List of services using the network. This field is only present for
+
+          swarm scope networks, and omitted for local scope networks.'
+        type: object
+      Status:
+        $ref: '#/definitions/Status'
+    title: Inspect The body of the "get network" http response message.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  ServiceInfo:
+    description: ServiceInfo represents service parameters with the list of service's tasks
+    properties:
+      LocalLBIndex:
+        description: local l b index
+        format: int64
+        type: integer
+      Ports:
+        description: ports
+        items:
+          type: string
+        type: array
+      Tasks:
+        description: tasks
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+      VIP:
+        description: v IP
+        type: string
+        x-go-type: net/netip.Addr
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  SubnetStatuses:
+    additionalProperties:
+      type: object
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  PeerInfo:
+    properties:
+      IP:
+        description: IP-address of the peer-node in the Swarm cluster.
+        example: 10.133.77.91
+        type: string
+        x-go-type: net/netip.Addr
+      Name:
+        description: ID of the peer-node in the Swarm cluster.
+        example: 6869d7c1732b
+        type: string
+    title: PeerInfo represents one peer of an overlay network.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Platform:
+    properties:
+      architecture:
+        description: 'Architecture field specifies the CPU architecture, for example
+
+          `amd64` or `ppc64le`.'
+        type: string
+        x-go-name: Architecture
+      os:
+        description: OS specifies the operating system, for example `linux` or `windows`.
+        type: string
+        x-go-name: OS
+      os.features:
+        description: 'OSFeatures is an optional field specifying an array of strings,
+
+          each listing a required OS feature (for example on Windows `win32k`).'
+        items:
+          type: string
+        type: array
+        x-go-name: OSFeatures
+      os.version:
+        description: 'OSVersion is an optional field specifying the operating system
+
+          version, for example on Windows `10.0.14393.1066`.'
+        type: string
+        x-go-name: OSVersion
+      variant:
+        description: 'Variant is an optional field specifying a variant of the CPU, for
+
+          example `v7` to specify ARMv7 when architecture is `arm`.'
+        type: string
+        x-go-name: Variant
+    title: Platform describes the platform which the image in the manifest runs on.
+    type: object
+    x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+  Digest:
+    description: 'The following is an example of the contents of Digest types:
+
+
+      sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
+
+
+      This allows to abstract the digest behind this type and work only in those
+
+      terms.'
+    title: 'Digest allows simple protection of hex formatted digest strings, prefixed
+
+      by their algorithm. Strings of type Digest have some guarantee of being in
+
+      the correct format and it provides quick access to the components of a
+
+      digest string.'
+    type: string
+    x-go-package: github.com/opencontainers/go-digest
+  ImageProperties:
+    properties:
+      Containers:
+        description: 'Containers is an array containing the IDs of the containers that are
+
+          using this image.'
+        items:
+          type: string
+        type: array
+      Identity:
+        $ref: '#/definitions/Identity'
+      Platform:
+        $ref: '#/definitions/Platform'
+      Size:
+        properties:
+          Unpacked:
+            description: 'Unpacked is the size (in bytes) of the locally unpacked
+
+              (uncompressed) image content that''s directly usable by the containers
+
+              running this image.
+
+              It''s independent of the distributable content - e.g.
+
+              the image might still have an unpacked data that''s still used by
+
+              some container even when the distributable/compressed content is
+
+              already gone.'
+            format: int64
+            type: integer
+        required:
+        - Unpacked
+        type: object
+    required:
+    - Platform
+    - Containers
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  Identity:
+    description: 'This is trusted information verified by the daemon and cannot be modified
+
+      by tagging an image to a different name.'
+    properties:
+      Build:
+        description: Build contains build reference information if image was created via build.
+        items:
+          $ref: '#/definitions/BuildIdentity'
+        type: array
+      Pull:
+        description: 'Pull contains remote location information if image was created via pull.
+
+          If image was pulled via mirror, this contains the original repository location.
+
+          After successful push this images also contains the pushed repository location.'
+        items:
+          $ref: '#/definitions/PullIdentity'
+        type: array
+      Signature:
+        description: Signature contains the properties of verified signatures for the image.
+        items:
+          $ref: '#/definitions/SignatureIdentity'
+        type: array
+    title: Identity holds information about the identity and origin of the image.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  SignatureTimestampType:
+    title: SignatureTimestampType is the type of timestamp used in the signature.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/image
+  KnownSignerIdentity:
+    title: KnownSignerIdentity is an identifier for a special signer identity that is known to the implementation.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/image
+  ConnectRequest:
+    properties:
+      Container:
+        description: The ID or name of the container to connect to the network.
+        example: 3613f73ba0e4
+        type: string
+      EndpointConfig:
+        $ref: '#/definitions/EndpointSettings'
+    required:
+    - Container
+    title: ConnectRequest NetworkConnectRequest represents the data to be used to connect a container to a network.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  IPAMConfig:
+    description: IPAMConfig represents IPAM configurations
+    properties:
+      AuxiliaryAddresses:
+        additionalProperties:
+          type: string
+          x-go-type: net/netip.Addr
+        type: object
+        x-go-name: AuxAddress
+      Gateway:
+        type: string
+        x-go-type: net/netip.Addr
+      IPRange:
+        type: string
+        x-go-type: net/netip.Prefix
+      Subnet:
+        type: string
+        x-go-type: net/netip.Prefix
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Status:
+    properties:
+      IPAM:
+        $ref: '#/definitions/IPAMStatus'
+    title: Status provides runtime information about the network such as the number of allocated IPs.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  CreateRequest:
+    properties:
+      Attachable:
+        type: boolean
+      ConfigFrom:
+        $ref: '#/definitions/ConfigReference'
+      ConfigOnly:
+        type: boolean
+      Driver:
+        type: string
+      EnableIPv4:
+        type: boolean
+      EnableIPv6:
+        type: boolean
+      IPAM:
+        $ref: '#/definitions/IPAM'
+      Ingress:
+        type: boolean
+      Internal:
+        type: boolean
+      Labels:
+        additionalProperties:
+          type: string
+        type: object
+      Name:
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        type: object
+      Scope:
+        type: string
+    title: CreateRequest is the request message sent to the server for network create call.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  networkCreate:
+    $ref: '#/definitions/CreateRequest'
+    description: Network create
+  networkDisconnectRequest:
+    $ref: '#/definitions/DisconnectRequest'
+    description: Network disconnect
+  ManifestSummary:
+    properties:
+      AttestationData:
+        $ref: '#/definitions/AttestationProperties'
+      Available:
+        description: 'Indicates whether all the child content (image config, layers) is
+
+          fully available locally'
+        type: boolean
+      Descriptor:
+        $ref: '#/definitions/Descriptor'
+      ID:
+        description: 'ID is the content-addressable ID of an image and is the same as the
+
+          digest of the image manifest.'
+        type: string
+      ImageData:
+        $ref: '#/definitions/ImageProperties'
+      Kind:
+        $ref: '#/definitions/ManifestKind'
+      Size:
+        description: 'Size is the size information of the content related to this manifest.
+
+          Note: These sizes only take the locally available content into account.'
+        properties:
+          Content:
+            description: 'Content is the size (in bytes) of all the locally present
+
+              content in the content store (e.g. image config, layers)
+
+              referenced by this manifest and its children.
+
+              This only includes blobs in the content store.'
+            format: int64
+            type: integer
+          Total:
+            description: 'Total is the total size (in bytes) of all the locally present
+
+              data (both distributable and non-distributable) that''s related to
+
+              this manifest and its children.
+
+              This equal to the sum of [Content] size AND all the sizes in the
+
+              [Size] struct present in the Kind-specific data struct.
+
+              For example, for an image kind (Kind == ManifestKindImage),
+
+              this would include the size of the image content and unpacked
+
+              image snapshots ([Size.Content] + [ImageData.Size.Unpacked]).'
+            format: int64
+            type: integer
+        type: object
+    required:
+    - ID
+    - Descriptor
+    - Available
+    - Size
+    - Kind
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  SignatureTimestamp:
+    properties:
+      Timestamp:
+        format: date-time
+        type: string
+      Type:
+        $ref: '#/definitions/SignatureTimestampType'
+      URI:
+        type: string
+    title: SignatureTimestamp contains information about a verified signed timestamp for an image signature.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  BuildIdentity:
+    properties:
+      CreatedAt:
+        description: CreatedAt is the time when the build ran.
+        format: date-time
+        type: string
+      Ref:
+        description: 'Ref is the identifier for the build request. This reference can be used to
+
+          look up the build details in BuildKit history API.'
+        type: string
+    title: BuildIdentity contains build reference information if image was created via build.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/image
+  IPAMStatus:
+    description: IPAMStatus IPAM status
+    properties:
+      Subnets:
+        $ref: '#/definitions/SubnetStatuses'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  ConfigReference:
+    description: 'ConfigReference The config-only network source to provide the configuration for
+
+      this network.'
+    properties:
+      Network:
+        description: 'The name of the config-only network that provides the network''s
+
+          configuration. The specified network must be an existing config-only
+
+          network. Only network names are allowed, not network IDs.'
+        example: config_only_network_01
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  EndpointIPAMConfig:
+    description: EndpointIPAMConfig represents IPAM configurations for the endpoint
+    properties:
+      IPv4Address:
+        type: string
+        x-go-type: net/netip.Addr
+      IPv6Address:
+        type: string
+        x-go-type: net/netip.Addr
+      LinkLocalIPs:
+        items:
+          type: string
+          x-go-type: net/netip.Addr
+        type: array
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  ManifestKind:
+    type: string
+    x-go-package: github.com/moby/moby/api/types/image
+responses:
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  networkConnectedError:
+    description: Network is already connected and container is running or transitioning to the running state ('initialized')
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  networkInspectCompat:
+    description: Network inspect
+    schema:
+      $ref: '#/definitions/Inspect'
+  networkListCompat:
+    description: Network list
+    schema:
+      items:
+        $ref: '#/definitions/Summary'
+      type: array
+  networkNotFound:
+    description: No such network
+    schema:
+      $ref: '#/definitions/ErrorModel'

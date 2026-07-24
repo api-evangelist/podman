@@ -1,0 +1,707 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts manifests API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to manifests
+  name: manifests
+paths:
+  /libpod/manifests/{name}:
+    delete:
+      description: 'Delete named manifest list
+
+
+        As of v4.0.0
+
+        '
+      operationId: ManifestDeleteLibpod
+      parameters:
+      - description: The name or ID of the  list to be deleted
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Ignore if a specified manifest does not exist and do not throw an error.
+        in: query
+        name: ignore
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/imagesRemoveResponseLibpod'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Delete manifest list
+      tags:
+      - manifests
+    post:
+      description: Create a manifest list
+      operationId: ManifestCreateLibpod
+      parameters:
+      - description: manifest list or index name to create
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 'One or more names of an image or a manifest list. Repeat parameter as needed.
+
+
+          Support for multiple images, as of version 4.0.0
+
+          Alias of `image` is support for compatibility with < 4.0.0
+
+          Response status code is 200 with < 4.0.0 for compatibility
+
+          '
+        in: query
+        name: images
+        required: true
+        type: string
+      - description: add all contents if given list
+        in: query
+        name: all
+        type: boolean
+      - description: modify an existing list if one with the desired name already exists
+        in: query
+        name: amend
+        type: boolean
+      - description: options for new manifest
+        in: body
+        name: options
+        schema:
+          $ref: '#/definitions/ManifestModifyOptions'
+      produces:
+      - application/json
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/IDResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/imageNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create
+      tags:
+      - manifests
+    put:
+      description: 'Add/Remove an image(s) to a manifest list
+
+
+        Note: operations are not atomic when multiple Images are provided.
+
+
+        As of v4.0.0
+
+        '
+      operationId: ManifestModifyLibpod
+      parameters:
+      - description: the name or ID of the manifest
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: true
+        description: Require HTTPS and verify signatures when contacting registries.
+        in: query
+        name: tlsVerify
+        type: boolean
+      - description: options for mutating a manifest
+        in: body
+        name: options
+        required: true
+        schema:
+          $ref: '#/definitions/ManifestModifyOptions'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ManifestModifyReport'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '409':
+          description: Operation had partial success, both Images and Errors may have members
+          schema:
+            $ref: '#/definitions/ManifestModifyReport'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Modify manifest list
+      tags:
+      - manifests
+  /libpod/manifests/{name}/add:
+    post:
+      description: 'Add an image to a manifest list
+
+
+        Deprecated: As of 4.0.0 use ManifestModifyLibpod instead
+
+        '
+      operationId: ManifestAddLibpod
+      parameters:
+      - description: the name or ID of the manifest
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: options for creating a manifest
+        in: body
+        name: options
+        schema:
+          $ref: '#/definitions/ManifestAddOptions'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/IDResponse'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '409':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Add image
+      tags:
+      - manifests
+  /libpod/manifests/{name}/exists:
+    get:
+      description: 'Check if manifest list exists
+
+
+        Note: There is no contract that the manifest list will exist for a follow-on operation
+
+        '
+      operationId: ManifestExistsLibpod
+      parameters:
+      - description: the name or ID of the manifest list
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: manifest list exists
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Exists
+      tags:
+      - manifests
+  /libpod/manifests/{name}/json:
+    get:
+      description: Display attributes of given manifest list
+      operationId: ManifestInspectLibpod
+      parameters:
+      - description: the name or ID of the manifest list
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: true
+        description: Require HTTPS and verify signatures when contacting registries.
+        in: query
+        name: tlsVerify
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/manifestInspect'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect
+      tags:
+      - manifests
+  /libpod/manifests/{name}/push:
+    post:
+      description: 'Push a manifest list or image index to a registry
+
+
+        Deprecated: As of 4.0.0 use ManifestPushLibpod instead
+
+        '
+      operationId: ManifestPushV3Libpod
+      parameters:
+      - description: the name or ID of the manifest
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: the destination for the manifest
+        in: query
+        name: destination
+        required: true
+        type: string
+      - description: push all images
+        in: query
+        name: all
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/IDResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Push manifest to registry
+      tags:
+      - manifests
+  /libpod/manifests/{name}/registry/{destination}:
+    post:
+      description: 'Push a manifest list or image index to the named registry
+
+
+        As of v4.0.0
+
+        '
+      operationId: ManifestPushLibpod
+      parameters:
+      - description: the name or ID of the manifest list
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: add existing instances with requested compression algorithms to manifest list
+        in: query
+        items:
+          type: string
+        name: addCompression
+        type: array
+      - default: false
+        description: Enforce compressing the layers with the specified --compression and do not reuse differently compressed blobs on the registry.
+        in: query
+        name: forceCompressionFormat
+        type: boolean
+      - description: the registry for the manifest list
+        in: path
+        name: destination
+        required: true
+        type: string
+      - default: true
+        description: push all images
+        in: query
+        name: all
+        type: boolean
+      - default: true
+        description: Require HTTPS and verify signatures when contacting registries.
+        in: query
+        name: tlsVerify
+        type: boolean
+      - default: true
+        description: silences extra stream data on push
+        in: query
+        name: quiet
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/IDResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/manifestNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Push manifest list to registry
+      tags:
+      - manifests
+definitions:
+  Schema2List:
+    title: Schema2List is a list of platform-specific manifests.
+    type: object
+    x-go-package: go.podman.io/image/v5/manifest
+  ImageRemoveReport:
+    description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
+
+      and images what was untagged vs actually removed.'
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  LibpodImagesRemoveReport:
+    allOf:
+    - $ref: '#/definitions/ImageRemoveReport'
+    - properties:
+        Errors:
+          description: Image removal requires is to return data and an error.
+          items:
+            type: string
+          type: array
+      type: object
+    description: 'LibpodImagesRemoveReport is the return type for image removal via the rest
+
+      api.'
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+  ManifestModifyReport:
+    properties:
+      Id:
+        description: Manifest List ID
+        type: string
+        x-go-name: ID
+      errors:
+        description: Errors associated with operation
+        items:
+          type: string
+          x-go-type: error
+        type: array
+        x-go-name: Errors
+      files:
+        description: Files added to manifest list, otherwise not provided.
+        items:
+          type: string
+        type: array
+        x-go-name: Files
+      images:
+        description: Images added to or removed from manifest list, otherwise not provided.
+        items:
+          type: string
+        type: array
+        x-go-name: Images
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  IDResponse:
+    properties:
+      Id:
+        description: The id of the newly created object.
+        type: string
+        x-go-name: ID
+    required:
+    - Id
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+  ManifestAddOptions:
+    description: ManifestAddOptions provides model for adding digests to manifest list
+    properties:
+      all:
+        description: True when operating on a list to include all images
+        type: boolean
+        x-go-name: All
+      annotation:
+        description: Annotation to add to the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Annotation
+      annotations:
+        additionalProperties:
+          type: string
+        description: Annotations to add to the item in the manifest list by a map which is preferred over Annotation
+        type: object
+        x-go-name: Annotations
+      arch:
+        description: Arch overrides the architecture for the item in the manifest list
+        type: string
+        x-go-name: Arch
+      features:
+        description: Feature list for the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Features
+      images:
+        description: Images is an optional list of image references to add to manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Images
+      index_annotation:
+        description: IndexAnnotation is a slice of key=value annotations to add to the manifest list itself
+        items:
+          type: string
+        type: array
+        x-go-name: IndexAnnotation
+      index_annotations:
+        additionalProperties:
+          type: string
+        description: IndexAnnotations is a map of key:value annotations to add to the manifest list itself, by a map which is preferred over IndexAnnotation
+        type: object
+        x-go-name: IndexAnnotations
+      os:
+        description: OS overrides the operating system for the item in the manifest list
+        type: string
+        x-go-name: OS
+      os_features:
+        description: OS features for the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: OSFeatures
+      os_version:
+        description: OSVersion overrides the operating system for the item in the manifest list
+        type: string
+        x-go-name: OSVersion
+      subject:
+        description: IndexSubject is a subject value to set in the manifest list itself
+        type: string
+        x-go-name: IndexSubject
+      variant:
+        description: Variant for the item in the manifest list
+        type: string
+        x-go-name: Variant
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  ManifestModifyOptions:
+    description: 'swagger 2.0 does not support oneOf for schema validation.
+
+
+      Operation "update" uses all fields.
+
+      Operation "remove" uses fields: Operation and Images
+
+      Operation "annotate" uses fields: Operation and Annotations'
+    properties:
+      all:
+        description: True when operating on a list to include all images
+        type: boolean
+        x-go-name: All
+      annotation:
+        description: Annotation to add to the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Annotation
+      annotations:
+        additionalProperties:
+          type: string
+        description: Annotations to add to the item in the manifest list by a map which is preferred over Annotation
+        type: object
+        x-go-name: Annotations
+      arch:
+        description: Arch overrides the architecture for the item in the manifest list
+        type: string
+        x-go-name: Arch
+      artifact_annotations:
+        additionalProperties:
+          type: string
+        type: object
+        x-go-name: ArtifactAnnotations
+      artifact_config:
+        type: string
+        x-go-name: ArtifactConfig
+      artifact_config_type:
+        type: string
+        x-go-name: ArtifactConfigType
+      artifact_exclude_titles:
+        type: boolean
+        x-go-name: ArtifactExcludeTitles
+      artifact_files:
+        items:
+          type: string
+        type: array
+        x-go-name: ArtifactFiles
+      artifact_layer_type:
+        type: string
+        x-go-name: ArtifactLayerType
+      artifact_subject:
+        type: string
+        x-go-name: ArtifactSubject
+      artifact_type:
+        description: 'The following are all of the fields from ManifestAddArtifactOptions.
+
+          We can''t just embed the whole structure because it embeds a
+
+          ManifestAnnotateOptions, which would conflict with the one that
+
+          ManifestAddOptions embeds.'
+        type: string
+        x-go-name: ArtifactType
+      features:
+        description: Feature list for the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Features
+      images:
+        description: Images is an optional list of image references to add to manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: Images
+      index_annotation:
+        description: IndexAnnotation is a slice of key=value annotations to add to the manifest list itself
+        items:
+          type: string
+        type: array
+        x-go-name: IndexAnnotation
+      index_annotations:
+        additionalProperties:
+          type: string
+        description: IndexAnnotations is a map of key:value annotations to add to the manifest list itself, by a map which is preferred over IndexAnnotation
+        type: object
+        x-go-name: IndexAnnotations
+      operation:
+        type: string
+        x-go-name: Operation
+      os:
+        description: OS overrides the operating system for the item in the manifest list
+        type: string
+        x-go-name: OS
+      os_features:
+        description: OS features for the item in the manifest list
+        items:
+          type: string
+        type: array
+        x-go-name: OSFeatures
+      os_version:
+        description: OSVersion overrides the operating system for the item in the manifest list
+        type: string
+        x-go-name: OSVersion
+      subject:
+        description: IndexSubject is a subject value to set in the manifest list itself
+        type: string
+        x-go-name: IndexSubject
+      variant:
+        description: Variant for the item in the manifest list
+        type: string
+        x-go-name: Variant
+    title: ManifestModifyOptions provides the model for mutating a manifest
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+responses:
+  manifestNotFound:
+    description: No such manifest
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  imageNotFound:
+    description: No such image
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  imagesRemoveResponseLibpod:
+    description: Image Remove
+    schema:
+      $ref: '#/definitions/LibpodImagesRemoveReport'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  manifestInspect:
+    description: Inspect Manifest
+    schema:
+      $ref: '#/definitions/Schema2List'

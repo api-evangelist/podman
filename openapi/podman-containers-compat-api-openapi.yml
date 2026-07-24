@@ -1,0 +1,2465 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts containers (compat) API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to containers for the compatibility endpoints
+  name: containers (compat)
+paths:
+  /commit:
+    post:
+      description: Create a new image from a container
+      operationId: ImageCommit
+      parameters:
+      - description: the name or ID of a container
+        in: query
+        name: container
+        type: string
+      - description: the repository name for the created image
+        in: query
+        name: repo
+        type: string
+      - description: tag name for the created image
+        in: query
+        name: tag
+        type: string
+      - description: commit message
+        in: query
+        name: comment
+        type: string
+      - description: author of the image
+        in: query
+        name: author
+        type: string
+      - description: pause the container before committing it
+        in: query
+        name: pause
+        type: boolean
+      - description: instructions to apply while committing in Dockerfile format
+        in: query
+        name: changes
+        type: string
+      - description: squash newly built layers into a single new layer
+        in: query
+        name: squash
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '201':
+          description: no error
+        '404':
+          $ref: '#/responses/imageNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: New Image
+      tags:
+      - containers (compat)
+  /containers/{name}:
+    delete:
+      operationId: ContainerDelete
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: false
+        description: If the container is running, kill it before removing it.
+        in: query
+        name: force
+        type: boolean
+      - default: false
+        description: Remove the volumes associated with the container.
+        in: query
+        name: v
+        type: boolean
+      - description: not supported
+        in: query
+        name: link
+        type: boolean
+      - default: false
+        description: Ignore if a specified container does not exist.
+        in: query
+        name: ignore
+        type: boolean
+      - default: false
+        description: Remove container dependencies.
+        in: query
+        name: depend
+        type: boolean
+      - description: Number of seconds to wait before forcibly stopping the container.
+        in: query
+        name: timeout
+        type: integer
+      - default: false
+        description: Remove anonymous volumes associated with the container.
+        in: query
+        name: volumes
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '409':
+          $ref: '#/responses/conflictError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove a container
+      tags:
+      - containers (compat)
+  /containers/{name}/archive:
+    get:
+      description: Get a tar archive of files from a container
+      operationId: ContainerArchive
+      parameters:
+      - description: container name or id
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Path to a directory in the container to extract
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: no error
+          schema:
+            format: binary
+            type: string
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get files from a container
+      tags:
+      - containers (compat)
+    put:
+      description: Put a tar archive of files into a container
+      operationId: PutContainerArchive
+      parameters:
+      - description: container name or id
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Path to a directory in the container to extract
+        in: query
+        name: path
+        required: true
+        type: string
+      - description: if unpacking the given content would cause an existing directory to be replaced with a non-directory and vice versa (1 or true)
+        in: query
+        name: noOverwriteDirNonDir
+        type: string
+      - description: copy UID/GID maps to the dest file or di (1 or true)
+        in: query
+        name: copyUIDGID
+        type: string
+      - description: tarfile of files to copy into the container
+        in: body
+        name: request
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: no error
+        '400':
+          $ref: '#/responses/badParamError'
+        '403':
+          description: the container rootfs is read-only
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Put files into a container
+      tags:
+      - containers (compat)
+  /containers/{name}/attach:
+    post:
+      description: 'Attach to a container to read its output or send it input. You can attach
+
+        to the same container multiple times and you can reattach to containers
+
+        that have been detached.
+
+
+        It uses the same stream format as docker, see the libpod attach endpoint for a description of the format.
+
+        '
+      operationId: ContainerAttach
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: keys to use for detaching from the container
+        in: query
+        name: detachKeys
+        type: string
+      - description: Stream all logs from the container across the connection. Happens before streaming attach (if requested). At least one of logs or stream must be set
+        in: query
+        name: logs
+        type: boolean
+      - default: true
+        description: Attach to the container. If unset, and logs is set, only the container's logs will be sent. At least one of stream or logs must be set
+        in: query
+        name: stream
+        type: boolean
+      - description: Attach to container STDOUT
+        in: query
+        name: stdout
+        type: boolean
+      - description: Attach to container STDERR
+        in: query
+        name: stderr
+        type: boolean
+      - description: Attach to container STDIN
+        in: query
+        name: stdin
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '101':
+          description: No error, connection has been hijacked for transporting streams.
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Attach to a container
+      tags:
+      - containers (compat)
+  /containers/{name}/changes:
+    get:
+      description: 'Returns which files in a container''s filesystem have been added, deleted, or modified. The Kind of modification can be one of:
+
+
+        0: Modified
+
+        1: Added
+
+        2: Deleted
+
+        '
+      operationId: ContainerChanges
+      parameters:
+      - description: the name or id of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: specify a second layer which is used to compare against it instead of the parent layer
+        in: query
+        name: parent
+        type: string
+      - description: select what you want to match, default is all
+        enum:
+        - all
+        - container
+        - image
+        in: query
+        name: diffType
+        type: string
+      responses:
+        '200':
+          description: Array of Changes
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Report on changes to container's filesystem; adds, deletes or modifications.
+      tags:
+      - containers (compat)
+  /containers/{name}/export:
+    get:
+      description: Export the contents of a container as a tarball.
+      operationId: ContainerExport
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: tarball is returned in body
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Export a container
+      tags:
+      - containers (compat)
+  /containers/{name}/json:
+    get:
+      description: Return low-level information about a container.
+      operationId: ContainerInspect
+      parameters:
+      - description: the name or id of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: false
+        description: include the size of the container
+        in: query
+        name: size
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/containerInspectResponse'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect container
+      tags:
+      - containers (compat)
+  /containers/{name}/kill:
+    post:
+      description: Signal to send to the container as an integer or string (e.g. SIGINT)
+      operationId: ContainerKill
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: false
+        description: Send kill signal to all containers
+        in: query
+        name: all
+        type: boolean
+      - default: SIGKILL
+        description: signal to be sent to container
+        in: query
+        name: signal
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '409':
+          $ref: '#/responses/conflictError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Kill container
+      tags:
+      - containers (compat)
+  /containers/{name}/logs:
+    get:
+      description: Get stdout and stderr logs from a container.
+      operationId: ContainerLogs
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Keep connection after returning logs.
+        in: query
+        name: follow
+        type: boolean
+      - description: Return logs from stdout
+        in: query
+        name: stdout
+        type: boolean
+      - description: Return logs from stderr
+        in: query
+        name: stderr
+        type: boolean
+      - description: Only return logs since this time, as a UNIX timestamp
+        in: query
+        name: since
+        type: string
+      - description: Only return logs before this time, as a UNIX timestamp
+        in: query
+        name: until
+        type: string
+      - default: false
+        description: Add timestamps to every log line
+        in: query
+        name: timestamps
+        type: boolean
+      - default: all
+        description: Only return this number of log lines from the end of the logs
+        in: query
+        name: tail
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: logs returned as a stream in response body.
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get container logs
+      tags:
+      - containers (compat)
+  /containers/{name}/pause:
+    post:
+      description: Use the cgroups freezer to suspend all processes in a container.
+      operationId: ContainerPause
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Pause container
+      tags:
+      - containers (compat)
+  /containers/{name}/rename:
+    post:
+      description: Change the name of an existing container.
+      operationId: ContainerRename
+      parameters:
+      - description: Full or partial ID or full name of the container to rename
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: New name for the container
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '409':
+          $ref: '#/responses/conflictError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Rename an existing container
+      tags:
+      - containers (compat)
+  /containers/{name}/resize:
+    post:
+      description: Resize the terminal attached to a container (for use with Attach).
+      operationId: ContainerResize
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Height to set for the terminal, in characters
+        in: query
+        name: h
+        type: integer
+      - description: Width to set for the terminal, in characters
+        in: query
+        name: w
+        type: integer
+      - description: Ignore containers not running errors
+        in: query
+        name: running
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/ok'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Resize a container's TTY
+      tags:
+      - containers (compat)
+  /containers/{name}/restart:
+    post:
+      operationId: ContainerRestart
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: timeout before sending kill signal to container
+        in: query
+        name: t
+        type: integer
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Restart container
+      tags:
+      - containers (compat)
+  /containers/{name}/start:
+    post:
+      operationId: ContainerStart
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: ctrl-p,ctrl-q
+        description: 'Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _.'
+        in: query
+        name: detachKeys
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '304':
+          $ref: '#/responses/containerAlreadyStartedError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Start a container
+      tags:
+      - containers (compat)
+  /containers/{name}/stats:
+    get:
+      description: This returns a live stream of a container’s resource usage statistics.
+      operationId: ContainerStats
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: true
+        description: Stream the output
+        in: query
+        name: stream
+        type: boolean
+      - default: false
+        description: Provide a one-shot response in which preCPU stats are blank, resulting in a single cycle return.
+        in: query
+        name: one-shot
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: no error
+          schema:
+            type: object
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Get stats for a container
+      tags:
+      - containers (compat)
+  /containers/{name}/stop:
+    post:
+      description: Stop a container
+      operationId: ContainerStop
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: number of seconds to wait before killing container
+        in: query
+        name: t
+        type: integer
+      - description: Number of seconds to wait before killing the container (libpod alias for `t`).
+        in: query
+        name: timeout
+        type: integer
+      - default: false
+        description: Do not return an error if the container is already stopped.
+        in: query
+        name: ignore
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '304':
+          $ref: '#/responses/containerAlreadyStoppedError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Stop a container
+      tags:
+      - containers (compat)
+  /containers/{name}/top:
+    get:
+      operationId: ContainerTop
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: -ef
+        description: arguments to pass to ps such as aux.
+        in: query
+        name: ps_args
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/containerTopResponse'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List processes running inside a container
+      tags:
+      - containers (compat)
+  /containers/{name}/unpause:
+    post:
+      description: Resume a paused container
+      operationId: ContainerUnpause
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Unpause container
+      tags:
+      - containers (compat)
+  /containers/{name}/update:
+    post:
+      description: Change configuration settings for an existing container without requiring recreation.
+      operationId: ContainerUpdate
+      parameters:
+      - description: Full or partial ID or full name of the container to rename
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: attributes for updating the container
+        in: body
+        name: resources
+        schema:
+          $ref: '#/definitions/containerUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: no error
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Update configuration of an existing container, allowing changes to resource limits
+      tags:
+      - containers (compat)
+  /containers/{name}/wait:
+    post:
+      description: 'Block until a container stops or given condition is met.
+
+        This is a Docker-compatible endpoint.
+
+        '
+      operationId: ContainerWait
+      parameters:
+      - description: the name or ID of the container
+        in: path
+        name: name
+        required: true
+        type: string
+      - default: not-running
+        description: "Wait condition.  Valid values are:\n  - not-running (default) - return when the container is not running\n    (stopped, exited, or was never started).\n  - next-exit - wait for the next time the container stops.\n    If the container is running, block until it exits.\n    If the container is already stopped, block until\n    the next start-and-exit cycle.\n  - removed - wait until the container is removed.\n"
+        in: query
+        name: condition
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/containerWaitResponse'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Wait on a container
+      tags:
+      - containers (compat)
+  /containers/create:
+    post:
+      operationId: ContainerCreate
+      parameters:
+      - description: container name
+        in: query
+        name: name
+        type: string
+      - description: Container to create
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/CreateContainerConfig'
+      produces:
+      - application/json
+      responses:
+        '201':
+          $ref: '#/responses/containerCreateResponse'
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '409':
+          $ref: '#/responses/conflictError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create a container
+      tags:
+      - containers (compat)
+  /containers/json:
+    get:
+      description: Returns a list of containers
+      operationId: ContainerList
+      parameters:
+      - default: false
+        description: Return all containers. By default, only running containers are shown
+        in: query
+        name: all
+        type: boolean
+      - default: false
+        description: Return containers in storage not controlled by Podman
+        in: query
+        name: external
+        type: boolean
+      - description: Return this number of most recently created containers, including non-running ones.
+        in: query
+        name: limit
+        type: integer
+      - default: false
+        description: Return the size of container as fields SizeRw and SizeRootFs.
+        in: query
+        name: size
+        type: boolean
+      - description: 'A JSON encoded value of the filters (a `map[string][]string`) to process on the containers list. Available filters:
+
+          - `ancestor`=(`<image-name>[:<tag>]`, `<image id>`, or `<image@digest>`)
+
+          - `before`=(`<container id>` or `<container name>`)
+
+          - `expose`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)
+
+          - `exited=<int>` containers with exit code of `<int>`
+
+          - `health`=(`starting`, `healthy`, `unhealthy` or `none`)
+
+          - `id=<ID>` a container''s ID
+
+          - `is-task`=(`true` or `false`)
+
+          - `label`=(`key` or `"key=value"`) of a container label
+
+          - `name=<name>` a container''s name
+
+          - `network`=(`<network id>` or `<network name>`)
+
+          - `publish`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)
+
+          - `since`=(`<container id>` or `<container name>`)
+
+          - `status`=(`created`, `restarting`, `running`, `removing`, `paused`, `exited` or `dead`)
+
+          - `volume`=(`<volume name>` or `<mount point destination>`)
+
+          '
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/containersList'
+        '400':
+          $ref: '#/responses/badParamError'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List containers
+      tags:
+      - containers (compat)
+  /containers/prune:
+    post:
+      description: Remove containers not in use
+      operationId: ContainerPrune
+      parameters:
+      - description: "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).  Available filters:\n - `until=<timestamp>` Prune containers created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune containers with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/containersPrune'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Delete stopped containers
+      tags:
+      - containers (compat)
+  /libpod/containers/{name}/archive:
+    get:
+      description: Copy a tar archive of files from a container
+      operationId: ContainerArchiveLibpod
+      parameters:
+      - description: container name or id
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Path to a directory in the container to extract
+        in: query
+        name: path
+        required: true
+        type: string
+      - description: JSON encoded map[string]string to translate paths
+        in: query
+        name: rename
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: no error
+          schema:
+            format: binary
+            type: string
+        '400':
+          $ref: '#/responses/badParamError'
+        '404':
+          $ref: '#/responses/containerNotFound'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Copy files from a container
+      tags:
+      - containers (compat)
+definitions:
+  HealthConfig:
+    title: HealthConfig holds configuration settings for the HEALTHCHECK feature.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  TmpfsOptions:
+    properties:
+      Mode:
+        $ref: '#/definitions/FileMode'
+      Options:
+        description: 'Options to be passed to the tmpfs mount. An array of arrays. Flag
+
+          options should be provided as 1-length arrays. Other types should be
+
+          provided as 2-length arrays, where the first item is the key and the
+
+          second the value.'
+        items:
+          items:
+            type: string
+          type: array
+        type: array
+      SizeBytes:
+        description: 'Size sets the size of the tmpfs, in bytes.
+
+
+          This will be converted to an operating system specific value
+
+          depending on the host. For example, on linux, it will be converted to
+
+          use a ''k'', ''m'' or ''g'' syntax. BSD, though not widely supported with
+
+          docker, uses a straight byte value.
+
+
+          Percentages are not supported.'
+        format: int64
+        type: integer
+    title: TmpfsOptions defines options specific to mounts of type "tmpfs".
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  DriverData:
+    description: DriverData handles the data for a storage driver
+    properties:
+      Data:
+        additionalProperties:
+          type: string
+        description: 'Low-level storage metadata, provided as key/value pairs.
+
+
+          This information is driver-specific, and depends on the storage-driver
+
+          in use, and should be used for informational purposes only.'
+        example:
+          MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
+          UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
+          WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
+        type: object
+      Name:
+        description: Name of the storage driver.
+        example: overlay2
+        type: string
+    required:
+    - Data
+    - Name
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  InspectResponse:
+    description: endpoint.
+    properties:
+      AppArmorProfile:
+        type: string
+      Args:
+        items:
+          type: string
+        type: array
+      Config:
+        $ref: '#/definitions/Config'
+      Created:
+        type: string
+      Driver:
+        type: string
+      ExecIDs:
+        items:
+          type: string
+        type: array
+      GraphDriver:
+        $ref: '#/definitions/DriverData'
+      HostConfig:
+        $ref: '#/definitions/HostConfig'
+      HostnamePath:
+        type: string
+      HostsPath:
+        type: string
+      Id:
+        type: string
+        x-go-name: ID
+      Image:
+        type: string
+      ImageManifestDescriptor:
+        $ref: '#/definitions/Descriptor'
+      LogPath:
+        type: string
+      MountLabel:
+        type: string
+      Mounts:
+        items:
+          $ref: '#/definitions/MountPoint'
+        type: array
+      Name:
+        type: string
+      NetworkSettings:
+        $ref: '#/definitions/NetworkSettings'
+      Path:
+        type: string
+      Platform:
+        type: string
+      ProcessLabel:
+        type: string
+      ResolvConfPath:
+        type: string
+      RestartCount:
+        format: int64
+        type: integer
+      SizeRootFs:
+        format: int64
+        type: integer
+      SizeRw:
+        format: int64
+        type: integer
+      State:
+        $ref: '#/definitions/State'
+      Storage:
+        $ref: '#/definitions/Storage'
+    title: InspectResponse is the response for the GET "/containers/{name:.*}/json"
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  PidMode:
+    title: PidMode represents the pid namespace of the container.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  ClusterOptions:
+    title: ClusterOptions specifies options for a Cluster volume.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  NetworkingConfig:
+    description: 'NetworkingConfig represents the container''s networking configuration for each of its interfaces
+
+      Carries the networking configs specified in the `docker run` and `docker network connect` commands'
+    properties:
+      EndpointsConfig:
+        additionalProperties:
+          $ref: '#/definitions/EndpointSettings'
+        type: object
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  NetworkSettings:
+    description: NetworkSettings exposes the network settings in the api
+    properties:
+      Networks:
+        additionalProperties:
+          $ref: '#/definitions/EndpointSettings'
+        type: object
+      Ports:
+        $ref: '#/definitions/PortMap'
+      SandboxID:
+        type: string
+      SandboxKey:
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  MountPoint:
+    description: This is used for reporting the mountpoints in use by a container.
+    properties:
+      Destination:
+        description: 'Destination is the path relative to the container root (`/`) where the
+
+          Source is mounted inside the container.'
+        type: string
+      Driver:
+        description: Driver is the volume driver used to create the volume (if it is a volume).
+        type: string
+      Mode:
+        description: 'Mode is a comma separated list of options supplied by the user when
+
+          creating the bind/volume mount.
+
+
+          The default is platform-specific (`"z"` on Linux, empty on Windows).'
+        type: string
+      Name:
+        description: 'Name is the name reference to the underlying data defined by `Source`
+
+          e.g., the volume name.'
+        type: string
+      Propagation:
+        $ref: '#/definitions/Propagation'
+      RW:
+        description: RW indicates whether the mount is mounted writable (read-write).
+        type: boolean
+      Source:
+        description: 'Source is the source location of the mount.
+
+
+          For volumes, this contains the storage location of the volume (within
+
+          `/var/lib/docker/volumes/`). For bind-mounts, and `npipe`, this contains
+
+          the source (host) part of the bind-mount. For `tmpfs` mount points, this
+
+          field is empty.'
+        type: string
+      Type:
+        $ref: '#/definitions/Type'
+    title: MountPoint represents a mount point configuration inside the container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  Descriptor:
+    description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
+
+      when marshalled to JSON.'
+    properties:
+      annotations:
+        additionalProperties:
+          type: string
+        description: Annotations contains arbitrary metadata relating to the targeted content.
+        type: object
+        x-go-name: Annotations
+      artifactType:
+        description: ArtifactType is the IANA media type of this artifact.
+        type: string
+        x-go-name: ArtifactType
+      data:
+        description: 'Data is an embedding of the targeted content. This is encoded as a base64
+
+          string when marshalled to JSON (automatically, by encoding/json). If
+
+          present, Data can be used directly to avoid fetching the targeted content.'
+        items:
+          format: uint8
+          type: integer
+        type: array
+        x-go-name: Data
+      digest:
+        $ref: '#/definitions/Digest'
+      mediaType:
+        description: MediaType is the media type of the object this schema refers to.
+        type: string
+        x-go-name: MediaType
+      platform:
+        $ref: '#/definitions/Platform'
+      size:
+        description: Size specifies the size in bytes of the blob.
+        format: int64
+        type: integer
+        x-go-name: Size
+      urls:
+        description: URLs specifies a list of URLs from which this object MAY be downloaded
+        items:
+          type: string
+        type: array
+        x-go-name: URLs
+    title: Descriptor describes the disposition of targeted content.
+    type: object
+    x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+  Consistency:
+    title: Consistency represents the consistency requirements of a mount.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/mount
+  Isolation:
+    description: 'Isolation represents the isolation technology of a container. The supported
+
+      values are platform specific'
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  PortSet:
+    additionalProperties:
+      type: object
+    title: PortSet is a collection of structs indexed by [Port].
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  UsernsMode:
+    title: UsernsMode represents userns mode in the container.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  Type:
+    title: Type represents the type of a mount.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/mount
+  Health:
+    description: Health stores information about the container's healthcheck results
+    properties:
+      FailingStreak:
+        format: int64
+        type: integer
+      Log:
+        items:
+          $ref: '#/definitions/HealthcheckResult'
+        type: array
+      Status:
+        $ref: '#/definitions/HealthStatus'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  ContainerCreateResponse:
+    description: ContainerCreateResponse is the response struct for creating a container
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+  PortMap:
+    additionalProperties:
+      items:
+        properties:
+          HostIp:
+            description: HostIP is the host IP Address
+            type: string
+            x-go-name: HostIP
+            x-go-type: net/netip.Addr
+          HostPort:
+            description: HostPort is the host port number
+            type: string
+        type: object
+      type: array
+    title: PortMap is a collection of [PortBinding] indexed by [Port].
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  CgroupnsMode:
+    description: CgroupnsMode represents the cgroup namespace mode of the container
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  State:
+    description: 'State stores container''s running state
+
+      it''s part of ContainerJSONBase and returned by "inspect" command'
+    properties:
+      Dead:
+        type: boolean
+      Error:
+        type: string
+      ExitCode:
+        format: int64
+        type: integer
+      FinishedAt:
+        type: string
+      Health:
+        $ref: '#/definitions/Health'
+      OOMKilled:
+        type: boolean
+      Paused:
+        type: boolean
+      Pid:
+        format: int64
+        type: integer
+      Restarting:
+        type: boolean
+      Running:
+        type: boolean
+      StartedAt:
+        type: string
+      Status:
+        $ref: '#/definitions/ContainerState'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  PortSummary:
+    example: '{"PrivatePort":8080,"PublicPort":80,"Type":"tcp"}'
+    properties:
+      IP:
+        description: Host IP address that the container's port is mapped to
+        type: string
+        x-go-type: net/netip.Addr
+      PrivatePort:
+        description: Port on the container
+        format: uint16
+        type: integer
+      PublicPort:
+        description: Port exposed on the host
+        format: uint16
+        type: integer
+      Type:
+        description: type
+        enum:
+        - tcp
+        - udp
+        - sctp
+        type: string
+    required:
+    - PrivatePort
+    - Type
+    title: PortSummary Describes a port-mapping between the container and the host.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  FileMode:
+    description: 'The bits have the same definition on all systems, so that
+
+      information about files can be moved from one system
+
+      to another portably. Not all bits apply to all systems.
+
+      The only required bit is [ModeDir] for directories.'
+    format: uint32
+    title: A FileMode represents a file's mode and permission bits.
+    type: integer
+    x-go-package: os
+  VolumeOptions:
+    properties:
+      DriverConfig:
+        $ref: '#/definitions/Driver'
+      Labels:
+        additionalProperties:
+          type: string
+        type: object
+      NoCopy:
+        type: boolean
+      Subpath:
+        type: string
+    title: VolumeOptions represents the options for a mount of type volume.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  RootFSStorage:
+    properties:
+      Snapshot:
+        $ref: '#/definitions/RootFSStorageSnapshot'
+    title: RootFSStorage Information about the storage used for the container's root filesystem.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/storage
+  CreateContainerConfig:
+    description: CreateContainerConfig used when compatible endpoint creates a container
+    properties:
+      ArgsEscaped:
+        type: boolean
+      AttachStderr:
+        type: boolean
+      AttachStdin:
+        type: boolean
+      AttachStdout:
+        type: boolean
+      Cmd:
+        items:
+          type: string
+        type: array
+      Domainname:
+        type: string
+      Entrypoint:
+        items:
+          type: string
+        type: array
+      Env:
+        items:
+          type: string
+        type: array
+      EnvMerge:
+        items:
+          type: string
+        type: array
+      ExposedPorts:
+        $ref: '#/definitions/PortSet'
+      Healthcheck:
+        $ref: '#/definitions/HealthConfig'
+      HostConfig:
+        $ref: '#/definitions/HostConfig'
+      Hostname:
+        type: string
+      Image:
+        type: string
+      Labels:
+        additionalProperties:
+          type: string
+        type: object
+      MacAddress:
+        type: string
+      Name:
+        type: string
+      NetworkDisabled:
+        type: boolean
+      NetworkingConfig:
+        $ref: '#/definitions/NetworkingConfig'
+      OnBuild:
+        items:
+          type: string
+        type: array
+      OpenStdin:
+        type: boolean
+      Shell:
+        items:
+          type: string
+        type: array
+      StdinOnce:
+        type: boolean
+      StopSignal:
+        type: string
+      StopTimeout:
+        format: int64
+        type: integer
+      Tty:
+        type: boolean
+      UnsetEnv:
+        items:
+          type: string
+        type: array
+      UnsetEnvAll:
+        type: boolean
+      User:
+        type: string
+      Volumes:
+        additionalProperties:
+          type: object
+        type: object
+      WorkingDir:
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+  EndpointSettings:
+    description: EndpointSettings stores the network endpoint details
+    properties:
+      Aliases:
+        items:
+          type: string
+        type: array
+      DNSNames:
+        description: 'DNSNames holds all the (non fully qualified) DNS names associated to this
+
+          endpoint. The first entry is used to generate PTR records.'
+        items:
+          type: string
+        type: array
+      DriverOpts:
+        additionalProperties:
+          type: string
+        type: object
+      EndpointID:
+        type: string
+      Gateway:
+        type: string
+        x-go-type: net/netip.Addr
+      GlobalIPv6Address:
+        type: string
+        x-go-type: net/netip.Addr
+      GlobalIPv6PrefixLen:
+        format: int64
+        type: integer
+      GwPriority:
+        description: 'GwPriority determines which endpoint will provide the default gateway
+
+          for the container. The endpoint with the highest priority will be used.
+
+          If multiple endpoints have the same priority, they are lexicographically
+
+          sorted based on their network name, and the one that sorts first is picked.'
+        format: int64
+        type: integer
+      IPAMConfig:
+        $ref: '#/definitions/EndpointIPAMConfig'
+      IPAddress:
+        type: string
+        x-go-type: net/netip.Addr
+      IPPrefixLen:
+        format: int64
+        type: integer
+      IPv6Gateway:
+        type: string
+        x-go-type: net/netip.Addr
+      Links:
+        items:
+          type: string
+        type: array
+      MacAddress:
+        description: 'MacAddress may be used to specify a MAC address when the container is created.
+
+          Once the container is running, it becomes operational data (it may contain a
+
+          generated address).'
+        type: string
+        x-go-type: github.com/moby/moby/api/types/network.HardwareAddr
+      NetworkID:
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+  Ulimit:
+    description: Users are recommended to use this alias instead of using [units.Ulimit] directly.
+    title: 'Ulimit is an alias for [units.Ulimit], which may be moving to a different
+
+      location or become a local type. This alias is to help transitioning.'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  HealthcheckResult:
+    description: HealthcheckResult stores information about a single run of a healthcheck probe
+    properties:
+      End:
+        format: date-time
+        type: string
+      ExitCode:
+        format: int64
+        type: integer
+      Output:
+        type: string
+      Start:
+        format: date-time
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  BindOptions:
+    properties:
+      CreateMountpoint:
+        type: boolean
+      NonRecursive:
+        type: boolean
+      Propagation:
+        $ref: '#/definitions/Propagation'
+      ReadOnlyForceRecursive:
+        description: ReadOnlyForceRecursive raises an error if the mount cannot be made recursively read-only.
+        type: boolean
+      ReadOnlyNonRecursive:
+        description: 'ReadOnlyNonRecursive makes the mount non-recursively read-only, but still leaves the mount recursive
+
+          (unless NonRecursive is set to true in conjunction).'
+        type: boolean
+    title: BindOptions defines options specific to mounts of type "bind".
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  RootFSStorageSnapshot:
+    properties:
+      Name:
+        description: Name of the snapshotter.
+        type: string
+    title: RootFSStorageSnapshot Information about a snapshot backend of the container's root filesystem.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/storage
+  RestartPolicy:
+    properties:
+      MaximumRetryCount:
+        format: int64
+        type: integer
+      Name:
+        $ref: '#/definitions/RestartPolicyMode'
+    title: RestartPolicy represents the restart policies of the container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  Platform:
+    properties:
+      architecture:
+        description: 'Architecture field specifies the CPU architecture, for example
+
+          `amd64` or `ppc64le`.'
+        type: string
+        x-go-name: Architecture
+      os:
+        description: OS specifies the operating system, for example `linux` or `windows`.
+        type: string
+        x-go-name: OS
+      os.features:
+        description: 'OSFeatures is an optional field specifying an array of strings,
+
+          each listing a required OS feature (for example on Windows `win32k`).'
+        items:
+          type: string
+        type: array
+        x-go-name: OSFeatures
+      os.version:
+        description: 'OSVersion is an optional field specifying the operating system
+
+          version, for example on Windows `10.0.14393.1066`.'
+        type: string
+        x-go-name: OSVersion
+      variant:
+        description: 'Variant is an optional field specifying a variant of the CPU, for
+
+          example `v7` to specify ARMv7 when architecture is `arm`.'
+        type: string
+        x-go-name: Variant
+    title: Platform describes the platform which the image in the manifest runs on.
+    type: object
+    x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+  Digest:
+    description: 'The following is an example of the contents of Digest types:
+
+
+      sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
+
+
+      This allows to abstract the digest behind this type and work only in those
+
+      terms.'
+    title: 'Digest allows simple protection of hex formatted digest strings, prefixed
+
+      by their algorithm. Strings of type Digest have some guarantee of being in
+
+      the correct format and it provides quick access to the components of a
+
+      digest string.'
+    type: string
+    x-go-package: github.com/opencontainers/go-digest
+  ContainersPruneReport:
+    properties:
+      ContainersDeleted:
+        items:
+          type: string
+        type: array
+      SpaceReclaimed:
+        format: uint64
+        type: integer
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+  DeviceRequest:
+    description: Used by GPU device drivers.
+    properties:
+      Capabilities:
+        items:
+          items:
+            type: string
+          type: array
+        type: array
+      Count:
+        format: int64
+        type: integer
+      DeviceIDs:
+        items:
+          type: string
+        type: array
+      Driver:
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        type: object
+    title: DeviceRequest represents a request for devices from a device driver.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  RestartPolicyMode:
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  CgroupSpec:
+    title: CgroupSpec represents the cgroup to use for the container.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  Propagation:
+    title: Propagation represents the propagation of a mount.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/mount
+  ContainerTopOKBody:
+    properties:
+      Processes:
+        description: 'Each process running in the container, where each process
+
+          is an array of values corresponding to the titles.'
+        example: '{"Processes":[["root","13642","882","0","17:03","pts/0","00:00:00","/bin/bash"],["root","13735","13642","0","17:06","pts/0","00:00:00","sleep 10"]]}'
+        items:
+          items:
+            type: string
+          type: array
+        type: array
+      Titles:
+        description: The ps column titles
+        example: '{"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}'
+        items:
+          type: string
+        type: array
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+  Container:
+    properties:
+      Command:
+        type: string
+      Config:
+        $ref: '#/definitions/Config'
+      Created:
+        format: int64
+        type: integer
+      DefaultReadOnlyNonRecursive:
+        type: boolean
+      Health:
+        $ref: '#/definitions/HealthSummary'
+      HostConfig:
+        $ref: '#/definitions/HostConfig'
+        type: object
+      Id:
+        type: string
+        x-go-name: ID
+      Image:
+        type: string
+      ImageID:
+        type: string
+      ImageManifestDescriptor:
+        $ref: '#/definitions/Descriptor'
+      Labels:
+        additionalProperties:
+          type: string
+        type: object
+      Mounts:
+        items:
+          $ref: '#/definitions/MountPoint'
+        type: array
+      Name:
+        type: string
+      Names:
+        items:
+          type: string
+        type: array
+      NetworkSettings:
+        $ref: '#/definitions/NetworkSettingsSummary'
+      NetworkingConfig:
+        $ref: '#/definitions/NetworkingConfig'
+      Platform:
+        $ref: '#/definitions/Platform'
+      Ports:
+        items:
+          $ref: '#/definitions/PortSummary'
+        type: array
+      SizeRootFs:
+        format: int64
+        type: integer
+      SizeRw:
+        format: int64
+        type: integer
+      State:
+        $ref: '#/definitions/ContainerState'
+      Status:
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+  HealthStatus:
+    title: HealthStatus is a string representation of the container's health.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  WeightDevice:
+    description: WeightDevice is a structure that holds device:weight pair
+    properties:
+      Path:
+        type: string
+      Weight:
+        format: uint16
+        type: integer
+    type: object
+    x-go-package: github.com/moby/moby/api/types/blkiodev
+  Driver:
+    properties:
+      Name:
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        type: object
+    title: Driver represents a volume driver.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  ImageOptions:
+    properties:
+      Subpath:
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  ContainerState:
+    title: ContainerState is a string representation of the container's current state.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  DeviceMapping:
+    properties:
+      CgroupPermissions:
+        type: string
+      PathInContainer:
+        type: string
+      PathOnHost:
+        type: string
+    title: DeviceMapping represents the device mapping between the host and the container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  UTSMode:
+    title: UTSMode represents the UTS namespace of the container.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  Config:
+    description: 'It should hold only portable information about the container.
+
+      Here, "portable" means "independent from the host we are running on".
+
+      Non-portable information *should* appear in HostConfig.
+
+      All fields added to this struct must be marked `omitempty` to keep getting
+
+      predictable hashes from the old `v1Compatibility` configuration.'
+    properties:
+      ArgsEscaped:
+        type: boolean
+      AttachStderr:
+        type: boolean
+      AttachStdin:
+        type: boolean
+      AttachStdout:
+        type: boolean
+      Cmd:
+        items:
+          type: string
+        type: array
+      Domainname:
+        type: string
+      Entrypoint:
+        items:
+          type: string
+        type: array
+      Env:
+        items:
+          type: string
+        type: array
+      ExposedPorts:
+        $ref: '#/definitions/PortSet'
+      Healthcheck:
+        $ref: '#/definitions/HealthConfig'
+      Hostname:
+        type: string
+      Image:
+        type: string
+      Labels:
+        additionalProperties:
+          type: string
+        type: object
+      NetworkDisabled:
+        type: boolean
+      OnBuild:
+        items:
+          type: string
+        type: array
+      OpenStdin:
+        type: boolean
+      Shell:
+        items:
+          type: string
+        type: array
+      StdinOnce:
+        type: boolean
+      StopSignal:
+        type: string
+      StopTimeout:
+        format: int64
+        type: integer
+      Tty:
+        type: boolean
+      User:
+        type: string
+      Volumes:
+        additionalProperties:
+          type: object
+        type: object
+      WorkingDir:
+        type: string
+    title: Config contains the configuration data about a container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  ThrottleDevice:
+    description: ThrottleDevice is a structure that holds device:rate_per_second pair
+    properties:
+      Path:
+        type: string
+      Rate:
+        format: uint64
+        type: integer
+    type: object
+    x-go-package: github.com/moby/moby/api/types/blkiodev
+  NetworkSettingsSummary:
+    description: 'NetworkSettingsSummary provides a summary of container''s networks
+
+      in /containers/json'
+    properties:
+      Networks:
+        additionalProperties:
+          $ref: '#/definitions/EndpointSettings'
+        type: object
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  HealthSummary:
+    properties:
+      FailingStreak:
+        format: int64
+        type: integer
+      Status:
+        $ref: '#/definitions/HealthStatus'
+    title: HealthSummary stores a summary of the container's healthcheck results.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  LogConfig:
+    properties:
+      Config:
+        additionalProperties:
+          type: string
+        type: object
+      Type:
+        type: string
+    title: LogConfig represents the logging configuration of the container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  HostConfig:
+    description: 'Here, "non-portable" means "dependent of the host we are running on".
+
+      Portable information *should* appear in Config.'
+    properties:
+      Annotations:
+        additionalProperties:
+          type: string
+        type: object
+      AutoRemove:
+        type: boolean
+      Binds:
+        description: Applicable to all platforms
+        items:
+          type: string
+        type: array
+      BlkioDeviceReadBps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceReadIOps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceWriteBps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceWriteIOps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioWeight:
+        format: uint16
+        type: integer
+      BlkioWeightDevice:
+        items:
+          $ref: '#/definitions/WeightDevice'
+        type: array
+      CapAdd:
+        description: Applicable to UNIX platforms
+        items:
+          type: string
+        type: array
+      CapDrop:
+        items:
+          type: string
+        type: array
+      Cgroup:
+        $ref: '#/definitions/CgroupSpec'
+      CgroupParent:
+        description: Applicable to UNIX platforms
+        type: string
+      CgroupnsMode:
+        $ref: '#/definitions/CgroupnsMode'
+      ConsoleSize:
+        items:
+          format: uint64
+          type: integer
+        type: array
+      ContainerIDFile:
+        type: string
+      CpuCount:
+        description: Applicable to Windows
+        format: int64
+        type: integer
+        x-go-name: CPUCount
+      CpuPercent:
+        format: int64
+        type: integer
+        x-go-name: CPUPercent
+      CpuPeriod:
+        format: int64
+        type: integer
+        x-go-name: CPUPeriod
+      CpuQuota:
+        format: int64
+        type: integer
+        x-go-name: CPUQuota
+      CpuRealtimePeriod:
+        format: int64
+        type: integer
+        x-go-name: CPURealtimePeriod
+      CpuRealtimeRuntime:
+        format: int64
+        type: integer
+        x-go-name: CPURealtimeRuntime
+      CpuShares:
+        description: Applicable to all platforms
+        format: int64
+        type: integer
+        x-go-name: CPUShares
+      CpusetCpus:
+        type: string
+      CpusetMems:
+        type: string
+      DeviceCgroupRules:
+        items:
+          type: string
+        type: array
+      DeviceRequests:
+        items:
+          $ref: '#/definitions/DeviceRequest'
+        type: array
+      Devices:
+        items:
+          $ref: '#/definitions/DeviceMapping'
+        type: array
+      Dns:
+        items:
+          type: string
+          x-go-type: net/netip.Addr
+        type: array
+        x-go-name: DNS
+      DnsOptions:
+        items:
+          type: string
+        type: array
+        x-go-name: DNSOptions
+      DnsSearch:
+        items:
+          type: string
+        type: array
+        x-go-name: DNSSearch
+      ExtraHosts:
+        items:
+          type: string
+        type: array
+      GroupAdd:
+        items:
+          type: string
+        type: array
+      IOMaximumBandwidth:
+        format: uint64
+        type: integer
+      IOMaximumIOps:
+        format: uint64
+        type: integer
+      Init:
+        description: Run a custom init inside the container, if null, use the daemon's configured settings
+        type: boolean
+      IpcMode:
+        $ref: '#/definitions/IpcMode'
+      Isolation:
+        $ref: '#/definitions/Isolation'
+      Links:
+        items:
+          type: string
+        type: array
+      LogConfig:
+        $ref: '#/definitions/LogConfig'
+      MaskedPaths:
+        description: MaskedPaths is the list of paths to be masked inside the container (this overrides the default set of paths)
+        items:
+          type: string
+        type: array
+      Memory:
+        format: int64
+        type: integer
+      MemoryReservation:
+        format: int64
+        type: integer
+      MemorySwap:
+        format: int64
+        type: integer
+      MemorySwappiness:
+        format: int64
+        type: integer
+      Mounts:
+        description: Mounts specs used by the container
+        items:
+          $ref: '#/definitions/Mount'
+        type: array
+      NanoCpus:
+        format: int64
+        type: integer
+        x-go-name: NanoCPUs
+      NetworkMode:
+        $ref: '#/definitions/NetworkMode'
+      OomKillDisable:
+        type: boolean
+      OomScoreAdj:
+        format: int64
+        type: integer
+      PidMode:
+        $ref: '#/definitions/PidMode'
+      PidsLimit:
+        format: int64
+        type: integer
+      PortBindings:
+        $ref: '#/definitions/PortMap'
+      Privileged:
+        type: boolean
+      PublishAllPorts:
+        type: boolean
+      ReadonlyPaths:
+        description: ReadonlyPaths is the list of paths to be set as read-only inside the container (this overrides the default set of paths)
+        items:
+          type: string
+        type: array
+      ReadonlyRootfs:
+        type: boolean
+      RestartPolicy:
+        $ref: '#/definitions/RestartPolicy'
+      Runtime:
+        type: string
+      SecurityOpt:
+        items:
+          type: string
+        type: array
+      ShmSize:
+        format: int64
+        type: integer
+      StorageOpt:
+        additionalProperties:
+          type: string
+        type: object
+      Sysctls:
+        additionalProperties:
+          type: string
+        type: object
+      Tmpfs:
+        additionalProperties:
+          type: string
+        type: object
+      UTSMode:
+        $ref: '#/definitions/UTSMode'
+      Ulimits:
+        items:
+          $ref: '#/definitions/Ulimit'
+        type: array
+      UsernsMode:
+        $ref: '#/definitions/UsernsMode'
+      VolumeDriver:
+        type: string
+      VolumesFrom:
+        items:
+          type: string
+        type: array
+    title: HostConfig the non-portable Config structure of a container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/container
+  NetworkMode:
+    title: NetworkMode represents the container network stack.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  Storage:
+    properties:
+      RootFS:
+        $ref: '#/definitions/RootFSStorage'
+    title: Storage Information about the storage used by the container.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/storage
+  IpcMode:
+    title: IpcMode represents the container ipc stack.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/container
+  containerUpdateRequest:
+    description: Container update
+    properties:
+      BlkioDeviceReadBps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceReadIOps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceWriteBps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioDeviceWriteIOps:
+        items:
+          $ref: '#/definitions/ThrottleDevice'
+        type: array
+      BlkioWeight:
+        format: uint16
+        type: integer
+      BlkioWeightDevice:
+        items:
+          $ref: '#/definitions/WeightDevice'
+        type: array
+      CgroupParent:
+        description: Applicable to UNIX platforms
+        type: string
+      CpuCount:
+        description: Applicable to Windows
+        format: int64
+        type: integer
+        x-go-name: CPUCount
+      CpuPercent:
+        format: int64
+        type: integer
+        x-go-name: CPUPercent
+      CpuPeriod:
+        format: int64
+        type: integer
+        x-go-name: CPUPeriod
+      CpuQuota:
+        format: int64
+        type: integer
+        x-go-name: CPUQuota
+      CpuRealtimePeriod:
+        format: int64
+        type: integer
+        x-go-name: CPURealtimePeriod
+      CpuRealtimeRuntime:
+        format: int64
+        type: integer
+        x-go-name: CPURealtimeRuntime
+      CpuShares:
+        description: Applicable to all platforms
+        format: int64
+        type: integer
+        x-go-name: CPUShares
+      CpusetCpus:
+        type: string
+      CpusetMems:
+        type: string
+      DeviceCgroupRules:
+        items:
+          type: string
+        type: array
+      DeviceRequests:
+        items:
+          $ref: '#/definitions/DeviceRequest'
+        type: array
+      Devices:
+        items:
+          $ref: '#/definitions/DeviceMapping'
+        type: array
+      IOMaximumBandwidth:
+        format: uint64
+        type: integer
+      IOMaximumIOps:
+        format: uint64
+        type: integer
+      Memory:
+        format: int64
+        type: integer
+      MemoryReservation:
+        format: int64
+        type: integer
+      MemorySwap:
+        format: int64
+        type: integer
+      MemorySwappiness:
+        format: int64
+        type: integer
+      NanoCpus:
+        format: int64
+        type: integer
+        x-go-name: NanoCPUs
+      OomKillDisable:
+        type: boolean
+      PidsLimit:
+        format: int64
+        type: integer
+      RestartPolicy:
+        $ref: '#/definitions/RestartPolicy'
+      Ulimits:
+        items:
+          $ref: '#/definitions/Ulimit'
+        type: array
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
+  Mount:
+    properties:
+      BindOptions:
+        $ref: '#/definitions/BindOptions'
+      ClusterOptions:
+        $ref: '#/definitions/ClusterOptions'
+      Consistency:
+        $ref: '#/definitions/Consistency'
+      ImageOptions:
+        $ref: '#/definitions/ImageOptions'
+      ReadOnly:
+        type: boolean
+      Source:
+        description: 'Source specifies the name of the mount. Depending on mount type, this
+
+          may be a volume name or a host path, or even ignored.
+
+          Source is not supported for tmpfs (must be an empty value)'
+        type: string
+      Target:
+        type: string
+      TmpfsOptions:
+        $ref: '#/definitions/TmpfsOptions'
+      Type:
+        $ref: '#/definitions/Type'
+      VolumeOptions:
+        $ref: '#/definitions/VolumeOptions'
+    title: Mount represents a mount (volume).
+    type: object
+    x-go-package: github.com/moby/moby/api/types/mount
+  EndpointIPAMConfig:
+    description: EndpointIPAMConfig represents IPAM configurations for the endpoint
+    properties:
+      IPv4Address:
+        type: string
+        x-go-type: net/netip.Addr
+      IPv6Address:
+        type: string
+        x-go-type: net/netip.Addr
+      LinkLocalIPs:
+        items:
+          type: string
+          x-go-type: net/netip.Addr
+        type: array
+    type: object
+    x-go-package: github.com/moby/moby/api/types/network
+responses:
+  containerCreateResponse:
+    description: Create container
+    schema:
+      $ref: '#/definitions/ContainerCreateResponse'
+  ok:
+    description: Success
+    schema:
+      type: object
+  badParamError:
+    description: Bad parameter in request
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containerTopResponse:
+    description: List processes in container
+    schema:
+      $ref: '#/definitions/ContainerTopOKBody'
+  imageNotFound:
+    description: No such image
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containersPrune:
+    description: Prune Containers
+    schema:
+      items:
+        $ref: '#/definitions/ContainersPruneReport'
+      type: array
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containerAlreadyStartedError:
+    description: Container already started
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containersList:
+    description: List Containers
+    schema:
+      items:
+        $ref: '#/definitions/Container'
+      type: array
+  containerNotFound:
+    description: No such container
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containerAlreadyStoppedError:
+    description: Container already stopped
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  containerWaitResponse:
+    description: Wait container
+    schema:
+      properties:
+        Error:
+          properties:
+            Message:
+              type: string
+          type: object
+        StatusCode:
+          description: container exit code
+          format: int64
+          type: integer
+      type: object
+  containerInspectResponse:
+    description: Inspect container
+    schema:
+      $ref: '#/definitions/InspectResponse'
+  conflictError:
+    description: Conflict error in operation
+    schema:
+      $ref: '#/definitions/ErrorModel'

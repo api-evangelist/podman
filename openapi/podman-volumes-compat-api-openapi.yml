@@ -1,0 +1,932 @@
+swagger: '2.0'
+info:
+  contact:
+    email: podman@lists.podman.io
+    name: Podman
+    url: https://podman.io/community/
+  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
+
+    API and a Libpod API providing support for Podman’s unique features such as pods.
+
+
+    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
+
+
+    podman system service -t 5000 &
+
+
+    You can then use cURL on the socket using requests documented below.
+
+
+    NOTE: if you install the package podman-docker, it will create a symbolic
+
+    link for /run/docker.sock to /run/podman/podman.sock
+
+
+    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
+
+    if said field has a zero value, they will not be encoded in the API response. This
+
+    is a feature to help reduce the size of the JSON responses returned via the API.
+
+
+    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
+
+    some field values that have a complex type show up as null in the docs as well as in the
+
+    API responses. This is because the zero value for the field type is null. The field
+
+    description in the docs will state what type the field is expected to be for such cases.
+
+
+    See podman-system-service(1) for more information.
+
+
+    Quick Examples:
+
+
+    ''podman info''
+
+
+    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
+
+
+    ''podman pull quay.io/containers/podman''
+
+
+    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
+
+
+    ''podman list images''
+
+
+    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
+  title: supports a RESTful API for the Libpod library artifacts volumes (compat) API
+  version: 5.0.0
+  x-logo:
+  - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
+  - altText: Podman logo
+host: podman.io
+basePath: /
+schemes:
+- http
+- https
+consumes:
+- application/json
+- application/x-tar
+produces:
+- application/json
+- application/octet-stream
+- text/plain
+tags:
+- description: Actions related to volumes for the compatibility endpoints
+  name: volumes (compat)
+paths:
+  /volumes:
+    get:
+      description: Returns a list of volume
+      operationId: VolumeList
+      parameters:
+      - description: "JSON encoded value of the filters (a map[string][]string) to process on the volumes list. Available filters:\n  - driver=<volume-driver-name> Matches volumes based on their driver.\n  - label=<key> or label=<key>:<value> Matches volumes based on the presence of a label alone or a label and a value.\n  - name=<volume-name> Matches all of volume name.\n  - `until=<timestamp>` List volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n\nNote:\n  The boolean `dangling` filter is not yet implemented for this endpoint.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumeList'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: List volumes
+      tags:
+      - volumes (compat)
+  /volumes/{name}:
+    delete:
+      operationId: VolumeDelete
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 'Force removal of the volume. This actually only causes errors due
+
+          to the names volume not being found to be suppressed, which is the
+
+          behaviour Docker implements.
+
+          '
+        in: query
+        name: force
+        type: boolean
+      - description: timeout before forcibly killing any containers using the volume
+        in: query
+        name: timeout
+        type: integer
+      produces:
+      - application/json
+      responses:
+        '204':
+          description: no error
+        '404':
+          $ref: '#/responses/volumeNotFound'
+        '409':
+          description: Volume is in use and cannot be removed
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Remove volume
+      tags:
+      - volumes (compat)
+    get:
+      operationId: VolumeInspect
+      parameters:
+      - description: the name or ID of the volume
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumeInspect'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Inspect volume
+      tags:
+      - volumes (compat)
+  /volumes/create:
+    post:
+      operationId: VolumeCreate
+      parameters:
+      - description: 'attributes for creating a volume.
+
+          Note: If a volume by the same name exists, a 201 response with that volume''s information will be generated.
+
+          '
+        in: body
+        name: create
+        schema:
+          $ref: '#/definitions/volumeCreate'
+      produces:
+      - application/json
+      responses:
+        '201':
+          $ref: '#/responses/volumeInspect'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Create a volume
+      tags:
+      - volumes (compat)
+  /volumes/prune:
+    post:
+      operationId: VolumePrune
+      parameters:
+      - description: "JSON encoded value of filters (a map[string][]string). Docker API 1.42+ - by default only anonymous (unnamed) unused volumes are pruned; use filter all=true to prune all unused volumes.\nAvailable filters:\n  - `all` When true, prune all unused volumes (anonymous and named). When false or unset, only anonymous unused volumes are pruned.\n  - `until=<timestamp>` Prune volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.\n"
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        '200':
+          $ref: '#/responses/volumePruneResponse'
+        '500':
+          $ref: '#/responses/internalError'
+      summary: Prune volumes
+      tags:
+      - volumes (compat)
+definitions:
+  Availability:
+    title: Availability specifies the availability of the volume.
+    type: string
+    x-go-package: github.com/moby/moby/api/types/volume
+  Scope:
+    description: 'Scope defines the Scope of a Cluster Volume. This is how many nodes a
+
+      Volume can be accessed simultaneously on.'
+    type: string
+    x-go-package: github.com/moby/moby/api/types/volume
+  Volume:
+    description: Volume volume
+    properties:
+      ClusterVolume:
+        $ref: '#/definitions/ClusterVolume'
+      CreatedAt:
+        description: Date/Time the volume was created.
+        example: '2016-06-07T20:31:11.853781916Z'
+        type: string
+      Driver:
+        description: Name of the volume driver used by the volume.
+        example: custom
+        type: string
+      Labels:
+        additionalProperties:
+          type: string
+        description: User-defined key/value metadata.
+        example:
+          com.example.some-label: some-value
+          com.example.some-other-label: some-other-value
+        type: object
+      Mountpoint:
+        description: Mount path of the volume on the host.
+        example: /var/lib/docker/volumes/tardis
+        type: string
+      Name:
+        description: Name of the volume.
+        example: tardis
+        type: string
+      Options:
+        additionalProperties:
+          type: string
+        description: The driver specific options used when creating the volume.
+        example:
+          device: tmpfs
+          o: size=100m,uid=1000
+          type: tmpfs
+        type: object
+      Scope:
+        description: 'The level at which the volume exists. Either `global` for cluster-wide,
+
+          or `local` for machine level.'
+        enum:
+        - local
+        - global
+        example: local
+        type: string
+      Status:
+        additionalProperties: {}
+        description: 'Low-level details about the volume, provided by the volume driver.
+
+          Details are returned as a map with key/value pairs:
+
+          `{"key":"value","key2":"value2"}`.
+
+
+          The `Status` field is optional, and is omitted if the volume driver
+
+          does not support this feature.'
+        example:
+          hello: world
+        type: object
+      UsageData:
+        $ref: '#/definitions/UsageData'
+    required:
+    - Driver
+    - Labels
+    - Mountpoint
+    - Name
+    - Options
+    - Scope
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  ErrorModel:
+    description: ErrorModel is used in remote connections with podman
+    properties:
+      cause:
+        description: API root cause formatted for automated parsing
+        example: API root cause
+        type: string
+        x-go-name: Because
+      message:
+        description: human error message, formatted for a human to read
+        example: human error message
+        type: string
+        x-go-name: Message
+      response:
+        description: HTTP response code
+        format: int64
+        minimum: 400
+        type: integer
+        x-go-name: ResponseCode
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+  TypeMount:
+    description: 'TypeMount contains options for using a volume as a Mount-type
+
+      volume.'
+    properties:
+      FsType:
+        description: FsType specifies the filesystem type for the mount volume. Optional.
+        type: string
+      MountFlags:
+        description: MountFlags defines flags to pass when mounting the volume. Optional.
+        items:
+          type: string
+        type: array
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  PublishStatus:
+    description: 'PublishStatus represents the status of the volume as published to an
+
+      individual node'
+    properties:
+      NodeID:
+        description: NodeID is the ID of the swarm node this Volume is published to.
+        type: string
+      PublishContext:
+        additionalProperties:
+          type: string
+        description: 'PublishContext is the PublishContext returned by the CSI plugin when
+
+          a volume is published.'
+        type: object
+      State:
+        $ref: '#/definitions/PublishState'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  volumeCreate:
+    description: Details for creating a volume
+    properties:
+      Driver:
+        description: Name of the volume driver to use.
+        type: string
+      DriverOpts:
+        additionalProperties:
+          type: string
+        description: 'A mapping of driver options and values. These options are
+
+          passed directly to the driver and are driver specific.'
+        type: object
+      Labels:
+        additionalProperties:
+          type: string
+        description: User-defined key/value metadata.
+        type: object
+      Name:
+        description: The new volume's name. If not specified, Docker generates a name.
+        type: string
+    required:
+    - Driver
+    - DriverOpts
+    - Labels
+    - Name
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
+  Version:
+    description: Version is an output struct for API
+    properties:
+      APIVersion:
+        type: string
+      BuildOrigin:
+        type: string
+      Built:
+        format: int64
+        type: integer
+      BuiltTime:
+        type: string
+      GitCommit:
+        type: string
+      GoVersion:
+        type: string
+      Os:
+        type: string
+      OsArch:
+        type: string
+      Version:
+        type: string
+    type: object
+    x-go-package: go.podman.io/podman/v6/libpod/define
+  SharingMode:
+    description: 'SharingMode defines the Sharing of a Cluster Volume. This is how Tasks using a
+
+      Volume at the same time can use it.'
+    type: string
+    x-go-package: github.com/moby/moby/api/types/volume
+  Topology:
+    description: 'This description is taken verbatim from the CSI Spec:
+
+
+      A topological domain is a sub-division of a cluster, like "region",
+
+      "zone", "rack", etc.
+
+      A topological segment is a specific instance of a topological domain,
+
+      like "zone3", "rack3", etc.
+
+      For example {"com.company/zone": "Z1", "com.company/rack": "R3"}
+
+      Valid keys have two segments: an OPTIONAL prefix and name, separated'
+    example: '"com.company.example/zone".'
+    properties:
+      Segments:
+        additionalProperties:
+          type: string
+        type: object
+    title: Topology is a map of topological domains to topological segments.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  AccessMode:
+    properties:
+      BlockVolume:
+        $ref: '#/definitions/TypeBlock'
+      MountVolume:
+        $ref: '#/definitions/TypeMount'
+      Scope:
+        $ref: '#/definitions/Scope'
+      Sharing:
+        $ref: '#/definitions/SharingMode'
+    title: AccessMode defines the access mode of a volume.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  Info:
+    description: 'Info contains information about the Volume as a whole as provided by
+
+      the CSI storage plugin.'
+    properties:
+      AccessibleTopology:
+        description: 'AccessibleTopology is the topology this volume is actually accessible
+
+          from.'
+        items:
+          $ref: '#/definitions/Topology'
+        type: array
+      CapacityBytes:
+        description: 'CapacityBytes is the capacity of the volume in bytes. A value of 0
+
+          indicates that the capacity is unknown.'
+        format: int64
+        type: integer
+      VolumeContext:
+        additionalProperties:
+          type: string
+        description: 'VolumeContext is the context originating from the CSI storage plugin
+
+          when the Volume is created.'
+        type: object
+      VolumeID:
+        description: 'VolumeID is the ID of the Volume as seen by the CSI storage plugin. This
+
+          is distinct from the Volume''s Swarm ID, which is the ID used by all of
+
+          the Docker Engine to refer to the Volume. If this field is blank, then
+
+          the Volume has not been successfully created yet.'
+        type: string
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  ClusterVolume:
+    description: 'ClusterVolume contains options and information specific to, and only present
+
+      on, Swarm CSI cluster volumes.'
+    properties:
+      CreatedAt:
+        format: date-time
+        type: string
+      ID:
+        description: 'ID is the Swarm ID of the volume. Because cluster volumes are Swarm
+
+          objects, they have an ID, unlike non-cluster volumes, which only have a
+
+          Name. This ID can be used to refer to the cluster volume.'
+        type: string
+      Info:
+        $ref: '#/definitions/Info'
+      PublishStatus:
+        description: 'PublishStatus contains the status of the volume as it pertains to its
+
+          publishing on Nodes.'
+        items:
+          $ref: '#/definitions/PublishStatus'
+        type: array
+      Spec:
+        $ref: '#/definitions/ClusterVolumeSpec'
+      UpdatedAt:
+        format: date-time
+        type: string
+      Version:
+        $ref: '#/definitions/Version'
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  PruneReport:
+    description: POST "/volumes/prune"
+    properties:
+      Err:
+        type: string
+        x-go-type: error
+      Id:
+        type: string
+      Size:
+        format: uint64
+        type: integer
+    title: 'PruneReport contains the response for Engine API:'
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+  TopologyRequirement:
+    description: 'TopologyRequirement expresses the user''s requirements for a volume''s
+
+      accessible topology.'
+    properties:
+      Preferred:
+        description: 'Preferred is a list of Topologies that the volume should attempt to be
+
+          provisioned in.
+
+
+          Taken from the CSI spec:
+
+
+          Specifies the list of topologies the CO would prefer the volume to
+
+          be provisioned in.
+
+
+          This field is OPTIONAL. If TopologyRequirement is specified either
+
+          requisite or preferred or both MUST be specified.
+
+
+          An SP MUST attempt to make the provisioned volume available using
+
+          the preferred topologies in order from first to last.
+
+
+          If requisite is specified, all topologies in preferred list MUST
+
+          also be present in the list of requisite topologies.
+
+
+          If the SP is unable to make the provisioned volume available
+
+          from any of the preferred topologies, the SP MAY choose a topology
+
+          from the list of requisite topologies.
+
+          If the list of requisite topologies is not specified, then the SP
+
+          MAY choose from the list of all possible topologies.
+
+          If the list of requisite topologies is specified and the SP is
+
+          unable to make the provisioned volume available from any of the
+
+          requisite topologies it MUST fail the CreateVolume call.
+
+
+          Example 1:
+
+          Given a volume should be accessible from a single zone, and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"}
+
+          preferred =
+
+          {"region": "R1", "zone": "Z3"}
+
+          then the SP SHOULD first attempt to make the provisioned volume
+
+          available from "zone" "Z3" in the "region" "R1" and fall back to
+
+          "zone" "Z2" in the "region" "R1" if that is not possible.
+
+
+          Example 2:
+
+          Given a volume should be accessible from a single zone, and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"},
+
+          {"region": "R1", "zone": "Z4"},
+
+          {"region": "R1", "zone": "Z5"}
+
+          preferred =
+
+          {"region": "R1", "zone": "Z4"},
+
+          {"region": "R1", "zone": "Z2"}
+
+          then the SP SHOULD first attempt to make the provisioned volume
+
+          accessible from "zone" "Z4" in the "region" "R1" and fall back to
+
+          "zone" "Z2" in the "region" "R1" if that is not possible. If that
+
+          is not possible, the SP may choose between either the "zone"
+
+          "Z3" or "Z5" in the "region" "R1".
+
+
+          Example 3:
+
+          Given a volume should be accessible from TWO zones (because an
+
+          opaque parameter in CreateVolumeRequest, for example, specifies
+
+          the volume is accessible from two zones, aka synchronously
+
+          replicated), and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"},
+
+          {"region": "R1", "zone": "Z4"},
+
+          {"region": "R1", "zone": "Z5"}
+
+          preferred =
+
+          {"region": "R1", "zone": "Z5"},
+
+          {"region": "R1", "zone": "Z3"}
+
+          then the SP SHOULD first attempt to make the provisioned volume
+
+          accessible from the combination of the two "zones" "Z5" and "Z3" in
+
+          the "region" "R1". If that''s not possible, it should fall back to
+
+          a combination of "Z5" and other possibilities from the list of
+
+          requisite. If that''s not possible, it should fall back  to a
+
+          combination of "Z3" and other possibilities from the list of
+
+          requisite. If that''s not possible, it should fall back  to a
+
+          combination of other possibilities from the list of requisite.'
+        items:
+          $ref: '#/definitions/Topology'
+        type: array
+      Requisite:
+        description: 'Requisite specifies a list of Topologies, at least one of which the
+
+          volume must be accessible from.
+
+
+          Taken verbatim from the CSI Spec:
+
+
+          Specifies the list of topologies the provisioned volume MUST be
+
+          accessible from.
+
+          This field is OPTIONAL. If TopologyRequirement is specified either
+
+          requisite or preferred or both MUST be specified.
+
+
+          If requisite is specified, the provisioned volume MUST be
+
+          accessible from at least one of the requisite topologies.
+
+
+          Given
+
+          x = number of topologies provisioned volume is accessible from
+
+          n = number of requisite topologies
+
+          The CO MUST ensure n >= 1. The SP MUST ensure x >= 1
+
+          If x==n, then the SP MUST make the provisioned volume available to
+
+          all topologies from the list of requisite topologies. If it is
+
+          unable to do so, the SP MUST fail the CreateVolume call.
+
+          For example, if a volume should be accessible from a single zone,
+
+          and requisite =
+
+          {"region": "R1", "zone": "Z2"}
+
+          then the provisioned volume MUST be accessible from the "region"
+
+          "R1" and the "zone" "Z2".
+
+          Similarly, if a volume should be accessible from two zones, and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"}
+
+          then the provisioned volume MUST be accessible from the "region"
+
+          "R1" and both "zone" "Z2" and "zone" "Z3".
+
+
+          If x<n, then the SP SHALL choose x unique topologies from the list
+
+          of requisite topologies. If it is unable to do so, the SP MUST fail
+
+          the CreateVolume call.
+
+          For example, if a volume should be accessible from a single zone,
+
+          and requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"}
+
+          then the SP may choose to make the provisioned volume available in
+
+          either the "zone" "Z2" or the "zone" "Z3" in the "region" "R1".
+
+          Similarly, if a volume should be accessible from two zones, and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"},
+
+          {"region": "R1", "zone": "Z3"},
+
+          {"region": "R1", "zone": "Z4"}
+
+          then the provisioned volume MUST be accessible from any combination
+
+          of two unique topologies: e.g. "R1/Z2" and "R1/Z3", or "R1/Z2" and
+
+          "R1/Z4", or "R1/Z3" and "R1/Z4".
+
+
+          If x>n, then the SP MUST make the provisioned volume available from
+
+          all topologies from the list of requisite topologies and MAY choose
+
+          the remaining x-n unique topologies from the list of all possible
+
+          topologies. If it is unable to do so, the SP MUST fail the
+
+          CreateVolume call.
+
+          For example, if a volume should be accessible from two zones, and
+
+          requisite =
+
+          {"region": "R1", "zone": "Z2"}
+
+          then the provisioned volume MUST be accessible from the "region"
+
+          "R1" and the "zone" "Z2" and the SP may select the second zone
+
+          independently, e.g. "R1/Z4".'
+        items:
+          $ref: '#/definitions/Topology'
+        type: array
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  ListResponse:
+    description: '# Volume list response'
+    properties:
+      Volumes:
+        description: List of volumes
+        items:
+          $ref: '#/definitions/Volume'
+        type: array
+      Warnings:
+        description: Warnings that occurred when fetching the list of volumes.
+        example: []
+        items:
+          type: string
+        type: array
+    title: ListResponse VolumeListResponse
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  ClusterVolumeSpec:
+    properties:
+      AccessMode:
+        $ref: '#/definitions/AccessMode'
+      AccessibilityRequirements:
+        $ref: '#/definitions/TopologyRequirement'
+      Availability:
+        $ref: '#/definitions/Availability'
+      CapacityRange:
+        $ref: '#/definitions/CapacityRange'
+      Group:
+        description: 'Group defines the volume group of this volume. Volumes belonging to the
+
+          same group can be referred to by group name when creating Services.
+
+          Referring to a volume by group instructs swarm to treat volumes in that
+
+          group interchangeably for the purpose of scheduling. Volumes with an
+
+          empty string for a group technically all belong to the same, emptystring
+
+          group.'
+        type: string
+      Secrets:
+        description: 'Secrets defines Swarm Secrets that are passed to the CSI storage plugin
+
+          when operating on this volume.'
+        items:
+          $ref: '#/definitions/Secret'
+        type: array
+    title: ClusterVolumeSpec contains the spec used to create this volume.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  UsageData:
+    description: 'UsageData Usage details about the volume. This information is used by the
+
+      `GET /system/df` endpoint, and omitted in other endpoints.'
+    properties:
+      RefCount:
+        description: 'The number of containers referencing this volume. This field
+
+          is set to `-1` if the reference-count is not available.'
+        format: int64
+        type: integer
+      Size:
+        description: 'Amount of disk space used by the volume (in bytes). This information
+
+          is only available for volumes created with the `"local"` volume
+
+          driver. For volumes created with other volume drivers, this field
+
+          is set to `-1` ("not available")'
+        format: int64
+        type: integer
+    required:
+    - RefCount
+    - Size
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  PublishState:
+    description: 'PublishState represents the state of a Volume as it pertains to its
+
+      use on a particular Node.'
+    type: string
+    x-go-package: github.com/moby/moby/api/types/volume
+  Secret:
+    properties:
+      GID:
+        format: uint32
+        type: integer
+      Mode:
+        format: uint32
+        type: integer
+      Source:
+        type: string
+      Target:
+        type: string
+      UID:
+        format: uint32
+        type: integer
+    type: object
+    x-go-package: go.podman.io/podman/v6/pkg/specgen
+  CapacityRange:
+    description: 'CapacityRange describes the minimum and maximum capacity a volume should be
+
+      created with'
+    properties:
+      LimitBytes:
+        description: 'LimitBytes specifies that a volume must not be bigger than this. The
+
+          value of 0 indicates an unspecified maximum'
+        format: int64
+        type: integer
+      RequiredBytes:
+        description: 'RequiredBytes specifies that a volume must be at least this big. The
+
+          value of 0 indicates an unspecified minimum.'
+        format: int64
+        type: integer
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+  TypeBlock:
+    description: Intentionally empty.
+    title: TypeBlock defines options for using a volume as a block-type volume.
+    type: object
+    x-go-package: github.com/moby/moby/api/types/volume
+responses:
+  volumeInspect:
+    description: This response definition is used for both the create and inspect endpoints
+    schema:
+      $ref: '#/definitions/Volume'
+  internalError:
+    description: Internal server error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  volumeList:
+    description: Volume List
+    schema:
+      $ref: '#/definitions/ListResponse'
+  volumeNotFound:
+    description: No such volume
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  volumePruneResponse:
+    description: Volume prune
+    schema:
+      $ref: '#/definitions/PruneReport'
