@@ -6,9 +6,21 @@ description: >-
   Docker-compatible surface alongside Libpod-specific endpoints for pods, volumes, networks, secrets, generators, and
   system management.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/podman.png
 tags:
   - Cloud Native
   - Containers
@@ -20,25 +32,258 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: podman:podman-rest-api
-    name: Podman REST API
-    description: >-
-      The Podman REST API (libpod) provides a Docker-compatible API surface plus Podman-specific Libpod endpoints for
-      managing containers, images, pods, volumes, networks, secrets, manifests, and the Podman system service. The API
-      is published as a Swagger 2.0 specification generated from the Podman source tree.
-    humanURL: https://docs.podman.io/en/latest/_static/api.html
-    baseURL: http://d/v6.0.0/libpod
-    tags:
-      - Containers
-      - DevOps
-      - OCI
-    properties:
-      - type: Documentation
-        url: https://docs.podman.io/en/latest/_static/api.html
-      - type: GettingStarted
-        url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
-      - type: OpenAPI
-        url: openapi/podman-openapi.yml
+- aid: podman:podman-artifacts-api
+  name: Podman artifacts API
+  description: Actions related to artifacts
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - artifacts
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-artifacts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-containers-api
+  name: Podman containers API
+  description: Actions related to containers
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - containers
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-containers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-containers-compat-api
+  name: Podman containers (compat) API
+  description: Actions related to containers for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - containers (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-containers-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-exec-api
+  name: Podman exec API
+  description: Actions related to exec
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - exec
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-exec-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-exec-compat-api
+  name: Podman exec (compat) API
+  description: Actions related to exec for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - exec (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-exec-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-images-api
+  name: Podman images API
+  description: Actions related to images
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - images
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-images-compat-api
+  name: Podman images (compat) API
+  description: Actions related to images for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - images (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-images-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-manifests-api
+  name: Podman manifests API
+  description: Actions related to manifests
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - manifests
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-manifests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-networks-api
+  name: Podman networks API
+  description: Actions related to networks
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - networks
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-networks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-networks-compat-api
+  name: Podman networks (compat) API
+  description: Actions related to networks for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - networks (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-networks-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-pods-api
+  name: Podman pods API
+  description: Actions related to pods
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - pods
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-pods-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-quadlets-api
+  name: Podman quadlets API
+  description: The quadlets API from Podman — 5 operation(s) for quadlets.
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - quadlets
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-quadlets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-secrets-api
+  name: Podman secrets API
+  description: Actions related to secrets
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-secrets-compat-api
+  name: Podman secrets (compat) API
+  description: Actions related to secrets for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - secrets (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-secrets-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-system-api
+  name: Podman system API
+  description: Actions related to Podman engine
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - system
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-system-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-system-compat-api
+  name: Podman system (compat) API
+  description: Actions related to Podman and compatibility engines
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - system (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-system-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-volumes-api
+  name: Podman volumes API
+  description: Actions related to volumes
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
+- aid: podman:podman-volumes-compat-api
+  name: Podman volumes (compat) API
+  description: Actions related to volumes for the compatibility endpoints
+  humanURL: https://docs.podman.io/en/latest/_static/api.html
+  baseURL: http://d/v6.0.0/libpod
+  tags:
+  - volumes (compat)
+  properties:
+  - type: OpenAPI
+    url: openapi/podman-volumes-compat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.podman.io/en/latest/_static/api.html
+  - type: GettingStarted
+    url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
 common:
   - type: AgenticAccess
     url: agentic-access/podman-agentic-access.yml
