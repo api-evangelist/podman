@@ -285,6 +285,9 @@ apis:
   - type: GettingStarted
     url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
 common:
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/containers/podman/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/podman-agentic-access.yml
   - type: DomainSecurity
