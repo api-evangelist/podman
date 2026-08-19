@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts exec (compat) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "exec (compat)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an exec instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/exec",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "name of container"
+              }
+            ]
+          },
+          "docs": "Create an exec session to run a command inside a running container. Exec sessions will be automatically removed 5 minutes after they exit."
+        },
+        {
+          "info": {
+            "name": "Inspect an exec instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/exec/:id/json",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Exec instance ID"
+              }
+            ]
+          },
+          "docs": "Return low-level information about an exec instance."
+        },
+        {
+          "info": {
+            "name": "Resize an exec instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exec/:id/resize",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Exec instance ID"
+              },
+              {
+                "name": "h",
+                "value": "",
+                "type": "query",
+                "description": "Height of the TTY session in characters"
+              },
+              {
+                "name": "w",
+                "value": "",
+                "type": "query",
+                "description": "Width of the TTY session in characters"
+              },
+              {
+                "name": "running",
+                "value": "",
+                "type": "query",
+                "description": "Ignore containers not running errors"
+              }
+            ]
+          },
+          "docs": "Resize the TTY session used by an exec instance. This endpoint only works if tty was specified as part of creating and starting the exec instance.\n"
+        },
+        {
+          "info": {
+            "name": "Start an exec instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exec/:id/start",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Exec instance ID"
+              }
+            ]
+          },
+          "docs": "Starts a previously set up exec instance. If detach is true, this endpoint returns immediately after starting the command. Otherwise, it sets up an interactive session with the command."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

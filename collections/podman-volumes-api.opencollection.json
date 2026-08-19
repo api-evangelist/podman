@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts volumes API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Remove volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/volumes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "force removal"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "timeout before forcibly killing any containers using the volume"
+              }
+            ]
+          },
+          "docs": "Remove volume"
+        },
+        {
+          "info": {
+            "name": "Volume exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/volumes/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the volume"
+              }
+            ]
+          },
+          "docs": "Check if a volume exists"
+        },
+        {
+          "info": {
+            "name": "Export a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/volumes/:name/export",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              }
+            ]
+          },
+          "docs": "Export a volume"
+        },
+        {
+          "info": {
+            "name": "Populate a volume by importing provided tar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/volumes/:name/import",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              }
+            ]
+          },
+          "docs": "Populate a volume by importing provided tar"
+        },
+        {
+          "info": {
+            "name": "Inspect volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/volumes/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              }
+            ]
+          },
+          "docs": "Inspect volume"
+        },
+        {
+          "info": {
+            "name": "Create a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/volumes/create"
+          },
+          "docs": "Create a volume"
+        },
+        {
+          "info": {
+            "name": "List volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/volumes/json",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of the filters (a map[string][]string) to process on the volumes list. Available filters:\n  - driver=<volume-driver-name> Matches volumes based on their driver.\n  - label=<key> or label=<key>:<value> Matches volumes based on the presence of a label alone or a label and a value.\n  - name=<volume-name> Matches all of volume name.\n  - opt=<driver-option> Matches a storage driver options\n  - `until=<timestamp>` List volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of volumes"
+        },
+        {
+          "info": {
+            "name": "Prune volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/volumes/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of filters (a map[string][]string) to match volumes against before pruning.\nAvailable filters:\n  - `all` When true, prune all unused volumes; when false or unset, only anonymous unused volumes.\n  - `anonymous` When true/false, restrict to anonymous or named volumes only.\n  - `until=<timestamp>` Prune volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Prune volumes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

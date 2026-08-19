@@ -1,0 +1,823 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts containers (compat) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "containers (compat)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "New Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/commit",
+            "params": [
+              {
+                "name": "container",
+                "value": "",
+                "type": "query",
+                "description": "the name or ID of a container"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "the repository name for the created image"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "tag name for the created image"
+              },
+              {
+                "name": "comment",
+                "value": "",
+                "type": "query",
+                "description": "commit message"
+              },
+              {
+                "name": "author",
+                "value": "",
+                "type": "query",
+                "description": "author of the image"
+              },
+              {
+                "name": "pause",
+                "value": "",
+                "type": "query",
+                "description": "pause the container before committing it"
+              },
+              {
+                "name": "changes",
+                "value": "",
+                "type": "query",
+                "description": "instructions to apply while committing in Dockerfile format"
+              },
+              {
+                "name": "squash",
+                "value": "",
+                "type": "query",
+                "description": "squash newly built layers into a single new layer"
+              }
+            ]
+          },
+          "docs": "Create a new image from a container"
+        },
+        {
+          "info": {
+            "name": "Remove a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/containers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "If the container is running, kill it before removing it."
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Remove the volumes associated with the container."
+              },
+              {
+                "name": "link",
+                "value": "",
+                "type": "query",
+                "description": "not supported"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Ignore if a specified container does not exist."
+              },
+              {
+                "name": "depend",
+                "value": "",
+                "type": "query",
+                "description": "Remove container dependencies."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to wait before forcibly stopping the container."
+              },
+              {
+                "name": "volumes",
+                "value": "",
+                "type": "query",
+                "description": "Remove anonymous volumes associated with the container."
+              }
+            ]
+          },
+          "docs": "Remove a container"
+        },
+        {
+          "info": {
+            "name": "Get files from a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/archive",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "container name or id"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to a directory in the container to extract"
+              }
+            ]
+          },
+          "docs": "Get a tar archive of files from a container"
+        },
+        {
+          "info": {
+            "name": "Put files into a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/containers/:name/archive",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "container name or id"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to a directory in the container to extract"
+              },
+              {
+                "name": "noOverwriteDirNonDir",
+                "value": "",
+                "type": "query",
+                "description": "if unpacking the given content would cause an existing directory to be replaced with a non-directory and vice versa (1 or true)"
+              },
+              {
+                "name": "copyUIDGID",
+                "value": "",
+                "type": "query",
+                "description": "copy UID/GID maps to the dest file or di (1 or true)"
+              }
+            ]
+          },
+          "docs": "Put a tar archive of files into a container"
+        },
+        {
+          "info": {
+            "name": "Attach to a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/attach",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "detachKeys",
+                "value": "",
+                "type": "query",
+                "description": "keys to use for detaching from the container"
+              },
+              {
+                "name": "logs",
+                "value": "",
+                "type": "query",
+                "description": "Stream all logs from the container across the connection. Happens before streaming attach (if requested). At least one of logs or stream must be set"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Attach to the container. If unset, and logs is set, only the container's logs will be sent. At least one of stream or logs must be set"
+              },
+              {
+                "name": "stdout",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDOUT"
+              },
+              {
+                "name": "stderr",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDERR"
+              },
+              {
+                "name": "stdin",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDIN"
+              }
+            ]
+          },
+          "docs": "Attach to a container to read its output or send it input. You can attach\nto the same container multiple times and you can reattach to containers\nthat have been detached.\n\nIt uses the same stream format as docker, see the libpod attach endpoint for a description of the format.\n"
+        },
+        {
+          "info": {
+            "name": "Report on changes to container's filesystem; adds, deletes or modifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/changes",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or id of the container"
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "specify a second layer which is used to compare against it instead of the parent layer"
+              },
+              {
+                "name": "diffType",
+                "value": "",
+                "type": "query",
+                "description": "select what you want to match, default is all"
+              }
+            ]
+          },
+          "docs": "Returns which files in a container's filesystem have been added, deleted, or modified. The Kind of modification can be one of:\n\n0: Modified\n1: Added\n2: Deleted\n"
+        },
+        {
+          "info": {
+            "name": "Export a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/export",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Export the contents of a container as a tarball."
+        },
+        {
+          "info": {
+            "name": "Inspect container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or id of the container"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "include the size of the container"
+              }
+            ]
+          },
+          "docs": "Return low-level information about a container."
+        },
+        {
+          "info": {
+            "name": "Kill container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/kill",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Send kill signal to all containers"
+              },
+              {
+                "name": "signal",
+                "value": "",
+                "type": "query",
+                "description": "signal to be sent to container"
+              }
+            ]
+          },
+          "docs": "Signal to send to the container as an integer or string (e.g. SIGINT)"
+        },
+        {
+          "info": {
+            "name": "Get container logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/logs",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Keep connection after returning logs."
+              },
+              {
+                "name": "stdout",
+                "value": "",
+                "type": "query",
+                "description": "Return logs from stdout"
+              },
+              {
+                "name": "stderr",
+                "value": "",
+                "type": "query",
+                "description": "Return logs from stderr"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Only return logs since this time, as a UNIX timestamp"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Only return logs before this time, as a UNIX timestamp"
+              },
+              {
+                "name": "timestamps",
+                "value": "",
+                "type": "query",
+                "description": "Add timestamps to every log line"
+              },
+              {
+                "name": "tail",
+                "value": "",
+                "type": "query",
+                "description": "Only return this number of log lines from the end of the logs"
+              }
+            ]
+          },
+          "docs": "Get stdout and stderr logs from a container."
+        },
+        {
+          "info": {
+            "name": "Pause container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/pause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Use the cgroups freezer to suspend all processes in a container."
+        },
+        {
+          "info": {
+            "name": "Rename an existing container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/rename",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Full or partial ID or full name of the container to rename"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "New name for the container"
+              }
+            ]
+          },
+          "docs": "Change the name of an existing container."
+        },
+        {
+          "info": {
+            "name": "Resize a container's TTY",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/resize",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "h",
+                "value": "",
+                "type": "query",
+                "description": "Height to set for the terminal, in characters"
+              },
+              {
+                "name": "w",
+                "value": "",
+                "type": "query",
+                "description": "Width to set for the terminal, in characters"
+              },
+              {
+                "name": "running",
+                "value": "",
+                "type": "query",
+                "description": "Ignore containers not running errors"
+              }
+            ]
+          },
+          "docs": "Resize the terminal attached to a container (for use with Attach)."
+        },
+        {
+          "info": {
+            "name": "Restart container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/restart",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "t",
+                "value": "",
+                "type": "query",
+                "description": "timeout before sending kill signal to container"
+              }
+            ]
+          },
+          "docs": "Restart container"
+        },
+        {
+          "info": {
+            "name": "Start a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/start",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "detachKeys",
+                "value": "",
+                "type": "query",
+                "description": "Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _."
+              }
+            ]
+          },
+          "docs": "Start a container"
+        },
+        {
+          "info": {
+            "name": "Get stats for a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/stats",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Stream the output"
+              },
+              {
+                "name": "one-shot",
+                "value": "",
+                "type": "query",
+                "description": "Provide a one-shot response in which preCPU stats are blank, resulting in a single cycle return."
+              }
+            ]
+          },
+          "docs": "This returns a live stream of a container’s resource usage statistics."
+        },
+        {
+          "info": {
+            "name": "Stop a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "t",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing container"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Number of seconds to wait before killing the container (libpod alias for `t`)."
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Do not return an error if the container is already stopped."
+              }
+            ]
+          },
+          "docs": "Stop a container"
+        },
+        {
+          "info": {
+            "name": "List processes running inside a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/:name/top",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "ps_args",
+                "value": "",
+                "type": "query",
+                "description": "arguments to pass to ps such as aux."
+              }
+            ]
+          },
+          "docs": "List processes running inside a container"
+        },
+        {
+          "info": {
+            "name": "Unpause container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/unpause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Resume a paused container"
+        },
+        {
+          "info": {
+            "name": "Update configuration of an existing container, allowing changes to resource limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/update",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Full or partial ID or full name of the container to rename"
+              }
+            ]
+          },
+          "docs": "Change configuration settings for an existing container without requiring recreation."
+        },
+        {
+          "info": {
+            "name": "Wait on a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/:name/wait",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "condition",
+                "value": "",
+                "type": "query",
+                "description": "Wait condition.  Valid values are:\n  - not-running (default) - return when the container is not running\n    (stopped, exited, or was never started).\n  - next-exit - wait for the next time the container stops.\n    If the container is running, block until it exits.\n    If the container is already stopped, block until\n    the next start-and-exit cycle.\n  - removed - wait until the container is removed.\n"
+              }
+            ]
+          },
+          "docs": "Block until a container stops or given condition is met.\nThis is a Docker-compatible endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Create a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/create",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "container name"
+              }
+            ]
+          },
+          "docs": "Create a container"
+        },
+        {
+          "info": {
+            "name": "List containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/containers/json",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Return all containers. By default, only running containers are shown"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query",
+                "description": "Return containers in storage not controlled by Podman"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Return this number of most recently created containers, including non-running ones."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Return the size of container as fields SizeRw and SizeRootFs."
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "A JSON encoded value of the filters (a `map[string][]string`) to process on the containers list. Available filters:\n- `ancestor`=(`<image-name>[:<tag>]`, `<image id>`, or `<image@digest>`)\n- `before`=(`<container id>` or `<container name>`)\n- `expose`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)\n- `exited=<int>` containers with exit code of `<int>`\n- `health`=(`starting`, `healthy`, `unhealthy` or `none`)\n- `id=<ID>` a container's ID\n- `is-task`=(`true` or `false`)\n- `label`=(`key` or `\"key=value\"`) of a container label\n- `name=<name>` a container's name\n- `network`=(`<network id>` or `<network name>`)\n- `publish`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)\n- `since`=(`<container id>` or `<container name>`)\n- `status`=(`created`, `restarting`, `running`, `removing`, `paused`, `exited` or `dead`)\n- `volume`=(`<volume name>` or `<mount point destination>`)\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of containers"
+        },
+        {
+          "info": {
+            "name": "Delete stopped containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/containers/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).  Available filters:\n - `until=<timestamp>` Prune containers created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune containers with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Remove containers not in use"
+        },
+        {
+          "info": {
+            "name": "Copy files from a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/archive",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "container name or id"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to a directory in the container to extract"
+              },
+              {
+                "name": "rename",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded map[string]string to translate paths"
+              }
+            ]
+          },
+          "docs": "Copy a tar archive of files from a container"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

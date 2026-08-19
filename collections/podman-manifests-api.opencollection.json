@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts manifests API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "manifests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/manifests/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "manifest list or index name to create"
+              },
+              {
+                "name": "images",
+                "value": "",
+                "type": "query",
+                "description": "One or more names of an image or a manifest list. Repeat parameter as needed.\n\nSupport for multiple images, as of version 4.0.0\nAlias of `image` is support for compatibility with < 4.0.0\nResponse status code is 200 with < 4.0.0 for compatibility\n"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "add all contents if given list"
+              },
+              {
+                "name": "amend",
+                "value": "",
+                "type": "query",
+                "description": "modify an existing list if one with the desired name already exists"
+              }
+            ]
+          },
+          "docs": "Create a manifest list"
+        },
+        {
+          "info": {
+            "name": "Modify manifest list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/libpod/manifests/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              }
+            ]
+          },
+          "docs": "Add/Remove an image(s) to a manifest list\n\nNote: operations are not atomic when multiple Images are provided.\n\nAs of v4.0.0\n"
+        },
+        {
+          "info": {
+            "name": "Delete manifest list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/manifests/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name or ID of the  list to be deleted"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Ignore if a specified manifest does not exist and do not throw an error."
+              }
+            ]
+          },
+          "docs": "Delete named manifest list\n\nAs of v4.0.0\n"
+        },
+        {
+          "info": {
+            "name": "Add image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/manifests/:name/add",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest"
+              }
+            ]
+          },
+          "docs": "Add an image to a manifest list\n\nDeprecated: As of 4.0.0 use ManifestModifyLibpod instead\n"
+        },
+        {
+          "info": {
+            "name": "Exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/manifests/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest list"
+              }
+            ]
+          },
+          "docs": "Check if manifest list exists\n\nNote: There is no contract that the manifest list will exist for a follow-on operation\n"
+        },
+        {
+          "info": {
+            "name": "Inspect",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/manifests/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest list"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              }
+            ]
+          },
+          "docs": "Display attributes of given manifest list"
+        },
+        {
+          "info": {
+            "name": "Push manifest to registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/manifests/:name/push",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "the destination for the manifest"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "push all images"
+              }
+            ]
+          },
+          "docs": "Push a manifest list or image index to a registry\n\nDeprecated: As of 4.0.0 use ManifestPushLibpod instead\n"
+        },
+        {
+          "info": {
+            "name": "Push manifest list to registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/manifests/:name/registry/:destination",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the manifest list"
+              },
+              {
+                "name": "addCompression",
+                "value": "",
+                "type": "query",
+                "description": "add existing instances with requested compression algorithms to manifest list"
+              },
+              {
+                "name": "forceCompressionFormat",
+                "value": "",
+                "type": "query",
+                "description": "Enforce compressing the layers with the specified --compression and do not reuse differently compressed blobs on the registry."
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "path",
+                "description": "the registry for the manifest list"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "push all images"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              },
+              {
+                "name": "quiet",
+                "value": "",
+                "type": "query",
+                "description": "silences extra stream data on push"
+              }
+            ]
+          },
+          "docs": "Push a manifest list or image index to the named registry\n\nAs of v4.0.0\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

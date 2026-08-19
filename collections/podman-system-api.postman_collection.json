@@ -1,0 +1,1091 @@
+{
+  "item": [
+    {
+      "id": "52530782-87a3-4665-8e7a-723d52c32d1e",
+      "name": "system",
+      "description": {
+        "content": "Actions related to Podman engine",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b457132a-5d2f-446e-9519-0947a81396aa",
+          "name": "Ping service",
+          "request": {
+            "name": "Ping service",
+            "description": {
+              "content": "Return protocol information in response headers.\n`HEAD /libpod/_ping` is also supported.\n`/_ping` is available for compatibility with other engines.\nThe '_ping' endpoints are not versioned.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "_ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3144fba7-e8da-41da-a427-c51d31b7b975",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "_ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Max compatibility API Version the server supports",
+                  "key": "API-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Default version of docker image builder",
+                  "key": "BuildKit-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "always no-cache",
+                  "key": "Cache-Control",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "If the server is running with experimental mode enabled, always true",
+                  "key": "Docker-Experimental",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max Podman API Version the server supports.\nAvailable if service is backed by Podman, therefore may be used to\ndetermine if talking to Podman engine or another engine\n",
+                  "key": "Libpod-API-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Default version of libpod image builder.\n  Available if service is backed by Podman, therefore may be used to\n  determine if talking to Podman engine or another engine\n",
+                  "key": "Libpod-Buildah-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "always no-cache",
+                  "key": "Pragma",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "OK",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f5bfa3ee-fabc-407c-9fe3-d65554721429",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "_ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aec071ff-3050-489d-bbea-bfa68da5ae44",
+          "name": "Get events",
+          "request": {
+            "name": "Get events",
+            "description": {
+              "content": "Returns events filtered on query parameters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "start streaming events from this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "until",
+                  "value": "<string>",
+                  "description": "stop streaming events later than this"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded map[string][]string of constraints"
+                },
+                {
+                  "disabled": false,
+                  "key": "stream",
+                  "value": "true",
+                  "description": "when false, do not follow events"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92f4b0e2-6f22-4fc8-b815-bf3ee1e2aba3",
+              "name": "returns a string of json data describing an event",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stream",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcdae6e2-86e8-4ece-801f-f9924084121f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stream",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "341b74bc-5a10-4855-812d-b95cc2ebc332",
+          "name": "Get info",
+          "request": {
+            "name": "Get info",
+            "description": {
+              "content": "Returns information on the system and libpod configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aea7bf32-ae25-4114-900a-f9e086a78559",
+              "name": "Info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"host\": {\n    \"arch\": \"string\",\n    \"buildahVersion\": \"string\",\n    \"cgroupControllers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cgroupManager\": \"string\",\n    \"cgroupVersion\": \"string\",\n    \"conmon\": {\n      \"package\": \"string\",\n      \"path\": \"string\",\n      \"version\": \"string\"\n    },\n    \"cpuUtilization\": {\n      \"idlePercent\": 52.96233097678904,\n      \"systemPercent\": 528.5501585611652,\n      \"userPercent\": 8149.68845318757\n    },\n    \"cpus\": 117,\n    \"databaseBackend\": \"string\",\n    \"distribution\": {\n      \"codename\": \"string\",\n      \"distribution\": \"string\",\n      \"variant\": \"string\",\n      \"version\": \"string\"\n    },\n    \"emulatedArchitectures\": [\n      \"string\",\n      \"string\"\n    ],\n    \"eventLogger\": \"string\",\n    \"freeLocks\": 6453,\n    \"hostname\": \"string\",\n    \"idMappings\": {\n      \"gidmap\": [\n        {\n          \"container_id\": 9859,\n          \"host_id\": 8438,\n          \"size\": 5301\n        },\n        {\n          \"container_id\": 4223,\n          \"host_id\": 1389,\n          \"size\": 7742\n        }\n      ],\n      \"uidmap\": [\n        {\n          \"container_id\": 5007,\n          \"host_id\": 5598,\n          \"size\": 724\n        },\n        {\n          \"container_id\": 9420,\n          \"host_id\": 1321,\n          \"size\": 518\n        }\n      ]\n    },\n    \"kernel\": \"string\",\n    \"linkmode\": \"string\",\n    \"logDriver\": \"string\",\n    \"memFree\": 2847,\n    \"memTotal\": 702,\n    \"networkBackend\": \"string\",\n    \"networkBackendInfo\": {\n      \"backend\": \"string\",\n      \"defaultNetwork\": \"string\",\n      \"dns\": {\n        \"package\": \"string\",\n        \"path\": \"string\",\n        \"version\": \"string\"\n      },\n      \"package\": \"string\",\n      \"path\": \"string\",\n      \"version\": \"string\"\n    },\n    \"ociRuntime\": {\n      \"name\": \"string\",\n      \"package\": \"string\",\n      \"path\": \"string\",\n      \"version\": \"string\"\n    },\n    \"os\": \"string\",\n    \"pasta\": {\n      \"executable\": \"string\",\n      \"package\": \"string\",\n      \"version\": \"string\"\n    },\n    \"remoteSocket\": {\n      \"exists\": false,\n      \"path\": \"string\"\n    },\n    \"rootlessNetworkCmd\": \"string\",\n    \"runtimeInfo\": {\n      \"key_0\": {}\n    },\n    \"security\": {\n      \"apparmorEnabled\": true,\n      \"capabilities\": \"string\",\n      \"rootless\": false,\n      \"seccompEnabled\": false,\n      \"seccompProfilePath\": \"string\",\n      \"selinuxEnabled\": true\n    },\n    \"serviceIsRemote\": true,\n    \"swapFree\": 5418,\n    \"swapTotal\": 1268,\n    \"uptime\": \"string\",\n    \"variant\": \"string\"\n  },\n  \"plugins\": {\n    \"authorization\": [\n      \"string\",\n      \"string\"\n    ],\n    \"log\": [\n      \"string\",\n      \"string\"\n    ],\n    \"network\": [\n      \"string\",\n      \"string\"\n    ],\n    \"volume\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"registries\": {\n    \"key_0\": {}\n  },\n  \"store\": {\n    \"containerStore\": {\n      \"number\": 1492,\n      \"paused\": 8928,\n      \"running\": 2467,\n      \"stopped\": 648\n    },\n    \"graphDriverName\": \"string\",\n    \"graphOptions\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"graphRoot\": \"string\",\n    \"graphRootAllocated\": 652,\n    \"graphRootUsed\": 159,\n    \"graphStatus\": {\n      \"key_0\": \"string\"\n    },\n    \"imageCopyTmpDir\": \"string\",\n    \"imageStore\": {\n      \"number\": 239\n    },\n    \"runRoot\": \"string\",\n    \"transientStore\": true,\n    \"volumePath\": \"string\"\n  },\n  \"version\": {\n    \"APIVersion\": \"string\",\n    \"BuildOrigin\": \"string\",\n    \"Built\": 3965,\n    \"BuiltTime\": \"string\",\n    \"GitCommit\": \"string\",\n    \"GoVersion\": \"string\",\n    \"Os\": \"string\",\n    \"OsArch\": \"string\",\n    \"Version\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e9501fc-d4e7-4c57-bba7-d9d0924095a7",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b257dde5-0149-4b3a-9bcd-962149ea056a",
+          "name": "Performs consistency checks on storage, optionally removing items which fail checks",
+          "request": {
+            "name": "Performs consistency checks on storage, optionally removing items which fail checks",
+            "description": {},
+            "url": {
+              "path": [
+                "libpod",
+                "system",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "quick",
+                  "value": "<boolean>",
+                  "description": "Skip time-consuming checks"
+                },
+                {
+                  "disabled": false,
+                  "key": "repair",
+                  "value": "<boolean>",
+                  "description": "Remove inconsistent images"
+                },
+                {
+                  "disabled": false,
+                  "key": "repair_lossy",
+                  "value": "<boolean>",
+                  "description": "Remove inconsistent containers and images"
+                },
+                {
+                  "disabled": false,
+                  "key": "unreferenced_layer_max_age",
+                  "value": "24h0m0s",
+                  "description": "Maximum allowed age of unreferenced layers"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6d39ff6-927b-4b0c-8829-27fea19226f5",
+              "name": "Check",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quick",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair_lossy",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "unreferenced_layer_max_age",
+                      "value": "24h0m0s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e22481f6-0eb1-49f9-9fd7-3cef8c0cc23f",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quick",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair_lossy",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "unreferenced_layer_max_age",
+                      "value": "24h0m0s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76962da2-c212-458f-8beb-25a02a1e4331",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quick",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "repair_lossy",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "unreferenced_layer_max_age",
+                      "value": "24h0m0s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7134c4d-5cb8-4891-b7ce-3f85bce0a72e",
+          "name": "Show disk usage",
+          "request": {
+            "name": "Show disk usage",
+            "description": {
+              "content": "Return information about disk usage for containers, images, and volumes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "system",
+                "df"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb10eea9-b477-4c6d-8474-2ea27891ef6e",
+              "name": "Disk usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "df"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f8ea4a2-11d4-42c9-9819-3da681d0b8f8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "df"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77f56ead-3a5b-4c92-89d6-1bf3c103fba7",
+          "name": "Prune unused data",
+          "request": {
+            "name": "Prune unused data",
+            "description": {},
+            "url": {
+              "path": [
+                "libpod",
+                "system",
+                "prune"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "<boolean>",
+                  "description": "Remove all unused data, not just dangling data"
+                },
+                {
+                  "disabled": false,
+                  "key": "volumes",
+                  "value": "<boolean>",
+                  "description": "Prune volumes"
+                },
+                {
+                  "disabled": false,
+                  "key": "external",
+                  "value": "<boolean>",
+                  "description": "Remove images used by external containers (e.g., build containers)"
+                },
+                {
+                  "disabled": false,
+                  "key": "build",
+                  "value": "<boolean>",
+                  "description": "Remove build cache"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of filters (a map[string][]string) to match data against before pruning.\nAvailable filters:\n  - `until=<timestamp>` Prune data created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine's time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune data with (or without, in case `label!=...` is used) the specified labels.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a71216c8-edf6-493e-8b7c-6bc60b373d7c",
+              "name": "System Prune results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "volumes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "external",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "build",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3cfe0d0-acb5-4763-b641-529883f53e0a",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "volumes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "external",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "build",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e81d11aa-7b4c-4b78-94da-69700ed130e3",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "system",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "volumes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "external",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "build",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9923\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c121a706-6cea-4fbd-a4cb-dee46851a74b",
+          "name": "Component Version information",
+          "request": {
+            "name": "Component Version information",
+            "description": {},
+            "url": {
+              "path": [
+                "libpod",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9ac0d34-4abb-4588-b2ac-d24d53b87722",
+              "name": "Version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "20ffa6a9-6a04-4389-80d5-c00b82466b5c",
+    "name": "supports a RESTful API for the Libpod library artifacts system API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

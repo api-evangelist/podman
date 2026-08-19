@@ -1,0 +1,3329 @@
+{
+  "item": [
+    {
+      "id": "62b09aa3-4a8c-4070-8ded-0c64eec45210",
+      "name": "images (compat)",
+      "description": {
+        "content": "Actions related to images for the compatibility endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9e2044f8-f841-4ede-afef-9f535774448a",
+          "name": "Build image",
+          "request": {
+            "name": "Build image",
+            "description": {
+              "content": "Build an image from the given Dockerfile(s)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "dockerfile",
+                  "value": "Dockerfile",
+                  "description": "Path within the build context to the `Dockerfile`.\nThis is ignored if remote is specified and points to an external `Dockerfile`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "t",
+                  "value": "latest",
+                  "description": "A name and optional tag to apply to the image in the `name:tag` format. If you omit the tag, the default latest value is assumed. You can provide several t parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "extrahosts",
+                  "value": "<string>",
+                  "description": "TBD Extra hosts to add to /etc/hosts\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "nohosts",
+                  "value": "<boolean>",
+                  "description": "Not to create /etc/hosts when building the image\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "remote",
+                  "value": "<string>",
+                  "description": "A Git repository URI or HTTP/HTTPS context URI.\nIf the URI points to a single text file, the file’s contents are placed\ninto a file called Dockerfile and the image is built from that file. If\nthe URI points to a tarball, the file is downloaded by the daemon and the\ncontents therein used as the context for the build. If the URI points to a\ntarball and the dockerfile parameter is also specified, there must be a file\nwith the corresponding path inside the tarball.\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "retry",
+                  "value": "3",
+                  "description": "Number of times to retry in case of failure when performing push/pull.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "retry-delay",
+                  "value": "2s",
+                  "description": "Delay between retries in case of push/pull failures.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "false",
+                  "description": "Suppress verbose build output\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "nocache",
+                  "value": "false",
+                  "description": "Do not use the cache when building the image\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cachefrom",
+                  "value": "<string>",
+                  "description": "JSON array of images used to build cache resolution\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "pull",
+                  "value": "false",
+                  "description": "Attempt to pull the image even if an older image exists locally\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "rm",
+                  "value": "true",
+                  "description": "Remove intermediate containers after a successful build\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "forcerm",
+                  "value": "false",
+                  "description": "Always remove intermediate containers, even upon failure\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "memory",
+                  "value": "<integer>",
+                  "description": "Memory is the upper limit (in bytes) on how much memory running containers can use\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "memswap",
+                  "value": "<integer>",
+                  "description": "MemorySwap limits the amount of memory and swap together\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cpushares",
+                  "value": "<integer>",
+                  "description": "CPUShares (relative weight\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cpusetcpus",
+                  "value": "<string>",
+                  "description": "CPUSetCPUs in which to allow execution (0-3, 0,1)\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cpuperiod",
+                  "value": "<integer>",
+                  "description": "CPUPeriod limits the CPU CFS (Completely Fair Scheduler) period\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cpuquota",
+                  "value": "<integer>",
+                  "description": "CPUQuota limits the CPU CFS (Completely Fair Scheduler) quota\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "buildargs",
+                  "value": "<string>",
+                  "description": "JSON map of string pairs denoting build-time variables.\nFor example, the build argument `Foo` with the value of `bar` would be encoded in JSON as `[\"Foo\":\"bar\"]`.\n\nFor example, buildargs={\"Foo\":\"bar\"}.\n\nNote(s):\n* This should not be used to pass secrets.\n* The value of buildargs should be URI component encoded before being passed to the API.\n\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "shmsize",
+                  "value": "67108864",
+                  "description": "ShmSize is the \"size\" value to use when mounting an shmfs on the container's /dev/shm directory.\nDefault is 64MB\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "squash",
+                  "value": "false",
+                  "description": "Silently ignored.\nSquash the resulting images layers into a single layer\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "save-stages",
+                  "value": "false",
+                  "description": "Preserve intermediate stage images instead of removing them after the build completes.\nBy default, they are removed to save space.\nHowever, they can be useful for debugging multi-stage builds or reusing stages in subsequent builds.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "stage-labels",
+                  "value": "false",
+                  "description": "Add metadata labels to all intermediate stage images of a multistage build, including the final image.\nIf set to true, save-stages must also be set to true.\nIf enabled, the labels 'io.buildah.stage.name' and 'io.buildah.stage.base' will be added.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "JSON map of key, value pairs to set as labels on the new image\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "networkmode",
+                  "value": "bridge",
+                  "description": "Sets the networking mode for the run commands during build.\nSupported standard values are:\n  * `bridge` limited to containers within a single host, port mapping required for external access\n  * `host` no isolation between host and containers on this network\n  * `none` disable all networking for this container\n  * container:<nameOrID> share networking with given container\n  ---All other values are assumed to be a custom network's name\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>",
+                  "description": "Platform format os[/arch[/variant]]\nCan be comma separated list for multi arch builds.\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "target",
+                  "value": "<string>",
+                  "description": "Target build stage\n(As of version 1.xx)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "outputs",
+                  "value": "<string>",
+                  "description": "output configuration TBD\n(As of version 1.xx)\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Registry-Config",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a47e4a7f-6ecc-47bd-928a-d31b3c2d7b4e",
+              "name": "OK (As of version 1.xx)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dockerfile",
+                      "value": "Dockerfile"
+                    },
+                    {
+                      "key": "t",
+                      "value": "latest"
+                    },
+                    {
+                      "key": "extrahosts",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nohosts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retry-delay",
+                      "value": "2s"
+                    },
+                    {
+                      "key": "q",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nocache",
+                      "value": "false"
+                    },
+                    {
+                      "key": "cachefrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pull",
+                      "value": "false"
+                    },
+                    {
+                      "key": "rm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "forcerm",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memory",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memswap",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpushares",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpusetcpus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cpuperiod",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpuquota",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "buildargs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shmsize",
+                      "value": "67108864"
+                    },
+                    {
+                      "key": "squash",
+                      "value": "false"
+                    },
+                    {
+                      "key": "save-stages",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stage-labels",
+                      "value": "false"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "networkmode",
+                      "value": "bridge"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "outputs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/x-tar",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Registry-Config",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"stream\": \"(build details...)\\nSuccessfully built 8ba084515c724cbf90d447a63600c0a6\\nSuccessfully tagged your_image:latest\\n\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2156f278-0ce0-4716-9183-91e52745ddca",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dockerfile",
+                      "value": "Dockerfile"
+                    },
+                    {
+                      "key": "t",
+                      "value": "latest"
+                    },
+                    {
+                      "key": "extrahosts",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nohosts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retry-delay",
+                      "value": "2s"
+                    },
+                    {
+                      "key": "q",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nocache",
+                      "value": "false"
+                    },
+                    {
+                      "key": "cachefrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pull",
+                      "value": "false"
+                    },
+                    {
+                      "key": "rm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "forcerm",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memory",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memswap",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpushares",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpusetcpus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cpuperiod",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpuquota",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "buildargs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shmsize",
+                      "value": "67108864"
+                    },
+                    {
+                      "key": "squash",
+                      "value": "false"
+                    },
+                    {
+                      "key": "save-stages",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stage-labels",
+                      "value": "false"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "networkmode",
+                      "value": "bridge"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "outputs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/x-tar",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Registry-Config",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01e437fd-c43d-40b9-9ebc-0aed50413fa9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dockerfile",
+                      "value": "Dockerfile"
+                    },
+                    {
+                      "key": "t",
+                      "value": "latest"
+                    },
+                    {
+                      "key": "extrahosts",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nohosts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retry-delay",
+                      "value": "2s"
+                    },
+                    {
+                      "key": "q",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nocache",
+                      "value": "false"
+                    },
+                    {
+                      "key": "cachefrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pull",
+                      "value": "false"
+                    },
+                    {
+                      "key": "rm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "forcerm",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memory",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memswap",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpushares",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpusetcpus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cpuperiod",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cpuquota",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "buildargs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shmsize",
+                      "value": "67108864"
+                    },
+                    {
+                      "key": "squash",
+                      "value": "false"
+                    },
+                    {
+                      "key": "save-stages",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stage-labels",
+                      "value": "false"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "networkmode",
+                      "value": "bridge"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "outputs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/x-tar",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Registry-Config",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d20cccbf-2815-4854-94e6-cde535eff96a",
+          "name": "Remove Image",
+          "request": {
+            "name": "Remove Image",
+            "description": {
+              "content": "Delete an image from local storage",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "Remove the image even if it is being used by stopped containers or has other tags"
+                },
+                {
+                  "disabled": false,
+                  "key": "noprune",
+                  "value": "<boolean>",
+                  "description": "do not remove dangling parent images"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignore",
+                  "value": "false",
+                  "description": "Ignore if a specified image does not exist and do not throw an error."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) name or ID of image to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ccb81087-b291-4edc-8993-c5818daf640e",
+              "name": "Image Delete",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "noprune",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name or ID of image to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"deleted\": \"string\",\n    \"untagged\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"deleted\": \"string\",\n    \"untagged\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed8a5a31-c8c5-46ed-94fd-fe5eff032d33",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "noprune",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name or ID of image to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88fae6b1-3661-4b2a-9916-e5793b7fffb5",
+              "name": "Conflict error in operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "noprune",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name or ID of image to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6174b8a2-19c5-4175-b01e-02c568101a49",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "noprune",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name or ID of image to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "089644e1-21fd-4b15-982e-7a96ce9dfaa1",
+          "name": "Export an image",
+          "request": {
+            "name": "Export an image",
+            "description": {
+              "content": "Export an image in tarball format",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-tar"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a4cacfd2-042d-4b87-b4e3-81991cd4b0e9",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-tar"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-tar"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4cc6d65-862b-4e3a-b250-90608130d511",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c77fb077-294a-4c3c-8714-fcd6e458894c",
+          "name": "History of an image",
+          "request": {
+            "name": "History of an image",
+            "description": {
+              "content": "Return parent layers of an image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0565737a-0213-40e8-8506-b11ffe9c3360",
+              "name": "Image History",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Comment\": \"string\",\n  \"Created\": 2853,\n  \"CreatedBy\": \"string\",\n  \"Id\": \"string\",\n  \"Size\": 9551,\n  \"Tags\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27804b6a-180b-441e-a0f2-e243531f4965",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5ba4293-44db-48a8-a4df-b7366193e02a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "290ce0de-b4da-43f0-abad-32863cd51e5b",
+          "name": "Inspect an image",
+          "request": {
+            "name": "Inspect an image",
+            "description": {
+              "content": "Return low-level information about an image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3aa6825a-2375-44aa-9087-1847b322f9a7",
+              "name": "Image Inspect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Architecture\": \"string\",\n  \"Author\": \"string\",\n  \"Comment\": \"string\",\n  \"Config\": {\n    \"ArgsEscaped\": false,\n    \"Cmd\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Entrypoint\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Env\": [\n      \"string\",\n      \"string\"\n    ],\n    \"ExposedPorts\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"Healthcheck\": {\n      \"Interval\": 63,\n      \"Retries\": 245,\n      \"StartInterval\": 6254,\n      \"StartPeriod\": 4106,\n      \"Test\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Timeout\": 9113\n    },\n    \"Labels\": {\n      \"key_0\": \"string\"\n    },\n    \"OnBuild\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Shell\": [\n      \"string\",\n      \"string\"\n    ],\n    \"StopSignal\": \"string\",\n    \"User\": \"string\",\n    \"Volumes\": {\n      \"key_0\": {}\n    },\n    \"WorkingDir\": \"string\"\n  },\n  \"Container\": \"string\",\n  \"ContainerConfig\": {\n    \"ArgsEscaped\": false,\n    \"AttachStderr\": true,\n    \"AttachStdin\": false,\n    \"AttachStdout\": false,\n    \"Cmd\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Domainname\": \"string\",\n    \"Entrypoint\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Env\": [\n      \"string\",\n      \"string\"\n    ],\n    \"ExposedPorts\": {\n      \"key_0\": {}\n    },\n    \"Healthcheck\": {},\n    \"Hostname\": \"string\",\n    \"Image\": \"string\",\n    \"Labels\": {\n      \"key_0\": \"string\"\n    },\n    \"NetworkDisabled\": true,\n    \"OnBuild\": [\n      \"string\",\n      \"string\"\n    ],\n    \"OpenStdin\": false,\n    \"Shell\": [\n      \"string\",\n      \"string\"\n    ],\n    \"StdinOnce\": true,\n    \"StopSignal\": \"string\",\n    \"StopTimeout\": 4506,\n    \"Tty\": false,\n    \"User\": \"string\",\n    \"Volumes\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"WorkingDir\": \"string\"\n  },\n  \"Created\": \"string\",\n  \"Descriptor\": {\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"artifactType\": \"string\",\n    \"data\": [\n      6757,\n      4943\n    ],\n    \"digest\": \"string\",\n    \"mediaType\": \"string\",\n    \"platform\": {\n      \"architecture\": \"string\",\n      \"os\": \"string\",\n      \"os.features\": [\n        \"string\",\n        \"string\"\n      ],\n      \"os.version\": \"string\",\n      \"variant\": \"string\"\n    },\n    \"size\": 3651,\n    \"urls\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"DockerVersion\": \"string\",\n  \"GraphDriver\": {\n    \"Data\": {\n      \"MergedDir\": \"/var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged\",\n      \"UpperDir\": \"/var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff\",\n      \"WorkDir\": \"/var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work\"\n    },\n    \"Name\": \"overlay2\"\n  },\n  \"Id\": \"string\",\n  \"Identity\": {\n    \"Build\": [\n      {\n        \"CreatedAt\": \"1970-02-22T10:06:15.543Z\",\n        \"Ref\": \"string\"\n      },\n      {\n        \"CreatedAt\": \"1963-07-23T17:47:36.751Z\",\n        \"Ref\": \"string\"\n      }\n    ],\n    \"Pull\": [\n      {\n        \"Repository\": \"string\"\n      },\n      {\n        \"Repository\": \"string\"\n      }\n    ],\n    \"Signature\": [\n      {\n        \"DockerReference\": \"string\",\n        \"Error\": \"string\",\n        \"KnownSigner\": \"string\",\n        \"Name\": \"string\",\n        \"SignatureType\": \"string\",\n        \"Signer\": {\n          \"BuildConfigDigest\": \"string\",\n          \"BuildConfigURI\": \"string\",\n          \"BuildSignerDigest\": \"string\",\n          \"BuildSignerURI\": \"string\",\n          \"BuildTrigger\": \"string\",\n          \"CertificateIssuer\": \"string\",\n          \"Issuer\": \"string\",\n          \"RunInvocationURI\": \"string\",\n          \"RunnerEnvironment\": \"string\",\n          \"SourceRepositoryDigest\": \"string\",\n          \"SourceRepositoryIdentifier\": \"string\",\n          \"SourceRepositoryOwnerIdentifier\": \"string\",\n          \"SourceRepositoryOwnerURI\": \"string\",\n          \"SourceRepositoryRef\": \"string\",\n          \"SourceRepositoryURI\": \"string\",\n          \"SourceRepositoryVisibilityAtSigning\": \"string\",\n          \"SubjectAlternativeName\": \"string\"\n        },\n        \"Timestamps\": [\n          {\n            \"Timestamp\": \"2001-09-25T14:45:16.345Z\",\n            \"Type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"URI\": \"string\"\n          },\n          {\n            \"Timestamp\": \"1990-05-06T18:17:56.889Z\",\n            \"Type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"URI\": \"string\"\n          }\n        ],\n        \"Warnings\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"DockerReference\": \"string\",\n        \"Error\": \"string\",\n        \"KnownSigner\": \"string\",\n        \"Name\": \"string\",\n        \"SignatureType\": \"string\",\n        \"Signer\": {\n          \"BuildConfigDigest\": \"string\",\n          \"BuildConfigURI\": \"string\",\n          \"BuildSignerDigest\": \"string\",\n          \"BuildSignerURI\": \"string\",\n          \"BuildTrigger\": \"string\",\n          \"CertificateIssuer\": \"string\",\n          \"Issuer\": \"string\",\n          \"RunInvocationURI\": \"string\",\n          \"RunnerEnvironment\": \"string\",\n          \"SourceRepositoryDigest\": \"string\",\n          \"SourceRepositoryIdentifier\": \"string\",\n          \"SourceRepositoryOwnerIdentifier\": \"string\",\n          \"SourceRepositoryOwnerURI\": \"string\",\n          \"SourceRepositoryRef\": \"string\",\n          \"SourceRepositoryURI\": \"string\",\n          \"SourceRepositoryVisibilityAtSigning\": \"string\",\n          \"SubjectAlternativeName\": \"string\"\n        },\n        \"Timestamps\": [\n          {\n            \"Timestamp\": \"1999-12-27T08:26:09.355Z\",\n            \"Type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"URI\": \"string\"\n          },\n          {\n            \"Timestamp\": \"1965-01-01T23:59:48.339Z\",\n            \"Type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"URI\": \"string\"\n          }\n        ],\n        \"Warnings\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  },\n  \"Manifests\": [\n    {\n      \"ID\": \"string\",\n      \"Descriptor\": {\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"artifactType\": \"string\",\n        \"data\": [\n          6206,\n          8125\n        ],\n        \"digest\": \"string\",\n        \"mediaType\": \"string\",\n        \"platform\": {\n          \"architecture\": \"string\",\n          \"os\": \"string\",\n          \"os.features\": [\n            \"string\",\n            \"string\"\n          ],\n          \"os.version\": \"string\",\n          \"variant\": \"string\"\n        },\n        \"size\": 7972,\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"Available\": false,\n      \"Size\": {\n        \"Content\": 967,\n        \"Total\": 1586\n      },\n      \"Kind\": \"string\",\n      \"AttestationData\": {\n        \"For\": \"string\"\n      },\n      \"ImageData\": {\n        \"Platform\": {\n          \"architecture\": \"string\",\n          \"os\": \"string\",\n          \"os.features\": [\n            \"string\",\n            \"string\"\n          ],\n          \"os.version\": \"string\",\n          \"variant\": \"string\"\n        },\n        \"Containers\": [\n          \"string\",\n          \"string\"\n        ],\n        \"Identity\": {\n          \"Build\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Pull\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Signature\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"Size\": {\n          \"Unpacked\": 2433\n        }\n      }\n    },\n    {\n      \"ID\": \"string\",\n      \"Descriptor\": {\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"artifactType\": \"string\",\n        \"data\": [\n          3535,\n          471\n        ],\n        \"digest\": \"string\",\n        \"mediaType\": \"string\",\n        \"platform\": {\n          \"architecture\": \"string\",\n          \"os\": \"string\",\n          \"os.features\": [\n            \"string\",\n            \"string\"\n          ],\n          \"os.version\": \"string\",\n          \"variant\": \"string\"\n        },\n        \"size\": 7794,\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"Available\": true,\n      \"Size\": {\n        \"Content\": 1389,\n        \"Total\": 8058\n      },\n      \"Kind\": \"string\",\n      \"AttestationData\": {\n        \"For\": \"string\"\n      },\n      \"ImageData\": {\n        \"Platform\": {\n          \"architecture\": \"string\",\n          \"os\": \"string\",\n          \"os.features\": [\n            \"string\",\n            \"string\"\n          ],\n          \"os.version\": \"string\",\n          \"variant\": \"string\"\n        },\n        \"Containers\": [\n          \"string\",\n          \"string\"\n        ],\n        \"Identity\": {\n          \"Build\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Pull\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Signature\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"Size\": {\n          \"Unpacked\": 6954\n        }\n      }\n    }\n  ],\n  \"Metadata\": {\n    \"LastTagTime\": \"2018-07-27T15:54:12.437Z\"\n  },\n  \"Os\": \"string\",\n  \"OsVersion\": \"string\",\n  \"Parent\": \"string\",\n  \"RepoDigests\": [\n    \"string\",\n    \"string\"\n  ],\n  \"RepoTags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"RootFS\": {\n    \"Layers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"Type\": \"string\"\n  },\n  \"Size\": 7932,\n  \"Variant\": \"string\",\n  \"VirtualSize\": 9138\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af4dc288-e40a-42a8-a215-b64e3b35d753",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1330c47-7174-4a38-adfc-1058e649bd0d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b870b159-0725-4588-a564-fb4531203f64",
+          "name": "Push Image",
+          "request": {
+            "name": "Push Image",
+            "description": {
+              "content": "Push an image to a container registry",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name",
+                "push"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "The tag to associate with the image on the registry."
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "<boolean>",
+                  "description": "All indicates whether to push all images related to the image list"
+                },
+                {
+                  "disabled": false,
+                  "key": "compress",
+                  "value": "<boolean>",
+                  "description": "Use compression on image."
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "Allows for pushing the image to a different destination than the image refers to."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Manifest type (oci, v2s1, or v2s2) to use when pushing an image. Default is manifest type of source, with fallbacks."
+                },
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require TLS verification."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of image to push."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A base64-encoded auth configuration.",
+                "key": "X-Registry-Auth",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a4f1e86-5bf2-4f96-ac7c-a43be7ff4530",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "compress",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of image to push."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb533abd-e750-4917-bdf1-22dae59e0e78",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "compress",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of image to push."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f073e1d-fd3a-4a30-8133-1cf04e0aea5a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "compress",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of image to push."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f286380-fd71-43a4-9f59-9719a143c252",
+          "name": "Tag an image",
+          "request": {
+            "name": "Tag an image",
+            "description": {
+              "content": "Tag an image so that it becomes part of a repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":name",
+                "tag"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "repo",
+                  "value": "<string>",
+                  "description": "the repository to tag in"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "the name of the new tag"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0412eaa2-ed42-4deb-af24-8f5daf2e8f45",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "566a9318-f308-4891-850c-6f0c5283f512",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9c14f63-bb8a-4d40-9053-8b90683d5b9a",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6290696-0fb8-4e26-b92f-86c2c7dd9c2b",
+              "name": "Conflict error in operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2eb96c5e-5241-4749-bd99-a98b82f7f887",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":name",
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6354b91-01d5-4a49-a33b-9e064b2327e9",
+          "name": "Create an image",
+          "request": {
+            "name": "Create an image",
+            "description": {
+              "content": "Create an image by either pulling it from a registry or importing it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromImage",
+                  "value": "<string>",
+                  "description": "Name of the image to pull. The name may include a tag or digest. This parameter may only be used when pulling an image. The pull is cancelled if the HTTP connection is closed."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromSrc",
+                  "value": "<string>",
+                  "description": "Source to import. The value may be a URL from which the image can be retrieved or - to read the image from the request body. This parameter may only be used when importing an image"
+                },
+                {
+                  "disabled": false,
+                  "key": "repo",
+                  "value": "<string>",
+                  "description": "Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled."
+                },
+                {
+                  "disabled": false,
+                  "key": "message",
+                  "value": "<string>",
+                  "description": "Set commit message for imported image."
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>",
+                  "description": "Platform in the format os[/arch[/variant]]"
+                },
+                {
+                  "disabled": false,
+                  "key": "retry",
+                  "value": "<integer>",
+                  "description": "Number of times to retry in case of failure when performing pull."
+                },
+                {
+                  "disabled": false,
+                  "key": "retryDelay",
+                  "value": "<string>",
+                  "description": "Delay between retries in case of pull failures."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A base64-encoded auth configuration.",
+                "key": "X-Registry-Auth",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "c0537739-3406-4918-aea1-92a530065021",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromImage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromSrc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "935aa0ab-b289-4a1e-bb4b-206b0999b0ac",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromImage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromSrc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93085371-71f5-4e2f-b465-cac800b8d9fa",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromImage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromSrc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded auth configuration.",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2f681d9-89ad-4879-9343-6b937d977986",
+          "name": "Export several images",
+          "request": {
+            "name": "Export several images",
+            "description": {
+              "content": "Get a tarball containing all images and metadata for several image repositories",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "(Required) one or more image names or IDs comma separated"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c82ef73b-f12a-45f8-8add-3f2f3d74092b",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c9ebdcc-b3ff-4772-827c-3b5cfeeae410",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5720d8ea-c344-4e8a-ade4-cf8ad32f2cd4",
+          "name": "List Images",
+          "request": {
+            "name": "List Images",
+            "description": {
+              "content": "Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "false",
+                  "description": "Show all images. Only images from a final layer (no children) are shown by default."
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available filters:\n- `before`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)\n- `dangling=true`\n- `label=key` or `label=\"key=value\"` of an image label\n- `reference`=(`<image-name>[:<tag>]`)\n- `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "digests",
+                  "value": "false",
+                  "description": "Not supported"
+                },
+                {
+                  "disabled": false,
+                  "key": "shared-size",
+                  "value": "false",
+                  "description": "Compute and show shared size as a SharedSize field on each image."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "485f94ed-0f1b-45f9-9750-83c6acafea37",
+              "name": "Image summary for compat API",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digests",
+                      "value": "false"
+                    },
+                    {
+                      "key": "shared-size",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Containers\": 2164,\n    \"Created\": 2074,\n    \"Id\": \"string\",\n    \"Labels\": {\n      \"key_0\": \"string\"\n    },\n    \"ParentId\": \"string\",\n    \"RepoDigests\": [\n      \"string\",\n      \"string\"\n    ],\n    \"RepoTags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"SharedSize\": 2148,\n    \"Size\": 1988,\n    \"Descriptor\": {\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"artifactType\": \"string\",\n      \"data\": [\n        8534,\n        7882\n      ],\n      \"digest\": \"string\",\n      \"mediaType\": \"string\",\n      \"platform\": {\n        \"architecture\": \"string\",\n        \"os\": \"string\",\n        \"os.features\": [\n          \"string\",\n          \"string\"\n        ],\n        \"os.version\": \"string\",\n        \"variant\": \"string\"\n      },\n      \"size\": 8820,\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"Manifests\": [\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            8875,\n            7156\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 3120,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 516,\n          \"Total\": 7710\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 8557\n          }\n        }\n      },\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            4533,\n            5206\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 845,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 7479,\n          \"Total\": 5589\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 9116\n          }\n        }\n      }\n    ]\n  },\n  {\n    \"Containers\": 6367,\n    \"Created\": 9768,\n    \"Id\": \"string\",\n    \"Labels\": {\n      \"key_0\": \"string\"\n    },\n    \"ParentId\": \"string\",\n    \"RepoDigests\": [\n      \"string\",\n      \"string\"\n    ],\n    \"RepoTags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"SharedSize\": 4011,\n    \"Size\": 5141,\n    \"Descriptor\": {\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"artifactType\": \"string\",\n      \"data\": [\n        8467,\n        4918\n      ],\n      \"digest\": \"string\",\n      \"mediaType\": \"string\",\n      \"platform\": {\n        \"architecture\": \"string\",\n        \"os\": \"string\",\n        \"os.features\": [\n          \"string\",\n          \"string\"\n        ],\n        \"os.version\": \"string\",\n        \"variant\": \"string\"\n      },\n      \"size\": 7652,\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"Manifests\": [\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            40,\n            5195\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 6811,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 2709,\n          \"Total\": 5426\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 3030\n          }\n        }\n      },\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            8650,\n            1956\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 7076,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 7555,\n          \"Total\": 2912\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 2782\n          }\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06573034-362d-4324-b06a-1deeba61dd8c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digests",
+                      "value": "false"
+                    },
+                    {
+                      "key": "shared-size",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8f4746c-d71b-4b55-ad83-7bb113af4668",
+          "name": "Import image",
+          "request": {
+            "name": "Import image",
+            "description": {
+              "content": "Load a set of images and tags into a repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "load"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "quiet",
+                  "value": "<boolean>",
+                  "description": "not supported"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99a0e160-867f-4abf-b919-56760a5c30a3",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "load"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quiet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76d6a75b-90c4-4779-be58-13297c9472ad",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "load"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quiet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a549fce-414a-40cd-beff-0d4871c10606",
+          "name": "Prune unused images",
+          "request": {
+            "name": "Prune unused images",
+            "description": {
+              "content": "Remove images from local storage that are not being used by a container",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "prune"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "filters to apply to image pruning, encoded as JSON (map[string][]string). Available filters:\n  - `dangling=<boolean>` When set to `true` (or `1`), prune only\n     unused *and* untagged images. When set to `false`\n     (or `0`), all unused images are pruned.\n  - `until=<string>` Prune images created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune images with (or without, in case `label!=...` is used) the specified labels.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5252aa35-6b3b-4a9d-aa6c-b111ca6233ba",
+              "name": "Image Delete",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"deleted\": \"string\",\n    \"untagged\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"deleted\": \"string\",\n    \"untagged\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08d6dde8-4ede-4d90-8bdf-a0d491591788",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84e84879-ac6d-4290-a637-59078f4b7b75",
+          "name": "Search images",
+          "request": {
+            "name": "Search images",
+            "description": {
+              "content": "Search registries for an image",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>",
+                  "description": "term to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available filters:\n- `is-automated=(true|false)`\n- `is-official=(true|false)`\n- `stars=<number>` Matches images that have at least 'number' stars.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require HTTPS and verify signatures when contacting registries."
+                },
+                {
+                  "disabled": false,
+                  "key": "listTags",
+                  "value": "<boolean>",
+                  "description": "list the available tags in the repository"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "305f5575-a37c-4bd6-94bf-f1132e1a4dd3",
+              "name": "Registry Search",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "listTags",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Automated\": \"string\",\n  \"Description\": \"string\",\n  \"Index\": \"quay.io\",\n  \"Name\": \"docker.io/library/alpine\\\"\",\n  \"Official\": \"string\",\n  \"Stars\": 4656,\n  \"Tag\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce2b9c94-8de3-4697-aff1-1bf9b3cd186b",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "listTags",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d1929a4-a4d5-4187-8df7-84f34c07ac35",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "listTags",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8859\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c9c5484a-7ef5-4ffc-ae00-312518cb6ede",
+    "name": "supports a RESTful API for the Libpod library artifacts images (compat) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

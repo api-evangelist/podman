@@ -1,0 +1,960 @@
+{
+  "item": [
+    {
+      "id": "2e43865c-7c7e-4683-9905-b89dbd5b19a2",
+      "name": "exec (compat)",
+      "description": {
+        "content": "Actions related to exec for the compatibility endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c85d691b-cce5-421e-9e0c-e255020f92af",
+          "name": "Create an exec instance",
+          "request": {
+            "name": "Create an exec instance",
+            "description": {
+              "content": "Create an exec session to run a command inside a running container. Exec sessions will be automatically removed 5 minutes after they exit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "containers",
+                ":name",
+                "exec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) name of container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2df608c7-0210-4bcf-8af7-4d4e72dd0ee7",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7807106-444c-4f8f-8bcc-e47619d2c559",
+              "name": "No such container",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4b643b2-0cb1-46d2-82cf-bbafabcb377d",
+              "name": "container is paused",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8b07f57a-96ba-44a3-b43c-28f9d62a6038",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7025e5c9-726c-4104-8d49-c47bcf10a919",
+          "name": "Inspect an exec instance",
+          "request": {
+            "name": "Inspect an exec instance",
+            "description": {
+              "content": "Return low-level information about an exec instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exec",
+                ":id",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fed14f05-f2df-4ebf-97d0-b3f75eb870c0",
+              "name": "Exec Session Inspect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"CanRemove\": false,\n  \"ContainerID\": \"string\",\n  \"DetachKeys\": \"string\",\n  \"ExitCode\": 167,\n  \"ID\": \"string\",\n  \"OpenStderr\": true,\n  \"OpenStdin\": false,\n  \"OpenStdout\": false,\n  \"Pid\": 3034,\n  \"ProcessConfig\": {\n    \"arguments\": [\n      \"string\",\n      \"string\"\n    ],\n    \"entrypoint\": \"string\",\n    \"privileged\": true,\n    \"tty\": false,\n    \"user\": \"string\"\n  },\n  \"Running\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a074e204-9aa1-4868-b275-d621ed0c4921",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cce3545e-19b5-4935-8291-eb4de335026c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2af39337-5220-4f0a-b063-f793e0404be5",
+          "name": "Resize an exec instance",
+          "request": {
+            "name": "Resize an exec instance",
+            "description": {
+              "content": "Resize the TTY session used by an exec instance. This endpoint only works if tty was specified as part of creating and starting the exec instance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exec",
+                ":id",
+                "resize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "h",
+                  "value": "<integer>",
+                  "description": "Height of the TTY session in characters"
+                },
+                {
+                  "disabled": false,
+                  "key": "w",
+                  "value": "<integer>",
+                  "description": "Width of the TTY session in characters"
+                },
+                {
+                  "disabled": false,
+                  "key": "running",
+                  "value": "<boolean>",
+                  "description": "Ignore containers not running errors"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34a7b9f9-5f8a-494f-b8a3-64121cebd5e3",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "41d6cb74-14e6-43ad-83f1-e705632fbe3c",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10205573-7d79-427d-aba2-326cee33baa5",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa84ba71-0413-4bb1-a663-c006fffe5a9e",
+          "name": "Start an exec instance",
+          "request": {
+            "name": "Start an exec instance",
+            "description": {
+              "content": "Starts a previously set up exec instance. If detach is true, this endpoint returns immediately after starting the command. Otherwise, it sets up an interactive session with the command.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exec",
+                ":id",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf8d4891-f589-4e68-82cb-550b336a8831",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31bf6ab1-d7bf-4cb2-94ae-bbce1a8885f0",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbc4b224-20df-487c-a253-a9d4c76784cf",
+              "name": "container is not running",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3584136f-27d0-462c-ab31-518f52ae68cc",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 3886\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5715843d-f5f1-46d7-bd5e-56670c8ea90a",
+    "name": "supports a RESTful API for the Libpod library artifacts exec (compat) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

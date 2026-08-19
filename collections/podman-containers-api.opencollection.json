@@ -1,0 +1,1455 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts containers API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "containers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/commit",
+            "params": [
+              {
+                "name": "container",
+                "value": "",
+                "type": "query",
+                "description": "the name or ID of a container"
+              },
+              {
+                "name": "author",
+                "value": "",
+                "type": "query",
+                "description": "author of the image"
+              },
+              {
+                "name": "changes",
+                "value": "",
+                "type": "query",
+                "description": "instructions to apply while committing in Dockerfile format (i.e. \"CMD=/bin/foo\")"
+              },
+              {
+                "name": "comment",
+                "value": "",
+                "type": "query",
+                "description": "commit message"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "format of the image manifest and metadata (default \"oci\")"
+              },
+              {
+                "name": "pause",
+                "value": "",
+                "type": "query",
+                "description": "pause the container before committing it"
+              },
+              {
+                "name": "squash",
+                "value": "",
+                "type": "query",
+                "description": "squash the container before committing it"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "the repository name for the created image"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "output from commit process"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "tag name for the created image"
+              }
+            ]
+          },
+          "docs": "Create a new image from a container"
+        },
+        {
+          "info": {
+            "name": "Delete container",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/containers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "depend",
+                "value": "",
+                "type": "query",
+                "description": "additionally remove containers that depend on the container to be removed"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "force stop container if running"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "ignore errors when the container to be removed does not existxo"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing container when force removing"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "delete volumes"
+              }
+            ]
+          },
+          "docs": "Delete container"
+        },
+        {
+          "info": {
+            "name": "Copy files into a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/libpod/containers/:name/archive",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "container name or id"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to a directory in the container to extract"
+              },
+              {
+                "name": "pause",
+                "value": "",
+                "type": "query",
+                "description": "pause the container while copying (defaults to true)"
+              }
+            ]
+          },
+          "docs": "Copy a tar archive of files into a container"
+        },
+        {
+          "info": {
+            "name": "Attach to a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/attach",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "detachKeys",
+                "value": "",
+                "type": "query",
+                "description": "keys to use for detaching from the container"
+              },
+              {
+                "name": "logs",
+                "value": "",
+                "type": "query",
+                "description": "Stream all logs from the container across the connection. Happens before streaming attach (if requested). At least one of logs or stream must be set"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Attach to the container. If unset, and logs is set, only the container's logs will be sent. At least one of stream or logs must be set"
+              },
+              {
+                "name": "stdout",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDOUT"
+              },
+              {
+                "name": "stderr",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDERR"
+              },
+              {
+                "name": "stdin",
+                "value": "",
+                "type": "query",
+                "description": "Attach to container STDIN"
+              }
+            ]
+          },
+          "docs": "Attach to a container to read its output or send it input. You can attach\nto the same container multiple times and you can reattach to containers\nthat have been detached.\n\n### Hijacking\n\nThis endpoint hijacks the HTTP connection to transport `stdin`, `stdout`,\nand `stderr` on the same socket.\n\nThis is the response from the service for an attach request:\n\n```\nHTTP/1.1 200 OK\nContent-Type: application/vnd.docker.raw-stream\n\n[STREAM]\n```\n\nAfter the headers and two new lines, the TCP connection can "
+        },
+        {
+          "info": {
+            "name": "Report on changes to container's filesystem; adds, deletes or modifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/changes",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or id of the container"
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "specify a second layer which is used to compare against it instead of the parent layer"
+              },
+              {
+                "name": "diffType",
+                "value": "",
+                "type": "query",
+                "description": "select what you want to match, default is all"
+              }
+            ]
+          },
+          "docs": "Returns which files in a container's filesystem have been added, deleted, or modified. The Kind of modification can be one of:\n\n0: Modified\n1: Added\n2: Deleted\n"
+        },
+        {
+          "info": {
+            "name": "Checkpoint a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/checkpoint",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "keep",
+                "value": "",
+                "type": "query",
+                "description": "keep all temporary checkpoint files"
+              },
+              {
+                "name": "leaveRunning",
+                "value": "",
+                "type": "query",
+                "description": "leave the container running after writing checkpoint to disk"
+              },
+              {
+                "name": "tcpEstablished",
+                "value": "",
+                "type": "query",
+                "description": "checkpoint a container with established TCP connections"
+              },
+              {
+                "name": "export",
+                "value": "",
+                "type": "query",
+                "description": "export the checkpoint image to a tar.gz"
+              },
+              {
+                "name": "ignoreRootFS",
+                "value": "",
+                "type": "query",
+                "description": "do not include root file-system changes when exporting. can only be used with export"
+              },
+              {
+                "name": "ignoreVolumes",
+                "value": "",
+                "type": "query",
+                "description": "do not include associated volumes. can only be used with export"
+              },
+              {
+                "name": "preCheckpoint",
+                "value": "",
+                "type": "query",
+                "description": "dump the container's memory information only, leaving the container running. only works on runc 1.0-rc or higher"
+              },
+              {
+                "name": "withPrevious",
+                "value": "",
+                "type": "query",
+                "description": "check out the container with previous criu image files in pre-dump. only works on runc 1.0-rc or higher"
+              },
+              {
+                "name": "fileLocks",
+                "value": "",
+                "type": "query",
+                "description": "checkpoint a container with filelocks"
+              },
+              {
+                "name": "printStats",
+                "value": "",
+                "type": "query",
+                "description": "add checkpoint statistics to the returned CheckpointReport"
+              }
+            ]
+          },
+          "docs": "Checkpoint a container"
+        },
+        {
+          "info": {
+            "name": "Check if container exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Quick way to determine if a container exists by name or ID"
+        },
+        {
+          "info": {
+            "name": "Export a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/export",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Export the contents of a container as a tarball."
+        },
+        {
+          "info": {
+            "name": "Run a container's healthcheck",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/healthcheck",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Execute the defined healthcheck and return information about the results"
+        },
+        {
+          "info": {
+            "name": "Initialize a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/init",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Performs all tasks necessary for initializing the container but does not start the container."
+        },
+        {
+          "info": {
+            "name": "Inspect container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "display filesystem usage"
+              }
+            ]
+          },
+          "docs": "Return low-level information about a container."
+        },
+        {
+          "info": {
+            "name": "Kill container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/kill",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "signal",
+                "value": "",
+                "type": "query",
+                "description": "signal to be sent to container, either by integer or SIG_ name"
+              }
+            ]
+          },
+          "docs": "send a signal to a container, defaults to killing the container"
+        },
+        {
+          "info": {
+            "name": "Get container logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/logs",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "follow",
+                "value": "",
+                "type": "query",
+                "description": "Keep connection after returning logs."
+              },
+              {
+                "name": "stdout",
+                "value": "",
+                "type": "query",
+                "description": "Return logs from stdout"
+              },
+              {
+                "name": "stderr",
+                "value": "",
+                "type": "query",
+                "description": "Return logs from stderr"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Only return logs since this time, as a UNIX timestamp"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Only return logs before this time, as a UNIX timestamp"
+              },
+              {
+                "name": "timestamps",
+                "value": "",
+                "type": "query",
+                "description": "Add timestamps to every log line"
+              },
+              {
+                "name": "tail",
+                "value": "",
+                "type": "query",
+                "description": "Only return this number of log lines from the end of the logs"
+              }
+            ]
+          },
+          "docs": "Get stdout and stderr logs from a container.\n\nThe stream format is the same as described in the attach endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Mount a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/mount",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query",
+                "description": "Include external containers that are not managed by Podman."
+              }
+            ]
+          },
+          "docs": "Mount a container to the filesystem"
+        },
+        {
+          "info": {
+            "name": "Pause a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/pause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Use the cgroups freezer to suspend all processes in a container."
+        },
+        {
+          "info": {
+            "name": "Rename an existing container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/rename",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Full or partial ID or full name of the container to rename"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "New name for the container"
+              }
+            ]
+          },
+          "docs": "Change the name of an existing container."
+        },
+        {
+          "info": {
+            "name": "Resize a container's TTY",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/resize",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "h",
+                "value": "",
+                "type": "query",
+                "description": "Height to set for the terminal, in characters"
+              },
+              {
+                "name": "w",
+                "value": "",
+                "type": "query",
+                "description": "Width to set for the terminal, in characters"
+              },
+              {
+                "name": "running",
+                "value": "",
+                "type": "query",
+                "description": "Ignore containers not running errors"
+              }
+            ]
+          },
+          "docs": "Resize the terminal attached to a container (for use with Attach)."
+        },
+        {
+          "info": {
+            "name": "Restart a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/restart",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "t",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing container (Docker compatibility)"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing container"
+              }
+            ]
+          },
+          "docs": "Restart a container"
+        },
+        {
+          "info": {
+            "name": "Restore a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/restore",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or id of the container"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "the name of the container when restored from a tar. can only be used with import"
+              },
+              {
+                "name": "keep",
+                "value": "",
+                "type": "query",
+                "description": "keep all temporary checkpoint files"
+              },
+              {
+                "name": "tcpEstablished",
+                "value": "",
+                "type": "query",
+                "description": "restore a container with established TCP connections"
+              },
+              {
+                "name": "tcpClose",
+                "value": "",
+                "type": "query",
+                "description": "restore a container but close the TCP connections"
+              },
+              {
+                "name": "import",
+                "value": "",
+                "type": "query",
+                "description": "import the restore from a checkpoint tar.gz"
+              },
+              {
+                "name": "ignoreRootFS",
+                "value": "",
+                "type": "query",
+                "description": "do not include root file-system changes when exporting. can only be used with import"
+              },
+              {
+                "name": "ignoreVolumes",
+                "value": "",
+                "type": "query",
+                "description": "do not restore associated volumes. can only be used with import"
+              },
+              {
+                "name": "ignoreStaticIP",
+                "value": "",
+                "type": "query",
+                "description": "ignore IP address if set statically"
+              },
+              {
+                "name": "ignoreStaticMAC",
+                "value": "",
+                "type": "query",
+                "description": "ignore MAC address if set statically"
+              },
+              {
+                "name": "fileLocks",
+                "value": "",
+                "type": "query",
+                "description": "restore a container with file locks"
+              },
+              {
+                "name": "printStats",
+                "value": "",
+                "type": "query",
+                "description": "add restore statistics to the returned RestoreReport"
+              },
+              {
+                "name": "pod",
+                "value": "",
+                "type": "query",
+                "description": "pod to restore into"
+              }
+            ]
+          },
+          "docs": "Restore a container from a checkpoint."
+        },
+        {
+          "info": {
+            "name": "Start a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/start",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "detachKeys",
+                "value": "",
+                "type": "query",
+                "description": "Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _."
+              }
+            ]
+          },
+          "docs": "Start a container"
+        },
+        {
+          "info": {
+            "name": "Get stats for a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/stats",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Stream the output"
+              }
+            ]
+          },
+          "docs": "DEPRECATED. This endpoint will be removed with the next major release. Please use /libpod/containers/stats instead."
+        },
+        {
+          "info": {
+            "name": "Stop a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing container"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "do not return error if container is already stopped"
+              }
+            ]
+          },
+          "docs": "Stop a container"
+        },
+        {
+          "info": {
+            "name": "List processes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/:name/top",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of container to query for processes (As of version 1.xx)"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "when true, repeatedly stream the latest output (As of version 4.0)"
+              },
+              {
+                "name": "delay",
+                "value": "",
+                "type": "query",
+                "description": "if streaming, delay in seconds between updates. Must be >1. (As of version 4.0)"
+              },
+              {
+                "name": "ps_args",
+                "value": "",
+                "type": "query",
+                "description": "arguments to pass to ps such as aux.\n"
+              }
+            ]
+          },
+          "docs": "List processes running inside a container"
+        },
+        {
+          "info": {
+            "name": "Unmount a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/unmount",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Unmount a container from the filesystem"
+        },
+        {
+          "info": {
+            "name": "Unpause Container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/unpause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Unpause Container"
+        },
+        {
+          "info": {
+            "name": "Updates the configuration of an existing container, allowing changes to resource limits and healthchecks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/update",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Full or partial ID or full name of the container to update"
+              },
+              {
+                "name": "restartPolicy",
+                "value": "",
+                "type": "query",
+                "description": "New restart policy for the container."
+              },
+              {
+                "name": "restartRetries",
+                "value": "",
+                "type": "query",
+                "description": "New amount of retries for the container's restart policy. Only allowed if restartPolicy is set to on-failure"
+              }
+            ]
+          },
+          "docs": "Updates the configuration of an existing container, allowing changes to resource limits and healthchecks."
+        },
+        {
+          "info": {
+            "name": "Wait on a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/:name/wait",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "condition",
+                "value": "",
+                "type": "query",
+                "description": "Conditions to wait for. If no condition provided the 'exited' condition is assumed."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time Interval to wait before polling for completion."
+              }
+            ]
+          },
+          "docs": "Wait on a container to meet a given condition"
+        },
+        {
+          "info": {
+            "name": "Create a container",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/create"
+          },
+          "docs": "Create a container"
+        },
+        {
+          "info": {
+            "name": "List containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/json",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Return all containers. By default, only running containers are shown"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Return this number of most recently created containers, including non-running ones."
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "Alias for `limit`. Return this number of most recently created containers."
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query",
+                "description": "Return containers created by external tools that use container storage."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Include namespace information"
+              },
+              {
+                "name": "pod",
+                "value": "",
+                "type": "query",
+                "description": "Ignored. Previously included details on pod name and ID that are currently included by default."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Return the size of container as fields SizeRw and SizeRootFs."
+              },
+              {
+                "name": "sync",
+                "value": "",
+                "type": "query",
+                "description": "Sync container state with OCI runtime"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "A JSON encoded value of the filters (a `map[string][]string`) to process on the containers list. Available filters:\n- `ancestor`=(`<image-name>[:<tag>]`, `<image id>`, or `<image@digest>`)\n- `before`=(`<container id>` or `<container name>`)\n- `expose`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)\n- `exited=<int>` containers with exit code of `<int>`\n- `health`=(`starting`, `healthy`, `unhealthy` or `none`)\n- `id=<ID>` a container's ID\n- `is-task`=(`true` or `false`)\n- `label`=(`key` or `\"key=value\"`) of a container label\n- `name=<name>` a container's name\n- `network`=(`<network id>` or `<network name>`)\n- `pod`=(`<pod id>` or `<pod name>`)\n- `publish`=(`<port>[/<proto>]` or `<startport-endport>/[<proto>]`)\n- `since`=(`<container id>` or `<container name>`)\n- `status`=(`created`, `restarting`, `running`, `removing`, `paused`, `exited` or `dead`)\n- `volume`=(`<volume name>` or `<mount point destination>`)\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of containers"
+        },
+        {
+          "info": {
+            "name": "Delete stopped containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/containers/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).  Available filters:\n - `until=<timestamp>` Prune containers created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune containers with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Remove containers not in use"
+        },
+        {
+          "info": {
+            "name": "Show mounted containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/showmounted"
+          },
+          "docs": "Lists all mounted containers mount points"
+        },
+        {
+          "info": {
+            "name": "Get stats for one or more containers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/containers/stats",
+            "params": [
+              {
+                "name": "containers",
+                "value": "",
+                "type": "query",
+                "description": "names or IDs of containers"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Stream the output"
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Time in seconds between stats reports"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Provide statistics for all running containers"
+              }
+            ]
+          },
+          "docs": "Return a live stream of resource usage statistics of one or more container. If no container is specified, the statistics of all containers are returned."
+        },
+        {
+          "info": {
+            "name": "Generate Systemd Units",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/generate/:name/systemd",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name or ID of the container or pod."
+              },
+              {
+                "name": "useName",
+                "value": "",
+                "type": "query",
+                "description": "Use container/pod names instead of IDs."
+              },
+              {
+                "name": "new",
+                "value": "",
+                "type": "query",
+                "description": "Create a new container instead of starting an existing one."
+              },
+              {
+                "name": "noHeader",
+                "value": "",
+                "type": "query",
+                "description": "Do not generate the header including the Podman version and the timestamp."
+              },
+              {
+                "name": "startTimeout",
+                "value": "",
+                "type": "query",
+                "description": "Start timeout in seconds."
+              },
+              {
+                "name": "stopTimeout",
+                "value": "",
+                "type": "query",
+                "description": "Stop timeout in seconds."
+              },
+              {
+                "name": "restartPolicy",
+                "value": "",
+                "type": "query",
+                "description": "Systemd restart-policy."
+              },
+              {
+                "name": "containerPrefix",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name prefix for containers."
+              },
+              {
+                "name": "podPrefix",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name prefix for pods."
+              },
+              {
+                "name": "separator",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name separator between name/id and prefix."
+              },
+              {
+                "name": "restartSec",
+                "value": "",
+                "type": "query",
+                "description": "Configures the time to sleep before restarting a service."
+              },
+              {
+                "name": "wants",
+                "value": "",
+                "type": "query",
+                "description": "Systemd Wants list for the container or pods."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Systemd After list for the container or pods."
+              },
+              {
+                "name": "requires",
+                "value": "",
+                "type": "query",
+                "description": "Systemd Requires list for the container or pods."
+              },
+              {
+                "name": "additionalEnvVariables",
+                "value": "",
+                "type": "query",
+                "description": "Set environment variables to the systemd unit files."
+              },
+              {
+                "name": "templateUnitFile",
+                "value": "",
+                "type": "query",
+                "description": "Add template specifier for the systemd unit file names."
+              }
+            ]
+          },
+          "docs": "Generate Systemd Units based on a pod or container."
+        },
+        {
+          "info": {
+            "name": "Generate a Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/generate/kube",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Name or ID of the container or pod."
+              },
+              {
+                "name": "service",
+                "value": "",
+                "type": "query",
+                "description": "Generate YAML for a Kubernetes service object."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Generate YAML for the given Kubernetes kind."
+              },
+              {
+                "name": "replicas",
+                "value": "",
+                "type": "query",
+                "description": "Set the replica number for Deployment kind."
+              },
+              {
+                "name": "noTrunc",
+                "value": "",
+                "type": "query",
+                "description": "don't truncate annotations to the Kubernetes maximum length of 63 characters"
+              },
+              {
+                "name": "podmanOnly",
+                "value": "",
+                "type": "query",
+                "description": "add podman-only reserved annotations in generated YAML file (cannot be used by Kubernetes)"
+              }
+            ]
+          },
+          "docs": "Generate Kubernetes YAML based on a pod or container."
+        },
+        {
+          "info": {
+            "name": "Apply a podman workload or Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/kube/apply",
+            "params": [
+              {
+                "name": "caCertFile",
+                "value": "",
+                "type": "query",
+                "description": "Path to the CA cert file for the Kubernetes cluster."
+              },
+              {
+                "name": "kubeConfig",
+                "value": "",
+                "type": "query",
+                "description": "Path to the kubeconfig file for the Kubernetes cluster."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "The namespace to deploy the workload to on the Kubernetes cluster."
+              },
+              {
+                "name": "service",
+                "value": "",
+                "type": "query",
+                "description": "Create a service object for the container being deployed."
+              },
+              {
+                "name": "file",
+                "value": "",
+                "type": "query",
+                "description": "Path to the Kubernetes yaml file to deploy."
+              }
+            ]
+          },
+          "docs": "Deploy a podman container, pod, volume, or Kubernetes yaml to a Kubernetes cluster."
+        },
+        {
+          "info": {
+            "name": "Play a Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/play/kube",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "annotations",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of annotations (a map[string]string)."
+              },
+              {
+                "name": "logDriver",
+                "value": "",
+                "type": "query",
+                "description": "Logging driver for the containers in the pod."
+              },
+              {
+                "name": "logOptions",
+                "value": "",
+                "type": "query",
+                "description": "logging driver options"
+              },
+              {
+                "name": "network",
+                "value": "",
+                "type": "query",
+                "description": "USe the network mode or specify an array of networks."
+              },
+              {
+                "name": "noHosts",
+                "value": "",
+                "type": "query",
+                "description": "do not setup /etc/hosts file in container"
+              },
+              {
+                "name": "noTrunc",
+                "value": "",
+                "type": "query",
+                "description": "use annotations that are not truncated to the Kubernetes maximum length of 63 characters"
+              },
+              {
+                "name": "publishPorts",
+                "value": "",
+                "type": "query",
+                "description": "publish a container's port, or a range of ports, to the host"
+              },
+              {
+                "name": "publishAllPorts",
+                "value": "",
+                "type": "query",
+                "description": "Whether to publish all ports defined in the K8S YAML file (containerPort, hostPort), if false only hostPort will be published"
+              },
+              {
+                "name": "replace",
+                "value": "",
+                "type": "query",
+                "description": "replace existing pods and containers"
+              },
+              {
+                "name": "serviceContainer",
+                "value": "",
+                "type": "query",
+                "description": "Starts a service container before all pods."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start the pod after creating it."
+              },
+              {
+                "name": "staticIPs",
+                "value": "",
+                "type": "query",
+                "description": "Static IPs used for the pods."
+              },
+              {
+                "name": "staticMACs",
+                "value": "",
+                "type": "query",
+                "description": "Static MACs used for the pods."
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              },
+              {
+                "name": "userns",
+                "value": "",
+                "type": "query",
+                "description": "Set the user namespace mode for the pods."
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Clean up all objects created when a SIGTERM is received or pods exit."
+              },
+              {
+                "name": "build",
+                "value": "",
+                "type": "query",
+                "description": "Build the images with corresponding context."
+              }
+            ]
+          },
+          "docs": "Create and run pods based on a Kubernetes YAML file.\n\n### Content-Type\n\nThen endpoint support two Content-Type\n - `plain/text` for yaml format\n - `application/x-tar` for sending context(s) required for building images\n\n#### Tar format\n\nThe tar format must contain a `play.yaml` file at the root that will be used.\nIf the file format requires context to build an image, it uses the image name and\ncheck for corresponding folder.\n\nFor example, the client sends a tar file with the following structure:\n"
+        },
+        {
+          "info": {
+            "name": "Remove resources created from kube play",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/play/kube",
+            "params": [
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Remove volumes."
+              }
+            ]
+          },
+          "docs": "Tears down pods, secrets, and volumes defined in a YAML file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

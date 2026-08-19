@@ -1,0 +1,793 @@
+{
+  "item": [
+    {
+      "id": "7d36ae72-f694-4d7c-9de9-30570636694d",
+      "name": "volumes (compat)",
+      "description": {
+        "content": "Actions related to volumes for the compatibility endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a6a0321-f033-4fc3-b1bf-89a22dae2407",
+          "name": "List volumes",
+          "request": {
+            "name": "List volumes",
+            "description": {
+              "content": "Returns a list of volume",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of the filters (a map[string][]string) to process on the volumes list. Available filters:\n  - driver=<volume-driver-name> Matches volumes based on their driver.\n  - label=<key> or label=<key>:<value> Matches volumes based on the presence of a label alone or a label and a value.\n  - name=<volume-name> Matches all of volume name.\n  - `until=<timestamp>` List volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n\nNote:\n  The boolean `dangling` filter is not yet implemented for this endpoint.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a35d6c17-3710-4007-a263-b3c4c52ba413",
+              "name": "Volume List",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Volumes\": [\n    {\n      \"Driver\": \"custom\",\n      \"Labels\": {\n        \"com.example.some-label\": \"some-value\",\n        \"com.example.some-other-label\": \"some-other-value\"\n      },\n      \"Mountpoint\": \"/var/lib/docker/volumes/tardis\",\n      \"Name\": \"tardis\",\n      \"Options\": {\n        \"device\": \"tmpfs\",\n        \"o\": \"size=100m,uid=1000\",\n        \"type\": \"tmpfs\"\n      },\n      \"Scope\": \"local\",\n      \"ClusterVolume\": {\n        \"CreatedAt\": \"1949-12-26T02:53:24.738Z\",\n        \"ID\": \"string\",\n        \"Info\": {\n          \"AccessibleTopology\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"CapacityBytes\": 3550,\n          \"VolumeContext\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"VolumeID\": \"string\"\n        },\n        \"PublishStatus\": [\n          {\n            \"NodeID\": \"string\",\n            \"PublishContext\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"State\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"NodeID\": \"string\",\n            \"PublishContext\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_3\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"State\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"Spec\": {\n          \"AccessMode\": {\n            \"BlockVolume\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MountVolume\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Scope\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Sharing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"AccessibilityRequirements\": {\n            \"Preferred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Requisite\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Availability\": \"string\",\n          \"CapacityRange\": {\n            \"LimitBytes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"RequiredBytes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Group\": \"string\",\n          \"Secrets\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"UpdatedAt\": \"1974-07-08T06:39:32.047Z\",\n        \"Version\": {\n          \"APIVersion\": \"string\",\n          \"BuildOrigin\": \"string\",\n          \"Built\": 8265,\n          \"BuiltTime\": \"string\",\n          \"GitCommit\": \"string\",\n          \"GoVersion\": \"string\",\n          \"Os\": \"string\",\n          \"OsArch\": \"string\",\n          \"Version\": \"string\"\n        }\n      },\n      \"CreatedAt\": \"2016-06-07T20:31:11.853781916Z\",\n      \"Status\": {\n        \"key_0\": {}\n      },\n      \"UsageData\": {\n        \"RefCount\": 3740,\n        \"Size\": 3399\n      }\n    },\n    {\n      \"Driver\": \"custom\",\n      \"Labels\": {\n        \"com.example.some-label\": \"some-value\",\n        \"com.example.some-other-label\": \"some-other-value\"\n      },\n      \"Mountpoint\": \"/var/lib/docker/volumes/tardis\",\n      \"Name\": \"tardis\",\n      \"Options\": {\n        \"device\": \"tmpfs\",\n        \"o\": \"size=100m,uid=1000\",\n        \"type\": \"tmpfs\"\n      },\n      \"Scope\": \"local\",\n      \"ClusterVolume\": {\n        \"CreatedAt\": \"2002-02-03T23:42:44.451Z\",\n        \"ID\": \"string\",\n        \"Info\": {\n          \"AccessibleTopology\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"CapacityBytes\": 5838,\n          \"VolumeContext\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          },\n          \"VolumeID\": \"string\"\n        },\n        \"PublishStatus\": [\n          {\n            \"NodeID\": \"string\",\n            \"PublishContext\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"State\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"NodeID\": \"string\",\n            \"PublishContext\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"State\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"Spec\": {\n          \"AccessMode\": {\n            \"BlockVolume\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MountVolume\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Scope\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Sharing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"AccessibilityRequirements\": {\n            \"Preferred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Requisite\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Availability\": \"string\",\n          \"CapacityRange\": {\n            \"LimitBytes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"RequiredBytes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Group\": \"string\",\n          \"Secrets\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"UpdatedAt\": \"2013-04-22T11:23:15.797Z\",\n        \"Version\": {\n          \"APIVersion\": \"string\",\n          \"BuildOrigin\": \"string\",\n          \"Built\": 7670,\n          \"BuiltTime\": \"string\",\n          \"GitCommit\": \"string\",\n          \"GoVersion\": \"string\",\n          \"Os\": \"string\",\n          \"OsArch\": \"string\",\n          \"Version\": \"string\"\n        }\n      },\n      \"CreatedAt\": \"2016-06-07T20:31:11.853781916Z\",\n      \"Status\": {\n        \"key_0\": {}\n      },\n      \"UsageData\": {\n        \"RefCount\": 4020,\n        \"Size\": 5358\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7e9cbee-7053-4969-a109-b9b456139c36",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4e7e3b0-3ac9-4503-97ff-c18d311df42c",
+          "name": "Remove volume",
+          "request": {
+            "name": "Remove volume",
+            "description": {},
+            "url": {
+              "path": [
+                "volumes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "Force removal of the volume. This actually only causes errors due\nto the names volume not being found to be suppressed, which is the\nbehaviour Docker implements.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>",
+                  "description": "timeout before forcibly killing any containers using the volume"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the volume"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a27e4a5-8f97-4a53-b8e7-84152b2817de",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "afcad00f-26c1-4014-9dac-5a811714cc56",
+              "name": "No such volume",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adad4250-9ccc-4d90-bfec-b927b7c3c54e",
+              "name": "Volume is in use and cannot be removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d6486d62-f1d4-4a29-a16b-1f73a6c5e5cb",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "083a6690-7ccb-4c58-9899-c0376bf864b5",
+          "name": "Inspect volume",
+          "request": {
+            "name": "Inspect volume",
+            "description": {},
+            "url": {
+              "path": [
+                "volumes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the volume"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc26200b-5c2b-4531-a3f0-86ed4d6a77f9",
+              "name": "This response definition is used for both the create and inspect endpoints",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Driver\": \"custom\",\n  \"Labels\": {\n    \"com.example.some-label\": \"some-value\",\n    \"com.example.some-other-label\": \"some-other-value\"\n  },\n  \"Mountpoint\": \"/var/lib/docker/volumes/tardis\",\n  \"Name\": \"tardis\",\n  \"Options\": {\n    \"device\": \"tmpfs\",\n    \"o\": \"size=100m,uid=1000\",\n    \"type\": \"tmpfs\"\n  },\n  \"Scope\": \"local\",\n  \"ClusterVolume\": {\n    \"CreatedAt\": \"2022-06-15T07:49:22.945Z\",\n    \"ID\": \"string\",\n    \"Info\": {\n      \"AccessibleTopology\": [\n        {\n          \"Segments\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          }\n        },\n        {\n          \"Segments\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          }\n        }\n      ],\n      \"CapacityBytes\": 2292,\n      \"VolumeContext\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"VolumeID\": \"string\"\n    },\n    \"PublishStatus\": [\n      {\n        \"NodeID\": \"string\",\n        \"PublishContext\": {\n          \"key_0\": \"string\"\n        },\n        \"State\": \"string\"\n      },\n      {\n        \"NodeID\": \"string\",\n        \"PublishContext\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"State\": \"string\"\n      }\n    ],\n    \"Spec\": {\n      \"AccessMode\": {\n        \"BlockVolume\": {},\n        \"MountVolume\": {\n          \"FsType\": \"string\",\n          \"MountFlags\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"Scope\": \"string\",\n        \"Sharing\": \"string\"\n      },\n      \"AccessibilityRequirements\": {\n        \"Preferred\": [\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"Requisite\": [\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"Availability\": \"string\",\n      \"CapacityRange\": {\n        \"LimitBytes\": 3895,\n        \"RequiredBytes\": 3929\n      },\n      \"Group\": \"string\",\n      \"Secrets\": [\n        {\n          \"GID\": 4633,\n          \"Mode\": 1261,\n          \"Source\": \"string\",\n          \"Target\": \"string\",\n          \"UID\": 5087\n        },\n        {\n          \"GID\": 5985,\n          \"Mode\": 8010,\n          \"Source\": \"string\",\n          \"Target\": \"string\",\n          \"UID\": 101\n        }\n      ]\n    },\n    \"UpdatedAt\": \"2024-04-04T05:11:44.306Z\",\n    \"Version\": {\n      \"APIVersion\": \"string\",\n      \"BuildOrigin\": \"string\",\n      \"Built\": 6255,\n      \"BuiltTime\": \"string\",\n      \"GitCommit\": \"string\",\n      \"GoVersion\": \"string\",\n      \"Os\": \"string\",\n      \"OsArch\": \"string\",\n      \"Version\": \"string\"\n    }\n  },\n  \"CreatedAt\": \"2016-06-07T20:31:11.853781916Z\",\n  \"Status\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"UsageData\": {\n    \"RefCount\": 7357,\n    \"Size\": 5142\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c524195-8da0-46cd-aad3-9cd6b86e3130",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the volume"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88c8d681-e6c8-4555-b7be-e9d93ee4f3a7",
+          "name": "Create a volume",
+          "request": {
+            "name": "Create a volume",
+            "description": {},
+            "url": {
+              "path": [
+                "volumes",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Driver\": \"<string>\",\n  \"DriverOpts\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"Labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf36e616-0485-45f2-9dbf-eb263cfab808",
+              "name": "This response definition is used for both the create and inspect endpoints",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Driver\": \"<string>\",\n  \"DriverOpts\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Driver\": \"custom\",\n  \"Labels\": {\n    \"com.example.some-label\": \"some-value\",\n    \"com.example.some-other-label\": \"some-other-value\"\n  },\n  \"Mountpoint\": \"/var/lib/docker/volumes/tardis\",\n  \"Name\": \"tardis\",\n  \"Options\": {\n    \"device\": \"tmpfs\",\n    \"o\": \"size=100m,uid=1000\",\n    \"type\": \"tmpfs\"\n  },\n  \"Scope\": \"local\",\n  \"ClusterVolume\": {\n    \"CreatedAt\": \"2007-07-03T15:29:48.261Z\",\n    \"ID\": \"string\",\n    \"Info\": {\n      \"AccessibleTopology\": [\n        {\n          \"Segments\": {\n            \"key_0\": \"string\"\n          }\n        },\n        {\n          \"Segments\": {\n            \"key_0\": \"string\"\n          }\n        }\n      ],\n      \"CapacityBytes\": 3932,\n      \"VolumeContext\": {\n        \"key_0\": \"string\"\n      },\n      \"VolumeID\": \"string\"\n    },\n    \"PublishStatus\": [\n      {\n        \"NodeID\": \"string\",\n        \"PublishContext\": {\n          \"key_0\": \"string\"\n        },\n        \"State\": \"string\"\n      },\n      {\n        \"NodeID\": \"string\",\n        \"PublishContext\": {\n          \"key_0\": \"string\"\n        },\n        \"State\": \"string\"\n      }\n    ],\n    \"Spec\": {\n      \"AccessMode\": {\n        \"BlockVolume\": {},\n        \"MountVolume\": {\n          \"FsType\": \"string\",\n          \"MountFlags\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"Scope\": \"string\",\n        \"Sharing\": \"string\"\n      },\n      \"AccessibilityRequirements\": {\n        \"Preferred\": [\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"Requisite\": [\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Segments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"Availability\": \"string\",\n      \"CapacityRange\": {\n        \"LimitBytes\": 2973,\n        \"RequiredBytes\": 4344\n      },\n      \"Group\": \"string\",\n      \"Secrets\": [\n        {\n          \"GID\": 6135,\n          \"Mode\": 6833,\n          \"Source\": \"string\",\n          \"Target\": \"string\",\n          \"UID\": 2888\n        },\n        {\n          \"GID\": 4264,\n          \"Mode\": 3129,\n          \"Source\": \"string\",\n          \"Target\": \"string\",\n          \"UID\": 1937\n        }\n      ]\n    },\n    \"UpdatedAt\": \"1972-08-05T13:20:31.534Z\",\n    \"Version\": {\n      \"APIVersion\": \"string\",\n      \"BuildOrigin\": \"string\",\n      \"Built\": 5503,\n      \"BuiltTime\": \"string\",\n      \"GitCommit\": \"string\",\n      \"GoVersion\": \"string\",\n      \"Os\": \"string\",\n      \"OsArch\": \"string\",\n      \"Version\": \"string\"\n    }\n  },\n  \"CreatedAt\": \"2016-06-07T20:31:11.853781916Z\",\n  \"Status\": {\n    \"key_0\": {}\n  },\n  \"UsageData\": {\n    \"RefCount\": 7631,\n    \"Size\": 5442\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fa0c060-14a8-47da-b09c-54a3300d9f4b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Driver\": \"<string>\",\n  \"DriverOpts\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9d83a92-8fd1-43c2-8923-69764d4d62f2",
+          "name": "Prune volumes",
+          "request": {
+            "name": "Prune volumes",
+            "description": {},
+            "url": {
+              "path": [
+                "volumes",
+                "prune"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of filters (a map[string][]string). Docker API 1.42+ - by default only anonymous (unnamed) unused volumes are pruned; use filter all=true to prune all unused volumes.\nAvailable filters:\n  - `all` When true, prune all unused volumes (anonymous and named). When false or unset, only anonymous unused volumes are pruned.\n  - `until=<timestamp>` Prune volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90f5af8e-c1ba-4a3a-88ec-5e63389f9625",
+              "name": "Volume prune",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Err\": \"string\",\n  \"Id\": \"string\",\n  \"Size\": 8860\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c85082e-836d-4428-9a42-bf9ec68774fd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 2631\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0b8e1a9b-a82f-4f1b-aa08-5f25d92da439",
+    "name": "supports a RESTful API for the Libpod library artifacts volumes (compat) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

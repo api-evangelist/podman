@@ -1,0 +1,972 @@
+{
+  "item": [
+    {
+      "id": "1e7f78ba-6b2b-4b9f-b629-b4a90cc410b4",
+      "name": "exec",
+      "description": {
+        "content": "Actions related to exec",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "64d7dd7e-79fd-493f-adbc-b83be1059950",
+          "name": "Create an exec instance",
+          "request": {
+            "name": "Create an exec instance",
+            "description": {
+              "content": "Create an exec session to run a command inside a running container. Exec sessions will be automatically removed 5 minutes after they exit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "containers",
+                ":name",
+                "exec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) name of container"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26f2a6a7-29f9-40f2-bd0d-91201115531f",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c93b320-5309-4b86-8d35-1cbe57f3718e",
+              "name": "No such container",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3d37a45-a09a-420a-9297-fb3908c8747f",
+              "name": "container is paused",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7a9abea2-3c3a-467a-8415-94872a8f4036",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "containers",
+                    ":name",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) name of container"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AttachStderr\": \"<boolean>\",\n  \"AttachStdin\": \"<boolean>\",\n  \"AttachStdout\": \"<boolean>\",\n  \"Cmd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"DetachKeys\": \"<string>\",\n  \"Env\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Privileged\": false,\n  \"Tty\": \"<boolean>\",\n  \"User\": \"<string>\",\n  \"WorkingDir\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b14ef7d9-72bc-49d5-be04-7f3b8ef21fef",
+          "name": "Inspect an exec instance",
+          "request": {
+            "name": "Inspect an exec instance",
+            "description": {
+              "content": "Return low-level information about an exec instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "exec",
+                ":id",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc27bd8c-9065-4ab2-b5f9-884bf7df0cd0",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14eecd61-b44b-4953-9b1d-23b69b5b8d80",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8705f3b-79bd-4cd8-9bc9-87cafb991c81",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2478e879-692b-4ff8-ac8b-64e703ed594b",
+          "name": "Resize an exec instance",
+          "request": {
+            "name": "Resize an exec instance",
+            "description": {
+              "content": "Resize the TTY session used by an exec instance. This endpoint only works if tty was specified as part of creating and starting the exec instance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "exec",
+                ":id",
+                "resize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "h",
+                  "value": "<integer>",
+                  "description": "Height of the TTY session in characters"
+                },
+                {
+                  "disabled": false,
+                  "key": "w",
+                  "value": "<integer>",
+                  "description": "Width of the TTY session in characters"
+                },
+                {
+                  "disabled": false,
+                  "key": "running",
+                  "value": "<boolean>",
+                  "description": "Ignore containers not running errors"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c52e8d2-63c6-45fb-8033-45c1fd5b67d1",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "61c124f8-f4ea-4145-be99-b489f6b5bb25",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "229ffff5-e0db-4f6f-9e53-586daf18a81b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "resize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "h",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "w",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "running",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58091559-2d61-4447-bbbe-6df44751a8d3",
+          "name": "Start an exec instance",
+          "request": {
+            "name": "Start an exec instance",
+            "description": {
+              "content": "Starts a previously set up exec instance. If detach is true, this endpoint returns immediately after starting the command.\nOtherwise, it sets up an interactive session with the command. The stream format is the same as the attach endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "exec",
+                ":id",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Exec instance ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\",\n  \"h\": \"<integer>\",\n  \"w\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26369c40-eef3-4194-a859-ee3e3435d176",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\",\n  \"h\": \"<integer>\",\n  \"w\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "378f9ee1-780e-48d4-a035-87b543c6b4c3",
+              "name": "No such exec instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\",\n  \"h\": \"<integer>\",\n  \"w\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de60391f-ea5f-4b30-828b-13dc51bc38b2",
+              "name": "container is not running.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\",\n  \"h\": \"<integer>\",\n  \"w\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc96f868-c562-492a-8c24-eb883eecaddf",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "exec",
+                    ":id",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Exec instance ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Detach\": \"<boolean>\",\n  \"Tty\": \"<boolean>\",\n  \"h\": \"<integer>\",\n  \"w\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8975\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "76506d8d-f161-476e-a7e7-34127856dc73",
+    "name": "supports a RESTful API for the Libpod library artifacts exec API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts networks API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "networks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Remove a network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/networks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the network"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "remove containers associated with network"
+              }
+            ]
+          },
+          "docs": "Remove a configured network"
+        },
+        {
+          "info": {
+            "name": "Connect container to network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/networks/:name/connect",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the network"
+              }
+            ]
+          },
+          "docs": "Connect a container to a network."
+        },
+        {
+          "info": {
+            "name": "Disconnect container from network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/networks/:name/disconnect",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the network"
+              }
+            ]
+          },
+          "docs": "Disconnect a container from a network."
+        },
+        {
+          "info": {
+            "name": "Network exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/networks/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the network"
+              }
+            ]
+          },
+          "docs": "Check if network exists"
+        },
+        {
+          "info": {
+            "name": "Inspect a network",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/networks/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the network"
+              }
+            ]
+          },
+          "docs": "Display configuration for a network.\n"
+        },
+        {
+          "info": {
+            "name": "Update existing podman network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/networks/:name/update",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the network"
+              }
+            ]
+          },
+          "docs": "Update existing podman network"
+        },
+        {
+          "info": {
+            "name": "Create network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/networks/create",
+            "params": [
+              {
+                "name": "ignoreIfExists",
+                "value": "",
+                "type": "query",
+                "description": "Ignore the request if a network with the same name already exists."
+              }
+            ]
+          },
+          "docs": "Create a new network configuration"
+        },
+        {
+          "info": {
+            "name": "List networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/networks/json",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of the filters (a `map[string][]string`) to process on the network list. Available filters:\n  - `name=[name]` Matches network name (accepts regex).\n  - `id=[id]` Matches for full or partial ID.\n  - `driver=[driver]` Only bridge is supported.\n  - `label=[key]` or `label=[key=value]` Matches networks based on the presence of a label alone or a label and a value.\n  - `until=[timestamp]` Matches all networks that were created before the given timestamp.\n"
+              }
+            ]
+          },
+          "docs": "Display summary of network configurations.\n  - In a 200 response, all of the fields named Bytes are returned as a Base64 encoded string.\n"
+        },
+        {
+          "info": {
+            "name": "Delete unused networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/networks/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).\nAvailable filters:\n  - `until=<timestamp>` Prune networks created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Remove networks that do not have containers"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

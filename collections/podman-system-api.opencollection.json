@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts system API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "system",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/_ping"
+          },
+          "docs": "Return protocol information in response headers.\n`HEAD /libpod/_ping` is also supported.\n`/_ping` is available for compatibility with other engines.\nThe '_ping' endpoints are not versioned.\n"
+        },
+        {
+          "info": {
+            "name": "Get events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/events",
+            "params": [
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "start streaming events from this time"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "stop streaming events later than this"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded map[string][]string of constraints"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "when false, do not follow events"
+              }
+            ]
+          },
+          "docs": "Returns events filtered on query parameters"
+        },
+        {
+          "info": {
+            "name": "Get info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/info"
+          },
+          "docs": "Returns information on the system and libpod configuration"
+        },
+        {
+          "info": {
+            "name": "Performs consistency checks on storage, optionally removing items which fail checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/system/check",
+            "params": [
+              {
+                "name": "quick",
+                "value": "",
+                "type": "query",
+                "description": "Skip time-consuming checks"
+              },
+              {
+                "name": "repair",
+                "value": "",
+                "type": "query",
+                "description": "Remove inconsistent images"
+              },
+              {
+                "name": "repair_lossy",
+                "value": "",
+                "type": "query",
+                "description": "Remove inconsistent containers and images"
+              },
+              {
+                "name": "unreferenced_layer_max_age",
+                "value": "",
+                "type": "query",
+                "description": "Maximum allowed age of unreferenced layers"
+              }
+            ]
+          },
+          "docs": "Performs consistency checks on storage, optionally removing items which fail checks"
+        },
+        {
+          "info": {
+            "name": "Show disk usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/system/df"
+          },
+          "docs": "Return information about disk usage for containers, images, and volumes"
+        },
+        {
+          "info": {
+            "name": "Prune unused data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/system/prune",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Remove all unused data, not just dangling data"
+              },
+              {
+                "name": "volumes",
+                "value": "",
+                "type": "query",
+                "description": "Prune volumes"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query",
+                "description": "Remove images used by external containers (e.g., build containers)"
+              },
+              {
+                "name": "build",
+                "value": "",
+                "type": "query",
+                "description": "Remove build cache"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of filters (a map[string][]string) to match data against before pruning.\nAvailable filters:\n  - `until=<timestamp>` Prune data created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine's time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune data with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Prune unused data"
+        },
+        {
+          "info": {
+            "name": "Component Version information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/version"
+          },
+          "docs": "Component Version information"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

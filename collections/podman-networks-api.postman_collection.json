@@ -1,0 +1,1754 @@
+{
+  "item": [
+    {
+      "id": "05df0c33-2798-4892-b445-c9f897673875",
+      "name": "networks",
+      "description": {
+        "content": "Actions related to networks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61047932-402e-4708-87d5-3baf9815ade8",
+          "name": "Remove a network",
+          "request": {
+            "name": "Remove a network",
+            "description": {
+              "content": "Remove a configured network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "remove containers associated with network"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4e9cefa-0081-4fee-9a30-340f896be2f7",
+              "name": "Network Delete",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34f9ff5e-8495-4085-8984-74ce9ec24ffa",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e38ea6b-654f-4dd6-82e2-3a6c08a59e0d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88607d2b-47af-41f6-a546-bad3c55f81a6",
+          "name": "Connect container to network",
+          "request": {
+            "name": "Connect container to network",
+            "description": {
+              "content": "Connect a container to a network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0fb3f98d-e7c3-45b4-9240-49d31f2a2c49",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f11dc443-5e16-4d5a-a0da-993db252b3c2",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "808084f7-653f-4fca-a2ef-2e85840c6c9a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f05426d-9858-484f-8078-b834ad73c2f5",
+          "name": "Disconnect container from network",
+          "request": {
+            "name": "Disconnect container from network",
+            "description": {
+              "content": "Disconnect a container from a network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name",
+                "disconnect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Container\": \"<string>\",\n  \"Force\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ef3ef896-3f51-455d-9b36-bbdfc0936762",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "890862cd-81d5-401c-ae6e-33d9f3835c94",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d955a26-9cf2-4ee6-9a3e-add4b1e26275",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9cba890-3f66-4be8-9401-f07beb4affcc",
+          "name": "Network exists",
+          "request": {
+            "name": "Network exists",
+            "description": {
+              "content": "Check if network exists",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name",
+                "exists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f2a2144-f42c-4c5d-8874-01624ef40826",
+              "name": "network exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a1df8471-b611-4905-b73c-3cc15bd4d18f",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5be7d4d2-e772-4451-bb21-9efabf98503e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "365c10e8-024e-4734-83f9-629e88cd6228",
+          "name": "Inspect a network",
+          "request": {
+            "name": "Inspect a network",
+            "description": {
+              "content": "Display configuration for a network.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80a03906-0455-4a41-83e5-1d3b320a86da",
+              "name": "Network inspect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c165c1a4-970c-428e-8d3e-8037783b13ec",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ac91e78-b0ae-4b31-813c-f84e78b992ad",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa63f296-7dd2-4216-aa68-d80cc0a660a6",
+          "name": "Update existing podman network",
+          "request": {
+            "name": "Update existing podman network",
+            "description": {
+              "content": "Update existing podman network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                ":name",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"adddnsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removednsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "441c7d12-cffa-460a-866f-ac8216c77595",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"adddnsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removednsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a2d5b618-7619-4740-98e9-c23771306223",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"adddnsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removednsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e3fd566-dbd5-4942-9f8e-a479fa31678d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    ":name",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"adddnsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removednsservers\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ebcb84c7-060f-49e8-b68d-8ce4c1c8caa6",
+          "name": "Create network",
+          "request": {
+            "name": "Create network",
+            "description": {
+              "content": "Create a new network configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ignoreIfExists",
+                  "value": "false",
+                  "description": "Ignore the request if a network with the same name already exists."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"created\": \"<dateTime>\",\n  \"dns_enabled\": \"<boolean>\",\n  \"driver\": \"<string>\",\n  \"id\": \"<string>\",\n  \"internal\": \"<boolean>\",\n  \"ipam_options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"ipv6_enabled\": \"<boolean>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"network_dns_servers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"network_interface\": \"<string>\",\n  \"options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f5a3f4b6-427f-4a71-a632-416b3f02e476",
+              "name": "Network create",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignoreIfExists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"created\": \"<dateTime>\",\n  \"dns_enabled\": \"<boolean>\",\n  \"driver\": \"<string>\",\n  \"id\": \"<string>\",\n  \"internal\": \"<boolean>\",\n  \"ipam_options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"ipv6_enabled\": \"<boolean>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"network_dns_servers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"network_interface\": \"<string>\",\n  \"options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": \"1968-01-22T06:27:06.910Z\",\n  \"dns_enabled\": true,\n  \"driver\": \"string\",\n  \"id\": \"string\",\n  \"internal\": true,\n  \"ipam_options\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"ipv6_enabled\": false,\n  \"labels\": {\n    \"key_0\": \"string\"\n  },\n  \"name\": \"string\",\n  \"network_dns_servers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"network_interface\": \"string\",\n  \"options\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d73238a-0ade-454a-ad30-c559d88e944e",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignoreIfExists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"created\": \"<dateTime>\",\n  \"dns_enabled\": \"<boolean>\",\n  \"driver\": \"<string>\",\n  \"id\": \"<string>\",\n  \"internal\": \"<boolean>\",\n  \"ipam_options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"ipv6_enabled\": \"<boolean>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"network_dns_servers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"network_interface\": \"<string>\",\n  \"options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc2049a9-43c4-40a5-a974-8992f00716fe",
+              "name": "Conflict error in operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignoreIfExists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"created\": \"<dateTime>\",\n  \"dns_enabled\": \"<boolean>\",\n  \"driver\": \"<string>\",\n  \"id\": \"<string>\",\n  \"internal\": \"<boolean>\",\n  \"ipam_options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"ipv6_enabled\": \"<boolean>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"network_dns_servers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"network_interface\": \"<string>\",\n  \"options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0413427d-1cad-4587-ac64-cd57ab3bbcf4",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignoreIfExists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"created\": \"<dateTime>\",\n  \"dns_enabled\": \"<boolean>\",\n  \"driver\": \"<string>\",\n  \"id\": \"<string>\",\n  \"internal\": \"<boolean>\",\n  \"ipam_options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"ipv6_enabled\": \"<boolean>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"network_dns_servers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"network_interface\": \"<string>\",\n  \"options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"routes\": [\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    },\n    {\n      \"destination\": \"<string>\",\n      \"gateway\": \"<string>\",\n      \"metric\": \"<uint32>\",\n      \"route_type\": \"<string>\"\n    }\n  ],\n  \"subnets\": [\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    },\n    {\n      \"gateway\": \"<string>\",\n      \"lease_range\": {\n        \"end_ip\": \"<string>\",\n        \"start_ip\": \"<string>\"\n      },\n      \"subnet\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4aa79dd9-3bf1-4518-8896-9ef77e7033ba",
+          "name": "List networks",
+          "request": {
+            "name": "List networks",
+            "description": {
+              "content": "Display summary of network configurations.\n  - In a 200 response, all of the fields named Bytes are returned as a Base64 encoded string.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of the filters (a `map[string][]string`) to process on the network list. Available filters:\n  - `name=[name]` Matches network name (accepts regex).\n  - `id=[id]` Matches for full or partial ID.\n  - `driver=[driver]` Only bridge is supported.\n  - `label=[key]` or `label=[key=value]` Matches networks based on the presence of a label alone or a label and a value.\n  - `until=[timestamp]` Matches all networks that were created before the given timestamp.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6cf11c85-c2db-420b-b92d-6c0684dbad1f",
+              "name": "Network list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"created\": \"1981-02-14T05:44:31.554Z\",\n    \"dns_enabled\": false,\n    \"driver\": \"string\",\n    \"id\": \"string\",\n    \"internal\": true,\n    \"ipam_options\": {\n      \"key_0\": \"string\"\n    },\n    \"ipv6_enabled\": true,\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"name\": \"string\",\n    \"network_dns_servers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"network_interface\": \"string\",\n    \"options\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"routes\": [\n      {\n        \"destination\": \"<string>\",\n        \"gateway\": \"<string>\",\n        \"metric\": \"<uint32>\",\n        \"route_type\": \"<string>\"\n      },\n      {\n        \"destination\": \"<string>\",\n        \"gateway\": \"<string>\",\n        \"metric\": \"<uint32>\",\n        \"route_type\": \"<string>\"\n      }\n    ],\n    \"subnets\": [\n      {\n        \"gateway\": \"<string>\",\n        \"lease_range\": {\n          \"end_ip\": \"<string>\",\n          \"start_ip\": \"<string>\"\n        },\n        \"subnet\": \"<string>\"\n      },\n      {\n        \"gateway\": \"<string>\",\n        \"lease_range\": {\n          \"end_ip\": \"<string>\",\n          \"start_ip\": \"<string>\"\n        },\n        \"subnet\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"created\": \"2025-08-19T05:19:45.252Z\",\n    \"dns_enabled\": true,\n    \"driver\": \"string\",\n    \"id\": \"string\",\n    \"internal\": true,\n    \"ipam_options\": {\n      \"key_0\": \"string\"\n    },\n    \"ipv6_enabled\": false,\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"name\": \"string\",\n    \"network_dns_servers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"network_interface\": \"string\",\n    \"options\": {\n      \"key_0\": \"string\"\n    },\n    \"routes\": [\n      {\n        \"destination\": \"<string>\",\n        \"gateway\": \"<string>\",\n        \"metric\": \"<uint32>\",\n        \"route_type\": \"<string>\"\n      },\n      {\n        \"destination\": \"<string>\",\n        \"gateway\": \"<string>\",\n        \"metric\": \"<uint32>\",\n        \"route_type\": \"<string>\"\n      }\n    ],\n    \"subnets\": [\n      {\n        \"gateway\": \"<string>\",\n        \"lease_range\": {\n          \"end_ip\": \"<string>\",\n          \"start_ip\": \"<string>\"\n        },\n        \"subnet\": \"<string>\"\n      },\n      {\n        \"gateway\": \"<string>\",\n        \"lease_range\": {\n          \"end_ip\": \"<string>\",\n          \"start_ip\": \"<string>\"\n        },\n        \"subnet\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7d4f252-2c02-4495-9bc6-82c8a908e23b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff297ee0-e143-4305-882b-9c249b92a094",
+          "name": "Delete unused networks",
+          "request": {
+            "name": "Delete unused networks",
+            "description": {
+              "content": "Remove networks that do not have containers",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "networks",
+                "prune"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "Filters to process on the prune list, encoded as JSON (a `map[string][]string`).\nAvailable filters:\n  - `until=<timestamp>` Prune networks created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0fa4fa4-103e-44e1-8d9a-789edf908958",
+              "name": "Network prune",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Error\": \"string\",\n    \"Name\": \"string\"\n  },\n  {\n    \"Error\": \"string\",\n    \"Name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b907f06e-7d23-496f-96a6-0014145e59b7",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "networks",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6691\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "073697c7-79d2-4c03-a404-fe744e0cdc69",
+    "name": "supports a RESTful API for the Libpod library artifacts networks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

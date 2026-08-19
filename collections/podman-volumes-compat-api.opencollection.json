@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts volumes (compat) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "volumes (compat)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/volumes",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of the filters (a map[string][]string) to process on the volumes list. Available filters:\n  - driver=<volume-driver-name> Matches volumes based on their driver.\n  - label=<key> or label=<key>:<value> Matches volumes based on the presence of a label alone or a label and a value.\n  - name=<volume-name> Matches all of volume name.\n  - `until=<timestamp>` List volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n\nNote:\n  The boolean `dangling` filter is not yet implemented for this endpoint.\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of volume"
+        },
+        {
+          "info": {
+            "name": "Inspect volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/volumes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              }
+            ]
+          },
+          "docs": "Inspect volume"
+        },
+        {
+          "info": {
+            "name": "Remove volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/volumes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the volume"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Force removal of the volume. This actually only causes errors due\nto the names volume not being found to be suppressed, which is the\nbehaviour Docker implements.\n"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "timeout before forcibly killing any containers using the volume"
+              }
+            ]
+          },
+          "docs": "Remove volume"
+        },
+        {
+          "info": {
+            "name": "Create a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/volumes/create"
+          },
+          "docs": "Create a volume"
+        },
+        {
+          "info": {
+            "name": "Prune volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/volumes/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of filters (a map[string][]string). Docker API 1.42+ - by default only anonymous (unnamed) unused volumes are pruned; use filter all=true to prune all unused volumes.\nAvailable filters:\n  - `all` When true, prune all unused volumes (anonymous and named). When false or unset, only anonymous unused volumes are pruned.\n  - `until=<timestamp>` Prune volumes created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Prune volumes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

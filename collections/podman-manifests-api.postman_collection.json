@@ -1,0 +1,2248 @@
+{
+  "item": [
+    {
+      "id": "70cb22a1-40f2-432b-9bfa-8a4aabff9b60",
+      "name": "manifests",
+      "description": {
+        "content": "Actions related to manifests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74bc8a48-4765-4140-ae30-8759b2fee41b",
+          "name": "Delete manifest list",
+          "request": {
+            "name": "Delete manifest list",
+            "description": {
+              "content": "Delete named manifest list\n\nAs of v4.0.0\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ignore",
+                  "value": "<boolean>",
+                  "description": "Ignore if a specified manifest does not exist and do not throw an error."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name or ID of the  list to be deleted"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba6c8774-1ed1-4935-8e48-f9e641001a49",
+              "name": "Image Remove",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name or ID of the  list to be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd67fe33-f456-4697-a9c9-ec89eca043bf",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name or ID of the  list to be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a83c571d-5008-4834-a97f-ca22f71e9aff",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name or ID of the  list to be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c358af4-b14a-4572-a956-53cad98eecbe",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Create a manifest list",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "images",
+                  "value": "<string>",
+                  "description": "(Required) One or more names of an image or a manifest list. Repeat parameter as needed.\n\nSupport for multiple images, as of version 4.0.0\nAlias of `image` is support for compatibility with < 4.0.0\nResponse status code is 200 with < 4.0.0 for compatibility\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "<boolean>",
+                  "description": "add all contents if given list"
+                },
+                {
+                  "disabled": false,
+                  "key": "amend",
+                  "value": "<boolean>",
+                  "description": "modify an existing list if one with the desired name already exists"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) manifest list or index name to create"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b7fb34b-b6d4-417e-adc3-34f191d51caf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "images",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "amend",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) manifest list or index name to create"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c6636d9-17b5-4829-bc26-7da33fd36d33",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "images",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "amend",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) manifest list or index name to create"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc616caf-680d-49d4-bdd4-427b797c0598",
+              "name": "No such image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "images",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "amend",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) manifest list or index name to create"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1538d7f-77d2-4a1f-bcf2-c15cd83c531f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "images",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "amend",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) manifest list or index name to create"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f8293da-a1a2-4387-8d78-521c60374135",
+          "name": "Modify manifest list",
+          "request": {
+            "name": "Modify manifest list",
+            "description": {
+              "content": "Add/Remove an image(s) to a manifest list\n\nNote: operations are not atomic when multiple Images are provided.\n\nAs of v4.0.0\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require HTTPS and verify signatures when contacting registries."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7903844-3184-4272-b2ba-7c4ace0cf669",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"files\": [\n    \"string\",\n    \"string\"\n  ],\n  \"images\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e7a256b-8ebc-4ce9-9a47-4b3804c940e2",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cfe66f2-3948-4001-a061-010d813d1a69",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ca2d950-c68f-4d3e-afbc-d6dea54f890f",
+              "name": "Operation had partial success, both Images and Errors may have members",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"files\": [\n    \"string\",\n    \"string\"\n  ],\n  \"images\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "627b1f47-f2b2-4ba7-8338-beae769dac6a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"artifact_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"artifact_config\": \"<string>\",\n  \"artifact_config_type\": \"<string>\",\n  \"artifact_exclude_titles\": \"<boolean>\",\n  \"artifact_files\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"artifact_layer_type\": \"<string>\",\n  \"artifact_subject\": \"<string>\",\n  \"artifact_type\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"operation\": \"<string>\",\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29571dcb-feff-4281-b35e-92dded52a13e",
+          "name": "Add image",
+          "request": {
+            "name": "Add image",
+            "description": {
+              "content": "Add an image to a manifest list\n\nDeprecated: As of 4.0.0 use ManifestModifyLibpod instead\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3989ddbf-6141-4330-abaa-c869079c4750",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "969e8161-7bce-403b-9a89-9d74da779d72",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "643f7627-853f-4b1a-9189-7a1dde0576ee",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "585b0495-6c6c-4acd-b479-ca344975a391",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": \"<boolean>\",\n  \"annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"annotations\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"arch\": \"<string>\",\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotation\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"index_annotations\": {\n    \"key_0\": \"<string>\"\n  },\n  \"os\": \"<string>\",\n  \"os_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"os_version\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"variant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70f77b56-e16c-4533-a1d9-1b86dc4218a2",
+          "name": "Exists",
+          "request": {
+            "name": "Exists",
+            "description": {
+              "content": "Check if manifest list exists\n\nNote: There is no contract that the manifest list will exist for a follow-on operation\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name",
+                "exists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest list"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9056a42-da8e-4d03-8cef-a789d1bd57dc",
+              "name": "manifest list exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d85e01c-59e4-42bc-8c52-298e70163260",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed5a51e2-59d4-49b5-a51a-341b813c4477",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c9e5706-08fa-4fba-9805-738fbd9a28d6",
+          "name": "Inspect",
+          "request": {
+            "name": "Inspect",
+            "description": {
+              "content": "Display attributes of given manifest list",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require HTTPS and verify signatures when contacting registries."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest list"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b94bf750-ac9f-4d7a-a654-31866f83f940",
+              "name": "Inspect Manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9193e20-5f35-4dc0-8aef-d397c07d0f79",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41e657e9-4d31-4204-8a20-d6fc2db62f08",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e362af9f-fad1-4202-84b2-2ccd363fe820",
+          "name": "Push manifest to registry",
+          "request": {
+            "name": "Push manifest to registry",
+            "description": {
+              "content": "Push a manifest list or image index to a registry\n\nDeprecated: As of 4.0.0 use ManifestPushLibpod instead\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name",
+                "push"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "(Required) the destination for the manifest"
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "<boolean>",
+                  "description": "push all images"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d55ad8ac-c74d-48d9-b845-fea2b8baf36b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc90ab2c-52f1-4f89-a5f1-55c77759f616",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85470cf9-04d5-4a5f-b41b-7db722754f6e",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23c8729f-bf99-407d-a201-36f9c3d5c17f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d20c69d-e3f5-44c6-9496-f3409bcef0a9",
+          "name": "Push manifest list to registry",
+          "request": {
+            "name": "Push manifest list to registry",
+            "description": {
+              "content": "Push a manifest list or image index to the named registry\n\nAs of v4.0.0\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "manifests",
+                ":name",
+                "registry",
+                ":destination"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addCompression",
+                  "value": "<string>,<string>",
+                  "description": "add existing instances with requested compression algorithms to manifest list"
+                },
+                {
+                  "disabled": false,
+                  "key": "forceCompressionFormat",
+                  "value": "false",
+                  "description": "Enforce compressing the layers with the specified --compression and do not reuse differently compressed blobs on the registry."
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "true",
+                  "description": "push all images"
+                },
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require HTTPS and verify signatures when contacting registries."
+                },
+                {
+                  "disabled": false,
+                  "key": "quiet",
+                  "value": "true",
+                  "description": "silences extra stream data on push"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name or ID of the manifest list"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "destination",
+                  "description": "(Required) the registry for the manifest list"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aef52ad8-00bf-4e22-bbb0-04eeacc077be",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "registry",
+                    ":destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addCompression",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "forceCompressionFormat",
+                      "value": "false"
+                    },
+                    {
+                      "key": "all",
+                      "value": "true"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "quiet",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destination",
+                      "description": "(Required) the registry for the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2c71362-d0b2-46e3-9844-df7442c54eb8",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "registry",
+                    ":destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addCompression",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "forceCompressionFormat",
+                      "value": "false"
+                    },
+                    {
+                      "key": "all",
+                      "value": "true"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "quiet",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destination",
+                      "description": "(Required) the registry for the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43e965db-78fd-4dbb-8207-c306758c943f",
+              "name": "No such manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "registry",
+                    ":destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addCompression",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "forceCompressionFormat",
+                      "value": "false"
+                    },
+                    {
+                      "key": "all",
+                      "value": "true"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "quiet",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destination",
+                      "description": "(Required) the registry for the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90014d51-3453-497a-9dac-362079ddf7a7",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "manifests",
+                    ":name",
+                    "registry",
+                    ":destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addCompression",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "forceCompressionFormat",
+                      "value": "false"
+                    },
+                    {
+                      "key": "all",
+                      "value": "true"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    },
+                    {
+                      "key": "quiet",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name or ID of the manifest list"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destination",
+                      "description": "(Required) the registry for the manifest list"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 4817\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9bdeb7f2-0ae3-497c-8251-7f1aa634f744",
+    "name": "supports a RESTful API for the Libpod library artifacts manifests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,731 @@
+{
+  "item": [
+    {
+      "id": "aa6512de-0a85-41a2-ba1f-a7cb3ea9022a",
+      "name": "system (compat)",
+      "description": {
+        "content": "Actions related to Podman and compatibility engines",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6bdceedf-91ef-4f4c-b973-4b1eec2eb315",
+          "name": "Check auth configuration",
+          "request": {
+            "name": "Check auth configuration",
+            "description": {},
+            "url": {
+              "path": [
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"auth\": \"<string>\",\n  \"email\": \"<string>\",\n  \"identitytoken\": \"<string>\",\n  \"password\": \"<string>\",\n  \"registrytoken\": \"<string>\",\n  \"serveraddress\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f1b92ea-f854-4541-aa6a-d631ba24c416",
+              "name": "Auth response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\": \"<string>\",\n  \"email\": \"<string>\",\n  \"identitytoken\": \"<string>\",\n  \"password\": \"<string>\",\n  \"registrytoken\": \"<string>\",\n  \"serveraddress\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0adc173f-0c88-4da1-ba60-273468cec6a1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\": \"<string>\",\n  \"email\": \"<string>\",\n  \"identitytoken\": \"<string>\",\n  \"password\": \"<string>\",\n  \"registrytoken\": \"<string>\",\n  \"serveraddress\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6994\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "509f2550-4e99-4465-9914-a0bff70b7bcd",
+          "name": "Get events",
+          "request": {
+            "name": "Get events",
+            "description": {
+              "content": "Returns events filtered on query parameters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "start streaming events from this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "until",
+                  "value": "<string>",
+                  "description": "stop streaming events later than this"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded map[string][]string of constraints"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e071585b-97ec-4cb8-8c48-2f9ca44ecdb3",
+              "name": "returns a string of json data describing an event",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6083643b-f5c8-4199-bc92-d16480d1f924",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6994\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bb9ba48-ed46-42a5-92e7-201aa35cd431",
+          "name": "Get info",
+          "request": {
+            "name": "Get info",
+            "description": {
+              "content": "Returns information on the system and libpod configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0878ad8-f750-4a4e-be83-7cad7b0a1410",
+              "name": "to be determined",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3f408db-561f-4c49-957a-78de31a2668d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6994\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcb7bbbd-ffc8-41e9-bad0-b443e5a78b12",
+          "name": "Ping service",
+          "request": {
+            "name": "Ping service",
+            "description": {
+              "content": "Return protocol information in response headers.\n`HEAD /libpod/_ping` is also supported.\n`/_ping` is available for compatibility with other engines.\nThe '_ping' endpoints are not versioned.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "_ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3c5a29f4-ed49-443c-a7e9-4f60366e5357",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "_ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Max compatibility API Version the server supports",
+                  "key": "API-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Default version of docker image builder",
+                  "key": "BuildKit-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "always no-cache",
+                  "key": "Cache-Control",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "If the server is running with experimental mode enabled, always true",
+                  "key": "Docker-Experimental",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "description": "Max Podman API Version the server supports.\nAvailable if service is backed by Podman, therefore may be used to\ndetermine if talking to Podman engine or another engine\n",
+                  "key": "Libpod-API-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Default version of libpod image builder.\n  Available if service is backed by Podman, therefore may be used to\n  determine if talking to Podman engine or another engine\n",
+                  "key": "Libpod-Buildah-Version",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "always no-cache",
+                  "key": "Pragma",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "OK",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9c83f51-39d0-4ce6-92a0-cbd8e07dcabf",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "_ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6994\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a0fa9ac-3dc9-4a52-bac0-a385f8adc293",
+          "name": "Show disk usage",
+          "request": {
+            "name": "Show disk usage",
+            "description": {
+              "content": "Return information about disk usage for containers, images, and volumes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "system",
+                "df"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0df81e37-db85-480c-aea4-e0f7ecfafabd",
+              "name": "Disk usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "df"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3921239-4d94-4020-80a0-f52e5bc188fa",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "df"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 6994\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4139010-3f53-4263-b8f1-0173539f8025",
+          "name": "Component Version information",
+          "request": {
+            "name": "Component Version information",
+            "description": {},
+            "url": {
+              "path": [
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29eefc66-4202-42a6-a4dd-eb9b89cd07a0",
+              "name": "Version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "811d97ae-42c0-48f6-9724-985d803d7dc4",
+    "name": "supports a RESTful API for the Libpod library artifacts system (compat) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

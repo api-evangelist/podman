@@ -1,0 +1,2508 @@
+{
+  "item": [
+    {
+      "id": "b2188400-37c5-4276-8fbc-d5de70f6bd97",
+      "name": "artifacts",
+      "description": {
+        "content": "Actions related to artifacts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df6e3d11-d3f2-42b8-8027-a3ea17644494",
+          "name": "Remove an artifact",
+          "request": {
+            "name": "Remove an artifact",
+            "description": {
+              "content": "Remove a single artifact from local storage by name or ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name or ID of the artifact to remove"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b4f1b701-e885-406b-8430-1952286c6be7",
+              "name": "Artifact Remove",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33d29d05-716c-4254-b940-b425d37bebe7",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b48c4b58-f2c5-425a-97db-452021dc55a1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca840430-ab82-4bbd-b7a1-1c96e41920f1",
+          "name": "Extract an artifacts contents",
+          "request": {
+            "name": "Extract an artifacts contents",
+            "description": {
+              "content": "Extract the files of an OCI artifact to the local filesystem as a tar archive.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                ":name",
+                "extract"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "Only extract the file with the given title"
+                },
+                {
+                  "disabled": false,
+                  "key": "digest",
+                  "value": "<string>",
+                  "description": "Only extract the file with the given digest"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludeTitle",
+                  "value": "<boolean>",
+                  "description": "When extracting a single file from an artifact, don't use the files title as the file name in the tar archive\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name or digest of the artifact"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-tar"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6b81474-11f5-45c7-a2db-f3b4b382df37",
+              "name": "Extract successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludeTitle",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or digest of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-tar"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-tar"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "deb3a165-f4c5-41fc-950c-4616d0f2e67c",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludeTitle",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or digest of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a567b32d-d927-4701-9dfb-39b0be45a7db",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludeTitle",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or digest of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdb197a6-5e1a-4009-b25c-5de4ef6c4349",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "extract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "digest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludeTitle",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or digest of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bac0462-3ac7-46e2-b2be-c5c24d13b33f",
+          "name": "Inspect an artifact",
+          "request": {
+            "name": "Inspect an artifact",
+            "description": {
+              "content": "Retrieve detailed information about a specific OCI artifact by name or ID.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                ":name",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name or ID of the artifact"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cff7a41-c3a8-4560-8566-3cf5646505b3",
+              "name": "Inspect Artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfe11873-79dd-422b-98b6-984f175ecd72",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c4aa165-ff17-48a2-ada5-5b653e04d352",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name or ID of the artifact"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24ce3b42-7d71-4391-8084-df15aff8cf18",
+          "name": "Push an artifact",
+          "request": {
+            "name": "Push an artifact",
+            "description": {
+              "content": "Push an OCI artifact from local storage to a remote image registry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                ":name",
+                "push"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "retry",
+                  "value": "3",
+                  "description": "Number of times to retry in case of failure when performing pull"
+                },
+                {
+                  "disabled": false,
+                  "key": "retryDelay",
+                  "value": "1s",
+                  "description": "Delay between retries in case of pull failures (e.g., 10s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require TLS verification"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                "key": "X-Registry-Auth",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9ea780f-b9b9-46c5-adfe-b7f216514d05",
+              "name": "Artifact Push",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8822bb7-955f-4dd4-bc24-4779203a6b44",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b7c2b99-69d4-4bb0-9d29-041e78ac0cb1",
+              "name": "error in authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddf057c7-3a18-4e58-b0f7-4afe8690d1e1",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19573cc4-1792-451f-917c-15e7b5fed6fd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    ":name",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9311e612-7b2e-4943-8dde-91b92983b1d2",
+          "name": "Add a file as an artifact",
+          "request": {
+            "name": "Add a file as an artifact",
+            "description": {
+              "content": "Add a file as a new OCI artifact, or append to an existing artifact if 'append' is true.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fileName",
+                  "value": "<string>",
+                  "description": "(Required) Path of the file to be added"
+                },
+                {
+                  "disabled": false,
+                  "key": "fileMIMEType",
+                  "value": "<string>",
+                  "description": "Optionally set the type of file"
+                },
+                {
+                  "disabled": false,
+                  "key": "annotations",
+                  "value": "<string>,<string>",
+                  "description": "Array of annotation strings e.g \"test=true\""
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactMIMEType",
+                  "value": "<string>",
+                  "description": "Use type to describe an artifact"
+                },
+                {
+                  "disabled": false,
+                  "key": "append",
+                  "value": "false",
+                  "description": "Append files to an existing artifact"
+                },
+                {
+                  "disabled": false,
+                  "key": "replace",
+                  "value": "false",
+                  "description": "Replace an existing artifact with the same name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/octet-stream"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "8ea3c01c-bd3a-4893-be06-2c52fdef420b",
+              "name": "Artifact Add",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1f3bfc3-1c65-460c-a58b-d718f0db25ca",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7786884b-a06b-4a28-b500-a1fafc144101",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "068095c2-c6b5-4567-a356-5a64329462a4",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d46dbda-a1e2-4f81-aa6f-74b847a11a58",
+          "name": "List artifacts",
+          "request": {
+            "name": "List artifacts",
+            "description": {
+              "content": "Return a list of all OCI artifacts in local storage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9c3ca25-886b-4faf-a93f-91b2e004da51",
+              "name": "Artifact list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b29626a-f25b-4624-8172-15887f35d283",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a99db233-b842-43c3-9352-bd4747a96258",
+          "name": "Add a local file as an artifact",
+          "request": {
+            "name": "Add a local file as an artifact",
+            "description": {
+              "content": "Add a file from the local filesystem as a new OCI artifact, or append to an existing artifact if 'append' is true.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                "local",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                },
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "(Required) Absolute path to the local file on the server filesystem to be added"
+                },
+                {
+                  "disabled": false,
+                  "key": "fileName",
+                  "value": "<string>",
+                  "description": "(Required) Name/title of the file within the artifact"
+                },
+                {
+                  "disabled": false,
+                  "key": "fileMIMEType",
+                  "value": "<string>",
+                  "description": "Optionally set the MIME type of the file"
+                },
+                {
+                  "disabled": false,
+                  "key": "annotations",
+                  "value": "<string>,<string>",
+                  "description": "Array of annotation strings e.g \"test=true\""
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactMIMEType",
+                  "value": "<string>",
+                  "description": "Use type to describe an artifact"
+                },
+                {
+                  "disabled": false,
+                  "key": "append",
+                  "value": "false",
+                  "description": "Append files to an existing artifact"
+                },
+                {
+                  "disabled": false,
+                  "key": "replace",
+                  "value": "false",
+                  "description": "Replace an existing artifact with the same name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b3fa011-67f3-428a-b6bd-31b5395645ac",
+              "name": "Artifact Add",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "local",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d35983e-305a-4180-9cf7-1caf1141bf39",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "local",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e58e020c-e9e2-42cd-b6ea-d428df701fac",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "local",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "263ddd62-03a3-4c88-adb5-8e2f9b7caf15",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "local",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fileMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotations",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifactMIMEType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "append",
+                      "value": "false"
+                    },
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b157b3c8-8d62-471b-88e1-ed7f19ab6e74",
+          "name": "Pull an artifact",
+          "request": {
+            "name": "Pull an artifact",
+            "description": {
+              "content": "Pull an OCI artifact from a remote registry to local storage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                "pull"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "(Required) Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+                },
+                {
+                  "disabled": false,
+                  "key": "retry",
+                  "value": "3",
+                  "description": "Number of times to retry in case of failure when performing pull"
+                },
+                {
+                  "disabled": false,
+                  "key": "retryDelay",
+                  "value": "1s",
+                  "description": "Delay between retries in case of pull failures (e.g., 10s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tlsVerify",
+                  "value": "true",
+                  "description": "Require TLS verification"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                "key": "X-Registry-Auth",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d59b5f0-1729-403d-88e7-78a74e764906",
+              "name": "Artifact Pull",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "pull"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5bfa58f-aaa6-40eb-87e8-d360cfa02f49",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "pull"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98b0f03c-e278-4741-b676-7c3f76d6ad14",
+              "name": "error in authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "pull"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f242ed7-d65d-445e-be84-514477c3b459",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "pull"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bcff249-fc5b-4c8d-a8a8-7bd9772373e6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "pull"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "retry",
+                      "value": "3"
+                    },
+                    {
+                      "key": "retryDelay",
+                      "value": "1s"
+                    },
+                    {
+                      "key": "tlsVerify",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "base-64 encoded auth config.\nMust include the following four values: username, password, email and server address\nOR simply just an identity token.\n",
+                    "key": "X-Registry-Auth",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00f70368-3b0e-431c-a700-7b9e08f455df",
+          "name": "Remove one or more artifacts",
+          "request": {
+            "name": "Remove one or more artifacts",
+            "description": {
+              "content": "Remove one or more OCI artifacts from local storage.\nCan be filtered by name/ID or all artifacts can be removed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "artifacts",
+                "remove"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "artifacts",
+                  "value": "<string>,<string>",
+                  "description": "List of artifact names/IDs to remove"
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "<boolean>",
+                  "description": "Remove all artifacts"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignore",
+                  "value": "<boolean>",
+                  "description": "Ignore errors if artifact does not exist"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22ab6add-745d-46cc-9e72-0f4feba2c837",
+              "name": "Artifact Remove",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifacts",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75820ee9-0c4d-4ddb-adfb-1d3ed6233610",
+              "name": "No such artifact",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifacts",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d604914-387b-4393-bf9f-cb33c5815411",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "artifacts",
+                    "remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifacts",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 7148\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "73fc70af-a695-49bb-a7ba-6e0298aac65e",
+    "name": "supports a RESTful API for the Libpod library artifacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

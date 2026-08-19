@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts quadlets API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "quadlets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Install quadlet files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/quadlets",
+            "params": [
+              {
+                "name": "replace",
+                "value": "",
+                "type": "query",
+                "description": "Replace the installation files even if the files already exists"
+              },
+              {
+                "name": "reload-systemd",
+                "value": "",
+                "type": "query",
+                "description": "Reload systemd after installing quadlets"
+              }
+            ]
+          },
+          "docs": "Install one or more files for a quadlet application. Each request should contain a single quadlet file\nand optionally more files such as containerfile, kube yaml or configuration files. Supports both tar\narchives and multipart form data uploads.\n"
+        },
+        {
+          "info": {
+            "name": "Remove quadlet files (batch operation)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/quadlets",
+            "params": [
+              {
+                "name": "quadlets",
+                "value": "",
+                "type": "query",
+                "description": "Names of quadlets to remove (e.g., \"myapp.container\"). Required unless all=true"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Remove all quadlets for the current user"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Remove running quadlets by stopping them first"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Do not error for quadlets that do not exist"
+              },
+              {
+                "name": "reload-systemd",
+                "value": "",
+                "type": "query",
+                "description": "Reload systemd after removing quadlets"
+              }
+            ]
+          },
+          "docs": "Remove one or more quadlet files. Supports removing specific quadlets by name or all quadlets\nfor the current user. Can force removal of running quadlets and control systemd reload behavior.\n"
+        },
+        {
+          "info": {
+            "name": "Remove a quadlet file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/quadlets/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the quadlet with extension (e.g., \"myapp.container\")"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Remove running quadlet by stopping it first"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Do not error if the quadlet does not exist"
+              },
+              {
+                "name": "reload-systemd",
+                "value": "",
+                "type": "query",
+                "description": "Reload systemd after removing the quadlet"
+              }
+            ]
+          },
+          "docs": "Remove a quadlet file by name. Can force removal of running quadlets and control systemd reload behavior.\n"
+        },
+        {
+          "info": {
+            "name": "Check if quadlet exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/quadlets/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the quadlet with extension (e.g., \"myapp.container\")"
+              }
+            ]
+          },
+          "docs": "Check if a quadlet exists by name"
+        },
+        {
+          "info": {
+            "name": "Get quadlet file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/quadlets/:name/file",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name of the quadlet with extension (e.g., \"myapp.container\")"
+              }
+            ]
+          },
+          "docs": "Get the contents of a Quadlet, displaying the file including all comments"
+        },
+        {
+          "info": {
+            "name": "List quadlets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/quadlets/json",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of the filters (a map[string][]string).\nSupported filters:\n  - name=<quadlet-name> Filter by quadlet name\n  - pod=<pod-quadlet> Filter by Pod= value (container quadlets only)\n"
+              }
+            ]
+          },
+          "docs": "Return a list of all quadlets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,669 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts pods API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Systemd Units",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/generate/:name/systemd",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name or ID of the container or pod."
+              },
+              {
+                "name": "useName",
+                "value": "",
+                "type": "query",
+                "description": "Use container/pod names instead of IDs."
+              },
+              {
+                "name": "new",
+                "value": "",
+                "type": "query",
+                "description": "Create a new container instead of starting an existing one."
+              },
+              {
+                "name": "noHeader",
+                "value": "",
+                "type": "query",
+                "description": "Do not generate the header including the Podman version and the timestamp."
+              },
+              {
+                "name": "startTimeout",
+                "value": "",
+                "type": "query",
+                "description": "Start timeout in seconds."
+              },
+              {
+                "name": "stopTimeout",
+                "value": "",
+                "type": "query",
+                "description": "Stop timeout in seconds."
+              },
+              {
+                "name": "restartPolicy",
+                "value": "",
+                "type": "query",
+                "description": "Systemd restart-policy."
+              },
+              {
+                "name": "containerPrefix",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name prefix for containers."
+              },
+              {
+                "name": "podPrefix",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name prefix for pods."
+              },
+              {
+                "name": "separator",
+                "value": "",
+                "type": "query",
+                "description": "Systemd unit name separator between name/id and prefix."
+              },
+              {
+                "name": "restartSec",
+                "value": "",
+                "type": "query",
+                "description": "Configures the time to sleep before restarting a service."
+              },
+              {
+                "name": "wants",
+                "value": "",
+                "type": "query",
+                "description": "Systemd Wants list for the container or pods."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Systemd After list for the container or pods."
+              },
+              {
+                "name": "requires",
+                "value": "",
+                "type": "query",
+                "description": "Systemd Requires list for the container or pods."
+              },
+              {
+                "name": "additionalEnvVariables",
+                "value": "",
+                "type": "query",
+                "description": "Set environment variables to the systemd unit files."
+              },
+              {
+                "name": "templateUnitFile",
+                "value": "",
+                "type": "query",
+                "description": "Add template specifier for the systemd unit file names."
+              }
+            ]
+          },
+          "docs": "Generate Systemd Units based on a pod or container."
+        },
+        {
+          "info": {
+            "name": "Generate a Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/generate/kube",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Name or ID of the container or pod."
+              },
+              {
+                "name": "service",
+                "value": "",
+                "type": "query",
+                "description": "Generate YAML for a Kubernetes service object."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Generate YAML for the given Kubernetes kind."
+              },
+              {
+                "name": "replicas",
+                "value": "",
+                "type": "query",
+                "description": "Set the replica number for Deployment kind."
+              },
+              {
+                "name": "noTrunc",
+                "value": "",
+                "type": "query",
+                "description": "don't truncate annotations to the Kubernetes maximum length of 63 characters"
+              },
+              {
+                "name": "podmanOnly",
+                "value": "",
+                "type": "query",
+                "description": "add podman-only reserved annotations in generated YAML file (cannot be used by Kubernetes)"
+              }
+            ]
+          },
+          "docs": "Generate Kubernetes YAML based on a pod or container."
+        },
+        {
+          "info": {
+            "name": "Apply a podman workload or Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/kube/apply",
+            "params": [
+              {
+                "name": "caCertFile",
+                "value": "",
+                "type": "query",
+                "description": "Path to the CA cert file for the Kubernetes cluster."
+              },
+              {
+                "name": "kubeConfig",
+                "value": "",
+                "type": "query",
+                "description": "Path to the kubeconfig file for the Kubernetes cluster."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "The namespace to deploy the workload to on the Kubernetes cluster."
+              },
+              {
+                "name": "service",
+                "value": "",
+                "type": "query",
+                "description": "Create a service object for the container being deployed."
+              },
+              {
+                "name": "file",
+                "value": "",
+                "type": "query",
+                "description": "Path to the Kubernetes yaml file to deploy."
+              }
+            ]
+          },
+          "docs": "Deploy a podman container, pod, volume, or Kubernetes yaml to a Kubernetes cluster."
+        },
+        {
+          "info": {
+            "name": "Play a Kubernetes YAML file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/play/kube",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "annotations",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of annotations (a map[string]string)."
+              },
+              {
+                "name": "logDriver",
+                "value": "",
+                "type": "query",
+                "description": "Logging driver for the containers in the pod."
+              },
+              {
+                "name": "logOptions",
+                "value": "",
+                "type": "query",
+                "description": "logging driver options"
+              },
+              {
+                "name": "network",
+                "value": "",
+                "type": "query",
+                "description": "USe the network mode or specify an array of networks."
+              },
+              {
+                "name": "noHosts",
+                "value": "",
+                "type": "query",
+                "description": "do not setup /etc/hosts file in container"
+              },
+              {
+                "name": "noTrunc",
+                "value": "",
+                "type": "query",
+                "description": "use annotations that are not truncated to the Kubernetes maximum length of 63 characters"
+              },
+              {
+                "name": "publishPorts",
+                "value": "",
+                "type": "query",
+                "description": "publish a container's port, or a range of ports, to the host"
+              },
+              {
+                "name": "publishAllPorts",
+                "value": "",
+                "type": "query",
+                "description": "Whether to publish all ports defined in the K8S YAML file (containerPort, hostPort), if false only hostPort will be published"
+              },
+              {
+                "name": "replace",
+                "value": "",
+                "type": "query",
+                "description": "replace existing pods and containers"
+              },
+              {
+                "name": "serviceContainer",
+                "value": "",
+                "type": "query",
+                "description": "Starts a service container before all pods."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start the pod after creating it."
+              },
+              {
+                "name": "staticIPs",
+                "value": "",
+                "type": "query",
+                "description": "Static IPs used for the pods."
+              },
+              {
+                "name": "staticMACs",
+                "value": "",
+                "type": "query",
+                "description": "Static MACs used for the pods."
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              },
+              {
+                "name": "userns",
+                "value": "",
+                "type": "query",
+                "description": "Set the user namespace mode for the pods."
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Clean up all objects created when a SIGTERM is received or pods exit."
+              },
+              {
+                "name": "build",
+                "value": "",
+                "type": "query",
+                "description": "Build the images with corresponding context."
+              }
+            ]
+          },
+          "docs": "Create and run pods based on a Kubernetes YAML file.\n\n### Content-Type\n\nThen endpoint support two Content-Type\n - `plain/text` for yaml format\n - `application/x-tar` for sending context(s) required for building images\n\n#### Tar format\n\nThe tar format must contain a `play.yaml` file at the root that will be used.\nIf the file format requires context to build an image, it uses the image name and\ncheck for corresponding folder.\n\nFor example, the client sends a tar file with the following structure:\n"
+        },
+        {
+          "info": {
+            "name": "Remove resources created from kube play",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/play/kube",
+            "params": [
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Remove volumes."
+              }
+            ]
+          },
+          "docs": "Tears down pods, secrets, and volumes defined in a YAML file"
+        },
+        {
+          "info": {
+            "name": "Remove pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/pods/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "force removal of a running pod by first stopping all containers, then removing all containers in the pod"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "number of seconds to wait before killing containers in pod"
+              }
+            ]
+          },
+          "docs": "Remove pod"
+        },
+        {
+          "info": {
+            "name": "Pod exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/pods/:name/exists",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Check if a pod exists by name or ID"
+        },
+        {
+          "info": {
+            "name": "Inspect pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/pods/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Inspect pod"
+        },
+        {
+          "info": {
+            "name": "Kill a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/kill",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              },
+              {
+                "name": "signal",
+                "value": "",
+                "type": "query",
+                "description": "signal to be sent to pod"
+              }
+            ]
+          },
+          "docs": "Kill a pod"
+        },
+        {
+          "info": {
+            "name": "Pause a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/pause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Pause a pod"
+        },
+        {
+          "info": {
+            "name": "Restart a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/restart",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Restart a pod"
+        },
+        {
+          "info": {
+            "name": "Start a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/start",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Start a pod"
+        },
+        {
+          "info": {
+            "name": "Stop a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              },
+              {
+                "name": "t",
+                "value": "",
+                "type": "query",
+                "description": "timeout"
+              }
+            ]
+          },
+          "docs": "Stop a pod"
+        },
+        {
+          "info": {
+            "name": "List processes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/pods/:name/top",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of pod to query for processes"
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "when true, repeatedly stream the latest output (As of version 4.0)"
+              },
+              {
+                "name": "delay",
+                "value": "",
+                "type": "query",
+                "description": "if streaming, delay in seconds between updates. Must be >1. (As of version 4.0)"
+              },
+              {
+                "name": "ps_args",
+                "value": "",
+                "type": "query",
+                "description": "arguments to pass to ps such as aux.\n"
+              }
+            ]
+          },
+          "docs": "List processes running inside a pod"
+        },
+        {
+          "info": {
+            "name": "Unpause a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/:name/unpause",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the pod"
+              }
+            ]
+          },
+          "docs": "Unpause a pod"
+        },
+        {
+          "info": {
+            "name": "Create a pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/create"
+          },
+          "docs": "Create a pod"
+        },
+        {
+          "info": {
+            "name": "List pods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/pods/json",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON encoded value of the filters (a map[string][]string) to process on the pods list. Available filters:\n  - `id=<pod-id>` Matches all of pod id.\n  - `label=<key>` or `label=<key>:<value>` Matches pods based on the presence of a label alone or a label and a value.\n  - `name=<pod-name>` Matches all of pod name.\n  - `until=<timestamp>` List pods created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `status=<pod-status>` Pod's status: `stopped`, `running`, `paused`, `exited`, `dead`, `created`, `degraded`.\n  - `network=<pod-network>` Name or full ID of network.\n  - `ctr-names=<pod-ctr-names>` Container name within the pod.\n  - `ctr-ids=<pod-ctr-ids>` Container ID within the pod.\n  - `ctr-status=<pod-ctr-status>` Container status within the pod.\n  - `ctr-number=<pod-ctr-number>` Number of containers in the pod.\n"
+              }
+            ]
+          },
+          "docs": "List pods"
+        },
+        {
+          "info": {
+            "name": "Prune unused pods",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/pods/prune"
+          },
+          "docs": "Prune unused pods"
+        },
+        {
+          "info": {
+            "name": "Statistics for one or more pods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/pods/stats",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Provide statistics for all running pods."
+              },
+              {
+                "name": "namesOrIDs",
+                "value": "",
+                "type": "query",
+                "description": "Names or IDs of pods."
+              },
+              {
+                "name": "stream",
+                "value": "",
+                "type": "query",
+                "description": "Stream the output"
+              },
+              {
+                "name": "delay",
+                "value": "",
+                "type": "query",
+                "description": "Time in seconds between stats reports"
+              }
+            ]
+          },
+          "docs": "Display a live stream of resource usage statistics for the containers in one or more pods"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

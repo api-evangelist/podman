@@ -1,0 +1,1361 @@
+{
+  "item": [
+    {
+      "id": "b0e8cdcd-5e1b-477d-b744-ec6eeee2ca2d",
+      "name": "networks (compat)",
+      "description": {
+        "content": "Actions related to networks for the compatibility endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88374ee7-4837-40b5-9327-59dde854c01e",
+          "name": "List networks",
+          "request": {
+            "name": "List networks",
+            "description": {
+              "content": "Display summary of network configurations",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of the filters (a `map[string][]string`) to process on the network list. Currently available filters:\n  - `name=[name]` Matches network name (accepts regex).\n  - `id=[id]` Matches for full or partial ID.\n  - `driver=[driver]` Only bridge is supported.\n  - `label=[key]` or `label=[key=value]` Matches networks based on the presence of a label alone or a label and a value.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99823786-a346-4e6e-8652-13cd49d93e87",
+              "name": "Network list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Containers\": 4143,\n    \"Created\": 3417,\n    \"Id\": \"string\",\n    \"Labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ParentId\": \"string\",\n    \"RepoDigests\": [\n      \"string\",\n      \"string\"\n    ],\n    \"RepoTags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"SharedSize\": 2517,\n    \"Size\": 5079,\n    \"Descriptor\": {\n      \"annotations\": {\n        \"key_0\": \"string\"\n      },\n      \"artifactType\": \"string\",\n      \"data\": [\n        4829,\n        2932\n      ],\n      \"digest\": \"string\",\n      \"mediaType\": \"string\",\n      \"platform\": {\n        \"architecture\": \"string\",\n        \"os\": \"string\",\n        \"os.features\": [\n          \"string\",\n          \"string\"\n        ],\n        \"os.version\": \"string\",\n        \"variant\": \"string\"\n      },\n      \"size\": 6591,\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"Manifests\": [\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            5154,\n            7516\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 5999,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 702,\n          \"Total\": 4818\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 2877\n          }\n        }\n      },\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            8342,\n            6391\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 7449,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": true,\n        \"Size\": {\n          \"Content\": 2735,\n          \"Total\": 1665\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 1095\n          }\n        }\n      }\n    ]\n  },\n  {\n    \"Containers\": 1485,\n    \"Created\": 8633,\n    \"Id\": \"string\",\n    \"Labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"ParentId\": \"string\",\n    \"RepoDigests\": [\n      \"string\",\n      \"string\"\n    ],\n    \"RepoTags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"SharedSize\": 937,\n    \"Size\": 747,\n    \"Descriptor\": {\n      \"annotations\": {\n        \"key_0\": \"string\"\n      },\n      \"artifactType\": \"string\",\n      \"data\": [\n        8503,\n        8661\n      ],\n      \"digest\": \"string\",\n      \"mediaType\": \"string\",\n      \"platform\": {\n        \"architecture\": \"string\",\n        \"os\": \"string\",\n        \"os.features\": [\n          \"string\",\n          \"string\"\n        ],\n        \"os.version\": \"string\",\n        \"variant\": \"string\"\n      },\n      \"size\": 7305,\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"Manifests\": [\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            1090,\n            9229\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 4144,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": false,\n        \"Size\": {\n          \"Content\": 9192,\n          \"Total\": 7368\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 3508\n          }\n        }\n      },\n      {\n        \"ID\": \"string\",\n        \"Descriptor\": {\n          \"annotations\": {\n            \"key_0\": \"string\"\n          },\n          \"artifactType\": \"string\",\n          \"data\": [\n            3446,\n            4800\n          ],\n          \"digest\": \"string\",\n          \"mediaType\": \"string\",\n          \"platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"size\": 6932,\n          \"urls\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"Available\": false,\n        \"Size\": {\n          \"Content\": 2916,\n          \"Total\": 4080\n        },\n        \"Kind\": \"string\",\n        \"AttestationData\": {\n          \"For\": \"string\"\n        },\n        \"ImageData\": {\n          \"Platform\": {\n            \"architecture\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.features\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"os.version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"variant\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Containers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"Identity\": {\n            \"Build\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Pull\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Signature\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"Size\": {\n            \"Unpacked\": 1653\n          }\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c0a4e5a-05bc-4e3a-b26c-80d3966b9cbd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34e64842-c670-4099-907a-bee1fb808cce",
+          "name": "Remove a network",
+          "request": {
+            "name": "Remove a network",
+            "description": {
+              "content": "Remove a network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "false",
+                  "description": "Remove containers associated with the network."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>",
+                  "description": "Seconds to wait for container removal when force is set."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "736e49e9-1213-474b-b8f8-1e03e6880ad6",
+              "name": "no error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "05c8e130-1816-4eda-9482-cdeab8d5a891",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f931d964-873e-4855-af6b-40e9957a62e1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ceeb945-9c7d-4fc0-b226-37cdffabf932",
+          "name": "Inspect a network",
+          "request": {
+            "name": "Inspect a network",
+            "description": {
+              "content": "Display low level configuration network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "<boolean>",
+                  "description": "Detailed inspect output for troubleshooting"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Filter the network by scope (swarm, global, or local)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b192733-8baf-421e-a7ea-47aec5794b33",
+              "name": "Network inspect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Attachable\": false,\n  \"ConfigFrom\": {\n    \"Network\": \"config_only_network_01\"\n  },\n  \"ConfigOnly\": true,\n  \"Containers\": {\n    \"19a4d5d687db25203351ed79d478946f861258f018fe384f229f2efa4b23513c\": {\n      \"EndpointID\": \"628cadb8bcb92de107b2a1e516cbffe463e321f548feb37697cce00ad694f21a\",\n      \"IPv4Address\": \"172.19.0.2/16\",\n      \"IPv6Address\": \"\",\n      \"MacAddress\": \"02:42:ac:13:00:02\",\n      \"Name\": \"test\"\n    }\n  },\n  \"Created\": \"2016-10-19T04:33:30.360899459Z\",\n  \"Driver\": \"overlay\",\n  \"EnableIPv4\": true,\n  \"EnableIPv6\": false,\n  \"IPAM\": {\n    \"Config\": [\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"string\"\n        },\n        \"Gateway\": \"string\",\n        \"IPRange\": \"string\",\n        \"Subnet\": \"string\"\n      },\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"string\"\n        },\n        \"Gateway\": \"string\",\n        \"IPRange\": \"string\",\n        \"Subnet\": \"string\"\n      }\n    ],\n    \"Driver\": \"string\",\n    \"Options\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"Id\": \"7d86d31b1478e7cca9ebed7e73aa0fdeec46c5ca29497431d3007d2d9e15ed99\",\n  \"Ingress\": false,\n  \"Internal\": false,\n  \"Labels\": {\n    \"com.example.some-label\": \"some-value\",\n    \"com.example.some-other-label\": \"some-other-value\"\n  },\n  \"Name\": \"my_network\",\n  \"Options\": {\n    \"com.docker.network.bridge.default_bridge\": \"true\",\n    \"com.docker.network.bridge.enable_icc\": \"true\",\n    \"com.docker.network.bridge.enable_ip_masquerade\": \"true\",\n    \"com.docker.network.bridge.host_binding_ipv4\": \"0.0.0.0\",\n    \"com.docker.network.bridge.name\": \"docker0\",\n    \"com.docker.network.driver.mtu\": \"1500\"\n  },\n  \"Peers\": [\n    {\n      \"IP\": \"10.133.77.91\",\n      \"Name\": \"6869d7c1732b\"\n    },\n    {\n      \"IP\": \"10.133.77.91\",\n      \"Name\": \"6869d7c1732b\"\n    }\n  ],\n  \"Scope\": \"local\",\n  \"Services\": {\n    \"key_0\": {\n      \"LocalLBIndex\": 7630,\n      \"Ports\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Tasks\": [\n        {\n          \"EndpointID\": \"string\",\n          \"EndpointIP\": \"string\",\n          \"Info\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\",\n            \"key_3\": \"string\",\n            \"key_4\": \"string\"\n          },\n          \"Name\": \"string\"\n        },\n        {\n          \"EndpointID\": \"string\",\n          \"EndpointIP\": \"string\",\n          \"Info\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          },\n          \"Name\": \"string\"\n        }\n      ],\n      \"VIP\": \"string\"\n    }\n  },\n  \"Status\": {\n    \"IPAM\": {\n      \"Subnets\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c72b1eb-7a00-4d16-a335-76f69cf166f7",
+              "name": "No such network",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6affd35f-156b-47e3-ad8c-42891a160f5b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2db405e-ce4d-4c65-9d8f-8801af6b1d2e",
+          "name": "Connect container to network",
+          "request": {
+            "name": "Connect container to network",
+            "description": {
+              "content": "Connect a container to a network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                ":name",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Container\": \"<string>\",\n  \"EndpointConfig\": {\n    \"Aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DNSNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DriverOpts\": {\n      \"key_0\": \"<string>\"\n    },\n    \"EndpointID\": \"<string>\",\n    \"Gateway\": \"<string>\",\n    \"GlobalIPv6Address\": \"<string>\",\n    \"GlobalIPv6PrefixLen\": \"<long>\",\n    \"GwPriority\": \"<long>\",\n    \"IPAMConfig\": {\n      \"IPv4Address\": \"<string>\",\n      \"IPv6Address\": \"<string>\",\n      \"LinkLocalIPs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"IPAddress\": \"<string>\",\n    \"IPPrefixLen\": \"<long>\",\n    \"IPv6Gateway\": \"<string>\",\n    \"Links\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"MacAddress\": \"<string>\",\n    \"NetworkID\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ada70c10-1ac5-4fba-862e-ac5d61674199",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"EndpointConfig\": {\n    \"Aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DNSNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DriverOpts\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"EndpointID\": \"<string>\",\n    \"Gateway\": \"<string>\",\n    \"GlobalIPv6Address\": \"<string>\",\n    \"GlobalIPv6PrefixLen\": \"<long>\",\n    \"GwPriority\": \"<long>\",\n    \"IPAMConfig\": {\n      \"IPv4Address\": \"<string>\",\n      \"IPv6Address\": \"<string>\",\n      \"LinkLocalIPs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"IPAddress\": \"<string>\",\n    \"IPPrefixLen\": \"<long>\",\n    \"IPv6Gateway\": \"<string>\",\n    \"Links\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"MacAddress\": \"<string>\",\n    \"NetworkID\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4581d3c4-3a23-405c-8871-650ba558a00a",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"EndpointConfig\": {\n    \"Aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DNSNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DriverOpts\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"EndpointID\": \"<string>\",\n    \"Gateway\": \"<string>\",\n    \"GlobalIPv6Address\": \"<string>\",\n    \"GlobalIPv6PrefixLen\": \"<long>\",\n    \"GwPriority\": \"<long>\",\n    \"IPAMConfig\": {\n      \"IPv4Address\": \"<string>\",\n      \"IPv6Address\": \"<string>\",\n      \"LinkLocalIPs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"IPAddress\": \"<string>\",\n    \"IPPrefixLen\": \"<long>\",\n    \"IPv6Gateway\": \"<string>\",\n    \"Links\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"MacAddress\": \"<string>\",\n    \"NetworkID\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4883a220-d52e-4d49-b2c1-ccf50209b59c",
+              "name": "Network is already connected and container is running or transitioning to the running state ('initialized')",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"EndpointConfig\": {\n    \"Aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DNSNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DriverOpts\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"EndpointID\": \"<string>\",\n    \"Gateway\": \"<string>\",\n    \"GlobalIPv6Address\": \"<string>\",\n    \"GlobalIPv6PrefixLen\": \"<long>\",\n    \"GwPriority\": \"<long>\",\n    \"IPAMConfig\": {\n      \"IPv4Address\": \"<string>\",\n      \"IPv6Address\": \"<string>\",\n      \"LinkLocalIPs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"IPAddress\": \"<string>\",\n    \"IPPrefixLen\": \"<long>\",\n    \"IPv6Gateway\": \"<string>\",\n    \"Links\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"MacAddress\": \"<string>\",\n    \"NetworkID\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af92c567-8770-41de-9178-f60370ebfec9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"EndpointConfig\": {\n    \"Aliases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DNSNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"DriverOpts\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"EndpointID\": \"<string>\",\n    \"Gateway\": \"<string>\",\n    \"GlobalIPv6Address\": \"<string>\",\n    \"GlobalIPv6PrefixLen\": \"<long>\",\n    \"GwPriority\": \"<long>\",\n    \"IPAMConfig\": {\n      \"IPv4Address\": \"<string>\",\n      \"IPv6Address\": \"<string>\",\n      \"LinkLocalIPs\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"IPAddress\": \"<string>\",\n    \"IPPrefixLen\": \"<long>\",\n    \"IPv6Gateway\": \"<string>\",\n    \"Links\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"MacAddress\": \"<string>\",\n    \"NetworkID\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de28d8f8-8200-4e7e-91c2-a270556b983c",
+          "name": "Disconnect container from network",
+          "request": {
+            "name": "Disconnect container from network",
+            "description": {
+              "content": "Disconnect a container from a network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                ":name",
+                "disconnect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the network"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Container\": \"<string>\",\n  \"Force\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "24ee9ee5-8427-43f0-8042-0e92c3c3118e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f7c59bdd-4439-43af-95e9-5c51416a6e34",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac3ea8c8-a2ee-494f-87e8-808aaf1ce2b8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    ":name",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the network"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Container\": \"3613f73ba0e4\",\n  \"Force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4394020a-8ced-42bc-9286-041e70be1acd",
+          "name": "Create network",
+          "request": {
+            "name": "Create network",
+            "description": {
+              "content": "Create a network configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Attachable\": \"<boolean>\",\n  \"ConfigFrom\": {\n    \"Network\": \"<string>\"\n  },\n  \"ConfigOnly\": \"<boolean>\",\n  \"Driver\": \"<string>\",\n  \"EnableIPv4\": \"<boolean>\",\n  \"EnableIPv6\": \"<boolean>\",\n  \"IPAM\": {\n    \"Config\": [\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\",\n          \"key_2\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      },\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      }\n    ],\n    \"Driver\": \"<string>\",\n    \"Options\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"Ingress\": \"<boolean>\",\n  \"Internal\": \"<boolean>\",\n  \"Labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Name\": \"<string>\",\n  \"Options\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"Scope\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1826e976-a817-4c35-837f-3f7b7a5c5917",
+              "name": "network created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Attachable\": \"<boolean>\",\n  \"ConfigFrom\": {\n    \"Network\": \"config_only_network_01\"\n  },\n  \"ConfigOnly\": \"<boolean>\",\n  \"Driver\": \"<string>\",\n  \"EnableIPv4\": \"<boolean>\",\n  \"EnableIPv6\": \"<boolean>\",\n  \"IPAM\": {\n    \"Config\": [\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      },\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      }\n    ],\n    \"Driver\": \"<string>\",\n    \"Options\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"Ingress\": \"<boolean>\",\n  \"Internal\": \"<boolean>\",\n  \"Labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Name\": \"<string>\",\n  \"Options\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Scope\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": \"string\",\n  \"Warning\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dca7ffd7-121f-42fc-819b-0a829531d89f",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Attachable\": \"<boolean>\",\n  \"ConfigFrom\": {\n    \"Network\": \"config_only_network_01\"\n  },\n  \"ConfigOnly\": \"<boolean>\",\n  \"Driver\": \"<string>\",\n  \"EnableIPv4\": \"<boolean>\",\n  \"EnableIPv6\": \"<boolean>\",\n  \"IPAM\": {\n    \"Config\": [\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      },\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      }\n    ],\n    \"Driver\": \"<string>\",\n    \"Options\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"Ingress\": \"<boolean>\",\n  \"Internal\": \"<boolean>\",\n  \"Labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Name\": \"<string>\",\n  \"Options\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Scope\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d681d2d-6ea1-4067-b18f-3ba7231f7e1e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Attachable\": \"<boolean>\",\n  \"ConfigFrom\": {\n    \"Network\": \"config_only_network_01\"\n  },\n  \"ConfigOnly\": \"<boolean>\",\n  \"Driver\": \"<string>\",\n  \"EnableIPv4\": \"<boolean>\",\n  \"EnableIPv6\": \"<boolean>\",\n  \"IPAM\": {\n    \"Config\": [\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      },\n      {\n        \"AuxiliaryAddresses\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"Gateway\": \"<string>\",\n        \"IPRange\": \"<string>\",\n        \"Subnet\": \"<string>\"\n      }\n    ],\n    \"Driver\": \"<string>\",\n    \"Options\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  \"Ingress\": \"<boolean>\",\n  \"Internal\": \"<boolean>\",\n  \"Labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Name\": \"<string>\",\n  \"Options\": {\n    \"key_0\": \"<string>\"\n  },\n  \"Scope\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ffaa53c2-9b2d-4f99-b591-398ffb8ebfd5",
+          "name": "Delete unused networks",
+          "request": {
+            "name": "Delete unused networks",
+            "description": {
+              "content": "Remove networks that do not have containers",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "networks",
+                "prune"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "Filters to process on the prune list, encoded as JSON (a map[string][]string).\nAvailable filters:\n  - `until=<timestamp>` Prune networks created before this timestamp. The <timestamp> can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "006a0007-d86a-40c4-9058-8ee64d91de56",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"NetworksDeleted\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4db80c57-5d26-4082-968d-893e3ab416b9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "networks",
+                    "prune"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 8319\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "819ca165-0344-42fd-bd28-e105b8d33939",
+    "name": "supports a RESTful API for the Libpod library artifacts networks (compat) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

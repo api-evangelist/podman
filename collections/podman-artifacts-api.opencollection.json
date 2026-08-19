@@ -1,0 +1,337 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Remove an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/artifacts/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name or ID of the artifact to remove"
+              }
+            ]
+          },
+          "docs": "Remove a single artifact from local storage by name or ID."
+        },
+        {
+          "info": {
+            "name": "Extract an artifacts contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/artifacts/:name/extract",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name or digest of the artifact"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "Only extract the file with the given title"
+              },
+              {
+                "name": "digest",
+                "value": "",
+                "type": "query",
+                "description": "Only extract the file with the given digest"
+              },
+              {
+                "name": "excludeTitle",
+                "value": "",
+                "type": "query",
+                "description": "When extracting a single file from an artifact, don't use the files title as the file name in the tar archive\n"
+              }
+            ]
+          },
+          "docs": "Extract the files of an OCI artifact to the local filesystem as a tar archive."
+        },
+        {
+          "info": {
+            "name": "Inspect an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/artifacts/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name or ID of the artifact"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific OCI artifact by name or ID.\n"
+        },
+        {
+          "info": {
+            "name": "Push an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/artifacts/:name/push",
+            "headers": [
+              {
+                "name": "X-Registry-Auth",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+              },
+              {
+                "name": "retry",
+                "value": "",
+                "type": "query",
+                "description": "Number of times to retry in case of failure when performing pull"
+              },
+              {
+                "name": "retryDelay",
+                "value": "",
+                "type": "query",
+                "description": "Delay between retries in case of pull failures (e.g., 10s)"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require TLS verification"
+              }
+            ]
+          },
+          "docs": "Push an OCI artifact from local storage to a remote image registry."
+        },
+        {
+          "info": {
+            "name": "Add a file as an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/artifacts/add",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "Path of the file to be added"
+              },
+              {
+                "name": "fileMIMEType",
+                "value": "",
+                "type": "query",
+                "description": "Optionally set the type of file"
+              },
+              {
+                "name": "annotations",
+                "value": "",
+                "type": "query",
+                "description": "Array of annotation strings e.g \"test=true\""
+              },
+              {
+                "name": "artifactMIMEType",
+                "value": "",
+                "type": "query",
+                "description": "Use type to describe an artifact"
+              },
+              {
+                "name": "append",
+                "value": "",
+                "type": "query",
+                "description": "Append files to an existing artifact"
+              },
+              {
+                "name": "replace",
+                "value": "",
+                "type": "query",
+                "description": "Replace an existing artifact with the same name"
+              }
+            ]
+          },
+          "docs": "Add a file as a new OCI artifact, or append to an existing artifact if 'append' is true.\n"
+        },
+        {
+          "info": {
+            "name": "List artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/libpod/artifacts/json"
+          },
+          "docs": "Return a list of all OCI artifacts in local storage."
+        },
+        {
+          "info": {
+            "name": "Add a local file as an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/artifacts/local/add",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Absolute path to the local file on the server filesystem to be added"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "Name/title of the file within the artifact"
+              },
+              {
+                "name": "fileMIMEType",
+                "value": "",
+                "type": "query",
+                "description": "Optionally set the MIME type of the file"
+              },
+              {
+                "name": "annotations",
+                "value": "",
+                "type": "query",
+                "description": "Array of annotation strings e.g \"test=true\""
+              },
+              {
+                "name": "artifactMIMEType",
+                "value": "",
+                "type": "query",
+                "description": "Use type to describe an artifact"
+              },
+              {
+                "name": "append",
+                "value": "",
+                "type": "query",
+                "description": "Append files to an existing artifact"
+              },
+              {
+                "name": "replace",
+                "value": "",
+                "type": "query",
+                "description": "Replace an existing artifact with the same name"
+              }
+            ]
+          },
+          "docs": "Add a file from the local filesystem as a new OCI artifact, or append to an existing artifact if 'append' is true.\n"
+        },
+        {
+          "info": {
+            "name": "Pull an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/libpod/artifacts/pull",
+            "headers": [
+              {
+                "name": "X-Registry-Auth",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory reference to the artifact (e.g., quay.io/image/artifact:tag)"
+              },
+              {
+                "name": "retry",
+                "value": "",
+                "type": "query",
+                "description": "Number of times to retry in case of failure when performing pull"
+              },
+              {
+                "name": "retryDelay",
+                "value": "",
+                "type": "query",
+                "description": "Delay between retries in case of pull failures (e.g., 10s)"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require TLS verification"
+              }
+            ]
+          },
+          "docs": "Pull an OCI artifact from a remote registry to local storage."
+        },
+        {
+          "info": {
+            "name": "Remove one or more artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/libpod/artifacts/remove",
+            "params": [
+              {
+                "name": "artifacts",
+                "value": "",
+                "type": "query",
+                "description": "List of artifact names/IDs to remove"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Remove all artifacts"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Ignore errors if artifact does not exist"
+              }
+            ]
+          },
+          "docs": "Remove one or more OCI artifacts from local storage.\nCan be filtered by name/ID or all artifacts can be removed.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

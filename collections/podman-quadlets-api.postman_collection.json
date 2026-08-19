@@ -1,0 +1,1519 @@
+{
+  "item": [
+    {
+      "id": "665e3ec4-ae50-416e-b0bf-c38ecd4738a4",
+      "name": "quadlets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8129ee8-ccc2-417b-8821-1426cc0d7383",
+          "name": "Remove quadlet files (batch operation)",
+          "request": {
+            "name": "Remove quadlet files (batch operation)",
+            "description": {
+              "content": "Remove one or more quadlet files. Supports removing specific quadlets by name or all quadlets\nfor the current user. Can force removal of running quadlets and control systemd reload behavior.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "quadlets",
+                  "value": "<string>,<string>",
+                  "description": "Names of quadlets to remove (e.g., \"myapp.container\"). Required unless all=true"
+                },
+                {
+                  "disabled": false,
+                  "key": "all",
+                  "value": "false",
+                  "description": "Remove all quadlets for the current user"
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "false",
+                  "description": "Remove running quadlets by stopping them first"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignore",
+                  "value": "false",
+                  "description": "Do not error for quadlets that do not exist"
+                },
+                {
+                  "disabled": false,
+                  "key": "reload-systemd",
+                  "value": "true",
+                  "description": "Reload systemd after removing quadlets"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0185902-8716-438f-8b7c-161292df0d23",
+              "name": "Quadlet remove",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quadlets",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"Removed\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88e3beab-3fc6-4a0c-a309-35d3ece4f275",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quadlets",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc206d1b-abea-47e7-925d-e009aad89a9a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "quadlets",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "all",
+                      "value": "false"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7e8b80d-49b1-4e07-9660-970a507c43c1",
+          "name": "Install quadlet files",
+          "request": {
+            "name": "Install quadlet files",
+            "description": {
+              "content": "Install one or more files for a quadlet application. Each request should contain a single quadlet file\nand optionally more files such as containerfile, kube yaml or configuration files. Supports both tar\narchives and multipart form data uploads.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "replace",
+                  "value": "false",
+                  "description": "Replace the installation files even if the files already exists"
+                },
+                {
+                  "disabled": false,
+                  "key": "reload-systemd",
+                  "value": "true",
+                  "description": "Reload systemd after installing quadlets"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "0",
+                  "value": "<",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "1",
+                  "value": "b",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "2",
+                  "value": "i",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "3",
+                  "value": "n",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "4",
+                  "value": "a",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "5",
+                  "value": "r",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "6",
+                  "value": "y",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "7",
+                  "value": ">",
+                  "type": "text",
+                  "description": "undefined"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a31842f0-118c-4f5b-8f58-b22e4320dd73",
+              "name": "Quadlet installation report",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "0",
+                      "value": "<",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "1",
+                      "value": "b",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "2",
+                      "value": "i",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "3",
+                      "value": "n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "4",
+                      "value": "a",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "5",
+                      "value": "r",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "6",
+                      "value": "y",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "7",
+                      "value": ">",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"InstalledQuadlets\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"QuadletErrors\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1da2a3e-f42f-41e9-a213-8546356482c7",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "0",
+                      "value": "<",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "1",
+                      "value": "b",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "2",
+                      "value": "i",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "3",
+                      "value": "n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "4",
+                      "value": "a",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "5",
+                      "value": "r",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "6",
+                      "value": "y",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "7",
+                      "value": ">",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02ea7628-48e3-4d0d-bab5-acbad26c3ec4",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replace",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "0",
+                      "value": "<",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "1",
+                      "value": "b",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "2",
+                      "value": "i",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "3",
+                      "value": "n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "4",
+                      "value": "a",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "5",
+                      "value": "r",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "6",
+                      "value": "y",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "7",
+                      "value": ">",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a4e1537-3808-46a9-a26b-5a8edf57e684",
+          "name": "Remove a quadlet file",
+          "request": {
+            "name": "Remove a quadlet file",
+            "description": {
+              "content": "Remove a quadlet file by name. Can force removal of running quadlets and control systemd reload behavior.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "false",
+                  "description": "Remove running quadlet by stopping it first"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignore",
+                  "value": "false",
+                  "description": "Do not error if the quadlet does not exist"
+                },
+                {
+                  "disabled": false,
+                  "key": "reload-systemd",
+                  "value": "true",
+                  "description": "Reload systemd after removing the quadlet"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "117fe89f-0308-4a16-a668-8af150284890",
+              "name": "Quadlet remove",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"Removed\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78e98c6b-1afd-4c97-8c22-529259846d8e",
+              "name": "Bad parameter in request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98473ea9-d494-43de-b5ba-b4bb90cc475e",
+              "name": "No such quadlet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b042efe2-8975-4763-93ba-820bf6388018",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    },
+                    {
+                      "key": "ignore",
+                      "value": "false"
+                    },
+                    {
+                      "key": "reload-systemd",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35c18e84-32ab-42d5-b6c1-c99080a98935",
+          "name": "Check if quadlet exists",
+          "request": {
+            "name": "Check if quadlet exists",
+            "description": {
+              "content": "Check if a quadlet exists by name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets",
+                ":name",
+                "exists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66ab9d36-72bb-498d-bfe7-91f848bfefa3",
+              "name": "quadlet exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5cfeb99e-77cf-4464-99b9-0c2c4ad3a363",
+              "name": "No such quadlet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e061e92b-0c37-45b8-afb2-dfa36246bc37",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "exists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3644df9-5583-4ec5-a9fa-68eb1f9c3c57",
+          "name": "Get quadlet file",
+          "request": {
+            "name": "Get quadlet file",
+            "description": {
+              "content": "Get the contents of a Quadlet, displaying the file including all comments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets",
+                ":name",
+                "file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86d0a032-9519-4034-a476-d59614cb6339",
+              "name": "Quadlet file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b22f34de-2a8f-426c-933e-390e90638d64",
+              "name": "No such quadlet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2764e33-1012-4942-a2ed-b50d029b3567",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    ":name",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) the name of the quadlet with extension (e.g., \"myapp.container\")"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7d5fc2c-c570-46bb-886d-d54dd567c1e5",
+          "name": "List quadlets",
+          "request": {
+            "name": "List quadlets",
+            "description": {
+              "content": "Return a list of all quadlets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "libpod",
+                "quadlets",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "<string>",
+                  "description": "JSON encoded value of the filters (a map[string][]string).\nSupported filters:\n  - name=<quadlet-name> Filter by quadlet name\n  - pod=<pod-quadlet> Filter by Pod= value (container quadlets only)\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09ac8685-4722-4129-960d-1e4ff667ddcc",
+              "name": "Quadlet list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"App\": \"string\",\n    \"Name\": \"string\",\n    \"Path\": \"string\",\n    \"Pod\": \"string\",\n    \"Status\": \"string\",\n    \"UnitName\": \"string\"\n  },\n  {\n    \"App\": \"string\",\n    \"Name\": \"string\",\n    \"Path\": \"string\",\n    \"Pod\": \"string\",\n    \"Status\": \"string\",\n    \"UnitName\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4eaca76-1ac9-431f-94d7-9d0169943e11",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "libpod",
+                    "quadlets",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cause\": \"API root cause\",\n  \"message\": \"human error message\",\n  \"response\": 9839\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://podman.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eb08fe73-9381-4bb2-a8e9-10cb0cc2a83e",
+    "name": "supports a RESTful API for the Libpod library artifacts quadlets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible\nAPI and a Libpod API providing support for Podman’s unique features such as pods.\n\nTo start the service and keep it running for 5,000 seconds (-t 0 runs forever):\n\npodman system service -t 5000 &\n\nYou can then use cURL on the socket using requests documented below.\n\nNOTE: if you install the package podman-docker, it will create a symbolic\nlink for /run/docker.sock to /run/podman/podman.sock\n\nNOTE: Some fields in the API response JSON are encoded as omitempty, which means that\nif said field has a zero value, they will not be encoded in the API response. This\nis a feature to help reduce the size of the JSON responses returned via the API.\n\nNOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),\nsome field values that have a complex type show up as null in the docs as well as in the\nAPI responses. This is because the zero value for the field type is null. The field\ndescription in the docs will state what type the field is expected to be for such cases.\n\nSee podman-system-service(1) for more information.\n\nQuick Examples:\n\n'podman info'\n\ncurl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info\n\n'podman pull quay.io/containers/podman'\n\ncurl -XPOST --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman'\n\n'podman list images'\n\ncurl --unix-socket /run/podman/podman.sock -v 'http://d/v6.0.0/libpod/images/json' | jq\n\nContact Support:\n Name: Podman\n Email: podman@lists.podman.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,605 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "supports a RESTful API for the Libpod library artifacts images (compat) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "images (compat)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Build image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/build",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "X-Registry-Config",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dockerfile",
+                "value": "",
+                "type": "query",
+                "description": "Path within the build context to the `Dockerfile`.\nThis is ignored if remote is specified and points to an external `Dockerfile`.\n"
+              },
+              {
+                "name": "t",
+                "value": "",
+                "type": "query",
+                "description": "A name and optional tag to apply to the image in the `name:tag` format. If you omit the tag, the default latest value is assumed. You can provide several t parameters."
+              },
+              {
+                "name": "extrahosts",
+                "value": "",
+                "type": "query",
+                "description": "TBD Extra hosts to add to /etc/hosts\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "nohosts",
+                "value": "",
+                "type": "query",
+                "description": "Not to create /etc/hosts when building the image\n"
+              },
+              {
+                "name": "remote",
+                "value": "",
+                "type": "query",
+                "description": "A Git repository URI or HTTP/HTTPS context URI.\nIf the URI points to a single text file, the file’s contents are placed\ninto a file called Dockerfile and the image is built from that file. If\nthe URI points to a tarball, the file is downloaded by the daemon and the\ncontents therein used as the context for the build. If the URI points to a\ntarball and the dockerfile parameter is also specified, there must be a file\nwith the corresponding path inside the tarball.\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "retry",
+                "value": "",
+                "type": "query",
+                "description": "Number of times to retry in case of failure when performing push/pull.\n"
+              },
+              {
+                "name": "retry-delay",
+                "value": "",
+                "type": "query",
+                "description": "Delay between retries in case of push/pull failures.\n"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Suppress verbose build output\n"
+              },
+              {
+                "name": "nocache",
+                "value": "",
+                "type": "query",
+                "description": "Do not use the cache when building the image\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "cachefrom",
+                "value": "",
+                "type": "query",
+                "description": "JSON array of images used to build cache resolution\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "pull",
+                "value": "",
+                "type": "query",
+                "description": "Attempt to pull the image even if an older image exists locally\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "rm",
+                "value": "",
+                "type": "query",
+                "description": "Remove intermediate containers after a successful build\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "forcerm",
+                "value": "",
+                "type": "query",
+                "description": "Always remove intermediate containers, even upon failure\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "memory",
+                "value": "",
+                "type": "query",
+                "description": "Memory is the upper limit (in bytes) on how much memory running containers can use\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "memswap",
+                "value": "",
+                "type": "query",
+                "description": "MemorySwap limits the amount of memory and swap together\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "cpushares",
+                "value": "",
+                "type": "query",
+                "description": "CPUShares (relative weight\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "cpusetcpus",
+                "value": "",
+                "type": "query",
+                "description": "CPUSetCPUs in which to allow execution (0-3, 0,1)\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "cpuperiod",
+                "value": "",
+                "type": "query",
+                "description": "CPUPeriod limits the CPU CFS (Completely Fair Scheduler) period\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "cpuquota",
+                "value": "",
+                "type": "query",
+                "description": "CPUQuota limits the CPU CFS (Completely Fair Scheduler) quota\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "buildargs",
+                "value": "",
+                "type": "query",
+                "description": "JSON map of string pairs denoting build-time variables.\nFor example, the build argument `Foo` with the value of `bar` would be encoded in JSON as `[\"Foo\":\"bar\"]`.\n\nFor example, buildargs={\"Foo\":\"bar\"}.\n\nNote(s):\n* This should not be used to pass secrets.\n* The value of buildargs should be URI component encoded before being passed to the API.\n\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "shmsize",
+                "value": "",
+                "type": "query",
+                "description": "ShmSize is the \"size\" value to use when mounting an shmfs on the container's /dev/shm directory.\nDefault is 64MB\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "squash",
+                "value": "",
+                "type": "query",
+                "description": "Silently ignored.\nSquash the resulting images layers into a single layer\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "save-stages",
+                "value": "",
+                "type": "query",
+                "description": "Preserve intermediate stage images instead of removing them after the build completes.\nBy default, they are removed to save space.\nHowever, they can be useful for debugging multi-stage builds or reusing stages in subsequent builds.\n"
+              },
+              {
+                "name": "stage-labels",
+                "value": "",
+                "type": "query",
+                "description": "Add metadata labels to all intermediate stage images of a multistage build, including the final image.\nIf set to true, save-stages must also be set to true.\nIf enabled, the labels 'io.buildah.stage.name' and 'io.buildah.stage.base' will be added.\n"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "JSON map of key, value pairs to set as labels on the new image\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "networkmode",
+                "value": "",
+                "type": "query",
+                "description": "Sets the networking mode for the run commands during build.\nSupported standard values are:\n  * `bridge` limited to containers within a single host, port mapping required for external access\n  * `host` no isolation between host and containers on this network\n  * `none` disable all networking for this container\n  * container:<nameOrID> share networking with given container\n  ---All other values are assumed to be a custom network's name\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "Platform format os[/arch[/variant]]\nCan be comma separated list for multi arch builds.\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "Target build stage\n(As of version 1.xx)\n"
+              },
+              {
+                "name": "outputs",
+                "value": "",
+                "type": "query",
+                "description": "output configuration TBD\n(As of version 1.xx)\n"
+              }
+            ]
+          },
+          "docs": "Build an image from the given Dockerfile(s)"
+        },
+        {
+          "info": {
+            "name": "Remove Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/images/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "name or ID of image to delete"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Remove the image even if it is being used by stopped containers or has other tags"
+              },
+              {
+                "name": "noprune",
+                "value": "",
+                "type": "query",
+                "description": "do not remove dangling parent images"
+              },
+              {
+                "name": "ignore",
+                "value": "",
+                "type": "query",
+                "description": "Ignore if a specified image does not exist and do not throw an error."
+              }
+            ]
+          },
+          "docs": "Delete an image from local storage"
+        },
+        {
+          "info": {
+            "name": "Export an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/:name/get",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Export an image in tarball format"
+        },
+        {
+          "info": {
+            "name": "History of an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/:name/history",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Return parent layers of an image."
+        },
+        {
+          "info": {
+            "name": "Inspect an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/:name/json",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              }
+            ]
+          },
+          "docs": "Return low-level information about an image."
+        },
+        {
+          "info": {
+            "name": "Push Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/images/:name/push",
+            "headers": [
+              {
+                "name": "X-Registry-Auth",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of image to push."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "The tag to associate with the image on the registry."
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "All indicates whether to push all images related to the image list"
+              },
+              {
+                "name": "compress",
+                "value": "",
+                "type": "query",
+                "description": "Use compression on image."
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Allows for pushing the image to a different destination than the image refers to."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Manifest type (oci, v2s1, or v2s2) to use when pushing an image. Default is manifest type of source, with fallbacks."
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require TLS verification."
+              }
+            ]
+          },
+          "docs": "Push an image to a container registry"
+        },
+        {
+          "info": {
+            "name": "Tag an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/images/:name/tag",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "the name or ID of the container"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "the repository to tag in"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "the name of the new tag"
+              }
+            ]
+          },
+          "docs": "Tag an image so that it becomes part of a repository."
+        },
+        {
+          "info": {
+            "name": "Create an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/images/create",
+            "headers": [
+              {
+                "name": "X-Registry-Auth",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fromImage",
+                "value": "",
+                "type": "query",
+                "description": "Name of the image to pull. The name may include a tag or digest. This parameter may only be used when pulling an image. The pull is cancelled if the HTTP connection is closed."
+              },
+              {
+                "name": "fromSrc",
+                "value": "",
+                "type": "query",
+                "description": "Source to import. The value may be a URL from which the image can be retrieved or - to read the image from the request body. This parameter may only be used when importing an image"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled."
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "Set commit message for imported image."
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "Platform in the format os[/arch[/variant]]"
+              },
+              {
+                "name": "retry",
+                "value": "",
+                "type": "query",
+                "description": "Number of times to retry in case of failure when performing pull."
+              },
+              {
+                "name": "retryDelay",
+                "value": "",
+                "type": "query",
+                "description": "Delay between retries in case of pull failures."
+              }
+            ]
+          },
+          "docs": "Create an image by either pulling it from a registry or importing it."
+        },
+        {
+          "info": {
+            "name": "Export several images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/get",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "one or more image names or IDs comma separated"
+              }
+            ]
+          },
+          "docs": "Get a tarball containing all images and metadata for several image repositories"
+        },
+        {
+          "info": {
+            "name": "List Images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/json",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Show all images. Only images from a final layer (no children) are shown by default."
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available filters:\n- `before`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)\n- `dangling=true`\n- `label=key` or `label=\"key=value\"` of an image label\n- `reference`=(`<image-name>[:<tag>]`)\n- `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)\n"
+              },
+              {
+                "name": "digests",
+                "value": "",
+                "type": "query",
+                "description": "Not supported"
+              },
+              {
+                "name": "shared-size",
+                "value": "",
+                "type": "query",
+                "description": "Compute and show shared size as a SharedSize field on each image."
+              }
+            ]
+          },
+          "docs": "Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image."
+        },
+        {
+          "info": {
+            "name": "Import image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/images/load",
+            "params": [
+              {
+                "name": "quiet",
+                "value": "",
+                "type": "query",
+                "description": "not supported"
+              }
+            ]
+          },
+          "docs": "Load a set of images and tags into a repository."
+        },
+        {
+          "info": {
+            "name": "Prune unused images",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/images/prune",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "filters to apply to image pruning, encoded as JSON (map[string][]string). Available filters:\n  - `dangling=<boolean>` When set to `true` (or `1`), prune only\n     unused *and* untagged images. When set to `false`\n     (or `0`), all unused images are pruned.\n  - `until=<string>` Prune images created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.\n  - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune images with (or without, in case `label!=...` is used) the specified labels.\n"
+              }
+            ]
+          },
+          "docs": "Remove images from local storage that are not being used by a container"
+        },
+        {
+          "info": {
+            "name": "Search images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/images/search",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query",
+                "description": "term to search"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "maximum number of results"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "JSON-encoded string containing filters as a `map[string][]string` to process on the images list. Available filters:\n- `is-automated=(true|false)`\n- `is-official=(true|false)`\n- `stars=<number>` Matches images that have at least 'number' stars.\n"
+              },
+              {
+                "name": "tlsVerify",
+                "value": "",
+                "type": "query",
+                "description": "Require HTTPS and verify signatures when contacting registries."
+              },
+              {
+                "name": "listTags",
+                "value": "",
+                "type": "query",
+                "description": "list the available tags in the repository"
+              }
+            ]
+          },
+          "docs": "Search registries for an image"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
