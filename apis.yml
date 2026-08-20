@@ -22,6 +22,12 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/podman.png
 tags:
+  - Cloud-Native
+  - Containers
+  - DevOps
+  - OCI
+  - Open-Source
+tags_raw:
   - Cloud Native
   - Containers
   - DevOps
@@ -38,6 +44,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Artifacts
+  tags_raw:
   - artifacts
   properties:
   - type: OpenAPI
@@ -52,6 +60,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Containers
+  tags_raw:
   - containers
   properties:
   - type: OpenAPI
@@ -80,6 +90,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Exec
+  tags_raw:
   - exec
   properties:
   - type: OpenAPI
@@ -108,6 +120,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Image
+  tags_raw:
   - images
   properties:
   - type: OpenAPI
@@ -136,6 +150,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Manifests
+  tags_raw:
   - manifests
   properties:
   - type: OpenAPI
@@ -150,6 +166,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Networks
+  tags_raw:
   - networks
   properties:
   - type: OpenAPI
@@ -178,6 +196,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Pods
+  tags_raw:
   - pods
   properties:
   - type: OpenAPI
@@ -206,6 +226,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Secrets
+  tags_raw:
   - secrets
   properties:
   - type: OpenAPI
@@ -234,6 +256,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - System
+  tags_raw:
   - system
   properties:
   - type: OpenAPI
@@ -262,6 +286,8 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
+  - Volumes
+  tags_raw:
   - volumes
   properties:
   - type: OpenAPI
