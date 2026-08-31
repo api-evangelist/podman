@@ -179,7 +179,7 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
-  - Networks
+  - networks
   tags_raw:
   - networks
   properties:
@@ -209,7 +209,7 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
-  - Pods
+  - pods
   tags_raw:
   - pods
   properties:
@@ -299,7 +299,7 @@ apis:
   humanURL: https://docs.podman.io/en/latest/_static/api.html
   baseURL: http://d/v6.0.0/libpod
   tags:
-  - Volumes
+  - volumes
   tags_raw:
   - volumes
   properties:
