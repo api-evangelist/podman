@@ -1,24 +1,7 @@
 {
   "provider": "podman",
   "sources": [
-    "podman-artifacts-api-openapi.yml",
-    "podman-containers-api-openapi.yml",
-    "podman-containers-compat-api-openapi.yml",
-    "podman-exec-api-openapi.yml",
-    "podman-exec-compat-api-openapi.yml",
-    "podman-images-api-openapi.yml",
-    "podman-images-compat-api-openapi.yml",
-    "podman-manifests-api-openapi.yml",
-    "podman-networks-api-openapi.yml",
-    "podman-networks-compat-api-openapi.yml",
-    "podman-pods-api-openapi.yml",
-    "podman-quadlets-api-openapi.yml",
-    "podman-secrets-api-openapi.yml",
-    "podman-secrets-compat-api-openapi.yml",
-    "podman-system-api-openapi.yml",
-    "podman-system-compat-api-openapi.yml",
-    "podman-volumes-api-openapi.yml",
-    "podman-volumes-compat-api-openapi.yml"
+    "_original/podman-openapi.yml"
   ],
   "outputs": [
     "podman-artifacts-api-openapi.yml",
@@ -43,6 +26,30 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "podman-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "podman-openapi.yml: declared missing tag: quadlets",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "podman-artifacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-containers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-containers-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-exec-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-exec-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-images-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-manifests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-networks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-networks-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-pods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-quadlets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-secrets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-secrets-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-system-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-system-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-volumes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "podman-volumes-compat-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

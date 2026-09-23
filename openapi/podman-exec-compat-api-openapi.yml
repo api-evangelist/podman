@@ -1,87 +1,22 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
   contact:
     email: podman@lists.podman.io
     name: Podman
     url: https://podman.io/community/
-  description: 'This documentation describes the Podman v2.x+ RESTful API. It consists of a Docker-compatible
-
-    API and a Libpod API providing support for Podman’s unique features such as pods.
-
-
-    To start the service and keep it running for 5,000 seconds (-t 0 runs forever):
-
-
-    podman system service -t 5000 &
-
-
-    You can then use cURL on the socket using requests documented below.
-
-
-    NOTE: if you install the package podman-docker, it will create a symbolic
-
-    link for /run/docker.sock to /run/podman/podman.sock
-
-
-    NOTE: Some fields in the API response JSON are encoded as omitempty, which means that
-
-    if said field has a zero value, they will not be encoded in the API response. This
-
-    is a feature to help reduce the size of the JSON responses returned via the API.
-
-
-    NOTE: Due to the limitations of [go-swagger](https://github.com/go-swagger/go-swagger),
-
-    some field values that have a complex type show up as null in the docs as well as in the
-
-    API responses. This is because the zero value for the field type is null. The field
-
-    description in the docs will state what type the field is expected to be for such cases.
-
-
-    See podman-system-service(1) for more information.
-
-
-    Quick Examples:
-
-
-    ''podman info''
-
-
-    curl --unix-socket /run/podman/podman.sock http://d/v6.0.0/libpod/info
-
-
-    ''podman pull quay.io/containers/podman''
-
-
-    curl -XPOST --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/images/create?fromImage=quay.io%2Fcontainers%2Fpodman''
-
-
-    ''podman list images''
-
-
-    curl --unix-socket /run/podman/podman.sock -v ''http://d/v6.0.0/libpod/images/json'' | jq'
+  description: This documentation describes the Podman v2.x+ RESTful API.
   license:
     name: Apache-2.0
     url: https://opensource.org/licenses/Apache-2.0
   termsOfService: https://github.com/containers/podman/blob/913caaa9b1de2b63692c9bae15120208194c9eb3/LICENSE
-  title: supports a RESTful API for the Libpod library artifacts exec (compat) API
+  title: supports a RESTful API for the Libpod library exec (compat)…
   version: 5.0.0
   x-logo:
   - url: https://raw.githubusercontent.com/containers/libpod/main/logo/podman-logo.png
   - altText: Podman logo
-host: podman.io
-basePath: /
-schemes:
-- http
-- https
-consumes:
-- application/json
-- application/x-tar
-produces:
-- application/json
-- application/octet-stream
-- text/plain
+servers:
+- url: http://podman.io/
+- url: https://podman.io/
 tags:
 - description: Actions related to exec for the compatibility endpoints
   name: exec (compat)
@@ -95,66 +30,109 @@ paths:
         in: path
         name: name
         required: true
-        type: string
-      - description: Attributes for create
-        in: body
-        name: control
         schema:
-          properties:
-            AttachStderr:
-              description: Attach to stderr of the exec command
-              type: boolean
-            AttachStdin:
-              description: Attach to stdin of the exec command
-              type: boolean
-            AttachStdout:
-              description: Attach to stdout of the exec command
-              type: boolean
-            Cmd:
-              description: Command to run, as a string or array of strings.
-              items:
-                type: string
-              type: array
-            DetachKeys:
-              description: '"Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _."
-
-                '
-              type: string
-            Env:
-              description: A list of environment variables in the form ["VAR=value", ...]
-              items:
-                type: string
-              type: array
-            Privileged:
-              default: false
-              description: Runs the exec process with extended privileges
-              type: boolean
-            Tty:
-              description: Allocate a pseudo-TTY
-              type: boolean
-            User:
-              description: '"The user, and optionally, group to run the exec process inside the container. Format is one of: user, user:group, uid, or uid:gid."
-
-                '
-              type: string
-            WorkingDir:
-              description: The working directory for the exec process inside the container.
-              type: string
-          type: object
-      produces:
-      - application/json
+          type: string
       responses:
         '201':
           description: no error
         '404':
-          $ref: '#/responses/containerNotFound'
+          $ref: '#/components/responses/containerNotFound'
         '409':
           description: container is paused
         '500':
-          $ref: '#/responses/internalError'
+          $ref: '#/components/responses/internalError'
       summary: Create an exec instance
       tags:
       - exec (compat)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                AttachStderr:
+                  description: Attach to stderr of the exec command
+                  type: boolean
+                AttachStdin:
+                  description: Attach to stdin of the exec command
+                  type: boolean
+                AttachStdout:
+                  description: Attach to stdout of the exec command
+                  type: boolean
+                Cmd:
+                  description: Command to run, as a string or array of strings.
+                  items:
+                    type: string
+                  type: array
+                DetachKeys:
+                  description: '"Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _."
+
+                    '
+                  type: string
+                Env:
+                  description: A list of environment variables in the form ["VAR=value", ...]
+                  items:
+                    type: string
+                  type: array
+                Privileged:
+                  default: false
+                  description: Runs the exec process with extended privileges
+                  type: boolean
+                Tty:
+                  description: Allocate a pseudo-TTY
+                  type: boolean
+                User:
+                  description: '"The user, and optionally, group to run the exec process inside the container. Format is one of: user, user:group, uid, or uid:gid."
+
+                    '
+                  type: string
+                WorkingDir:
+                  description: The working directory for the exec process inside the container.
+                  type: string
+              type: object
+          application/x-tar:
+            schema:
+              properties:
+                AttachStderr:
+                  description: Attach to stderr of the exec command
+                  type: boolean
+                AttachStdin:
+                  description: Attach to stdin of the exec command
+                  type: boolean
+                AttachStdout:
+                  description: Attach to stdout of the exec command
+                  type: boolean
+                Cmd:
+                  description: Command to run, as a string or array of strings.
+                  items:
+                    type: string
+                  type: array
+                DetachKeys:
+                  description: '"Override the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _."
+
+                    '
+                  type: string
+                Env:
+                  description: A list of environment variables in the form ["VAR=value", ...]
+                  items:
+                    type: string
+                  type: array
+                Privileged:
+                  default: false
+                  description: Runs the exec process with extended privileges
+                  type: boolean
+                Tty:
+                  description: Allocate a pseudo-TTY
+                  type: boolean
+                User:
+                  description: '"The user, and optionally, group to run the exec process inside the container. Format is one of: user, user:group, uid, or uid:gid."
+
+                    '
+                  type: string
+                WorkingDir:
+                  description: The working directory for the exec process inside the container.
+                  type: string
+              type: object
+        description: Attributes for create
   /exec/{id}/json:
     get:
       description: Return low-level information about an exec instance.
@@ -164,52 +142,51 @@ paths:
         in: path
         name: id
         required: true
-        type: string
-      produces:
-      - application/json
+        schema:
+          type: string
       responses:
         '200':
-          $ref: '#/responses/execSessionInspect'
+          $ref: '#/components/responses/execSessionInspect'
         '404':
-          $ref: '#/responses/execSessionNotFound'
+          $ref: '#/components/responses/execSessionNotFound'
         '500':
-          $ref: '#/responses/internalError'
+          $ref: '#/components/responses/internalError'
       summary: Inspect an exec instance
       tags:
       - exec (compat)
   /exec/{id}/resize:
     post:
-      description: 'Resize the TTY session used by an exec instance. This endpoint only works if tty was specified as part of creating and starting the exec instance.
-
-        '
+      description: Resize the TTY session used by an exec instance. This endpoint only works if tty was specified as part of creating and starting the exec instance.
       operationId: ExecResize
       parameters:
       - description: Exec instance ID
         in: path
         name: id
         required: true
-        type: string
+        schema:
+          type: string
       - description: Height of the TTY session in characters
         in: query
         name: h
-        type: integer
+        schema:
+          type: integer
       - description: Width of the TTY session in characters
         in: query
         name: w
-        type: integer
+        schema:
+          type: integer
       - description: Ignore containers not running errors
         in: query
         name: running
-        type: boolean
-      produces:
-      - application/json
+        schema:
+          type: boolean
       responses:
         '201':
           description: no error
         '404':
-          $ref: '#/responses/execSessionNotFound'
+          $ref: '#/components/responses/execSessionNotFound'
         '500':
-          $ref: '#/responses/internalError'
+          $ref: '#/components/responses/internalError'
       summary: Resize an exec instance
       tags:
       - exec (compat)
@@ -222,161 +199,204 @@ paths:
         in: path
         name: id
         required: true
-        type: string
-      - description: Attributes for start
-        in: body
-        name: control
         schema:
-          properties:
-            Detach:
-              description: Detach from the command. Not presently supported.
-              type: boolean
-            Tty:
-              description: Allocate a pseudo-TTY. Presently ignored.
-              type: boolean
-          type: object
-      produces:
-      - application/octet-stream
+          type: string
       responses:
         '200':
           description: no error
         '404':
-          $ref: '#/responses/execSessionNotFound'
+          $ref: '#/components/responses/execSessionNotFound'
         '409':
           description: container is not running
         '500':
-          $ref: '#/responses/internalError'
+          $ref: '#/components/responses/internalError'
       summary: Start an exec instance
       tags:
       - exec (compat)
-definitions:
-  ErrorModel:
-    description: ErrorModel is used in remote connections with podman
-    properties:
-      cause:
-        description: API root cause formatted for automated parsing
-        example: API root cause
-        type: string
-        x-go-name: Because
-      message:
-        description: human error message, formatted for a human to read
-        example: human error message
-        type: string
-        x-go-name: Message
-      response:
-        description: HTTP response code
-        format: int64
-        minimum: 400
-        type: integer
-        x-go-name: ResponseCode
-    type: object
-    x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-  InspectExecSession:
-    properties:
-      CanRemove:
-        description: 'CanRemove is legacy and used purely for compatibility reasons.
-
-          Will always be set to true, unless the exec session is running.'
-        type: boolean
-      ContainerID:
-        description: 'ContainerID is the ID of the container this exec session is attached
-
-          to.'
-        type: string
-      DetachKeys:
-        description: 'DetachKeys are the detach keys used by the exec session.
-
-          If set to "" the default keys are being used.
-
-          Will show "<none>" if no detach keys are set.'
-        type: string
-      ExitCode:
-        description: 'ExitCode is the exit code of the exec session. Will be set to 0 if
-
-          the exec session has not yet exited.'
-        format: int64
-        type: integer
-      ID:
-        description: ID is the ID of the exec session.
-        type: string
-      OpenStderr:
-        description: 'OpenStderr is whether the container''s STDERR stream will be attached.
-
-          Always set to true if the exec session created a TTY.'
-        type: boolean
-      OpenStdin:
-        description: 'OpenStdin is whether the container''s STDIN stream will be attached
-
-          to.'
-        type: boolean
-      OpenStdout:
-        description: 'OpenStdout is whether the container''s STDOUT stream will be attached.
-
-          Always set to true if the exec session created a TTY.'
-        type: boolean
-      Pid:
-        description: 'Pid is the PID of the exec session''s process.
-
-          Will be set to 0 if the exec session is not running.'
-        format: int64
-        type: integer
-      ProcessConfig:
-        $ref: '#/definitions/InspectExecProcess'
-      Running:
-        description: Running is whether the exec session is running.
-        type: boolean
-    title: InspectExecSession contains information about a given exec session.
-    type: object
-    x-go-package: go.podman.io/podman/v6/libpod/define
-  InspectExecProcess:
-    description: 'InspectExecProcess contains information about the process in a given exec
-
-      session.'
-    properties:
-      arguments:
-        description: 'Arguments are the arguments to the entrypoint command of the exec
-
-          session.'
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                Detach:
+                  description: Detach from the command. Not presently supported.
+                  type: boolean
+                Tty:
+                  description: Allocate a pseudo-TTY. Presently ignored.
+                  type: boolean
+              type: object
+          application/x-tar:
+            schema:
+              properties:
+                Detach:
+                  description: Detach from the command. Not presently supported.
+                  type: boolean
+                Tty:
+                  description: Allocate a pseudo-TTY. Presently ignored.
+                  type: boolean
+              type: object
+        description: Attributes for start
+components:
+  schemas:
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
           type: string
-        type: array
-        x-go-name: Arguments
-      entrypoint:
-        description: 'Entrypoint is the entrypoint for the exec session (the command that
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    InspectExecSession:
+      properties:
+        CanRemove:
+          description: 'CanRemove is legacy and used purely for compatibility reasons.
 
-          will be executed in the container).'
-        type: string
-        x-go-name: Entrypoint
-      privileged:
-        description: 'Privileged is whether the exec session will be started with elevated
+            Will always be set to true, unless the exec session is running.'
+          type: boolean
+        ContainerID:
+          description: 'ContainerID is the ID of the container this exec session is attached
 
-          privileges.'
-        type: boolean
-        x-go-name: Privileged
-      tty:
-        description: Tty is whether the exec session created a terminal.
-        type: boolean
-        x-go-name: Tty
-      user:
-        description: User is the user the exec session was started as.
-        type: string
-        x-go-name: User
-    type: object
-    x-go-package: go.podman.io/podman/v6/libpod/define
-responses:
-  containerNotFound:
-    description: No such container
-    schema:
-      $ref: '#/definitions/ErrorModel'
-  execSessionInspect:
-    description: Exec Session Inspect
-    schema:
-      $ref: '#/definitions/InspectExecSession'
-  internalError:
-    description: Internal server error
-    schema:
-      $ref: '#/definitions/ErrorModel'
-  execSessionNotFound:
-    description: No such exec instance
-    schema:
-      $ref: '#/definitions/ErrorModel'
+            to.'
+          type: string
+        DetachKeys:
+          description: 'DetachKeys are the detach keys used by the exec session.
+
+            If set to "" the default keys are being used.
+
+            Will show "<none>" if no detach keys are set.'
+          type: string
+        ExitCode:
+          description: 'ExitCode is the exit code of the exec session. Will be set to 0 if
+
+            the exec session has not yet exited.'
+          format: int64
+          type: integer
+        ID:
+          description: ID is the ID of the exec session.
+          type: string
+        OpenStderr:
+          description: 'OpenStderr is whether the container''s STDERR stream will be attached.
+
+            Always set to true if the exec session created a TTY.'
+          type: boolean
+        OpenStdin:
+          description: 'OpenStdin is whether the container''s STDIN stream will be attached
+
+            to.'
+          type: boolean
+        OpenStdout:
+          description: 'OpenStdout is whether the container''s STDOUT stream will be attached.
+
+            Always set to true if the exec session created a TTY.'
+          type: boolean
+        Pid:
+          description: 'Pid is the PID of the exec session''s process.
+
+            Will be set to 0 if the exec session is not running.'
+          format: int64
+          type: integer
+        ProcessConfig:
+          $ref: '#/components/schemas/InspectExecProcess'
+        Running:
+          description: Running is whether the exec session is running.
+          type: boolean
+      title: InspectExecSession contains information about a given exec session.
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    InspectExecProcess:
+      description: 'InspectExecProcess contains information about the process in a given exec
+
+        session.'
+      properties:
+        arguments:
+          description: 'Arguments are the arguments to the entrypoint command of the exec
+
+            session.'
+          items:
+            type: string
+          type: array
+          x-go-name: Arguments
+        entrypoint:
+          description: 'Entrypoint is the entrypoint for the exec session (the command that
+
+            will be executed in the container).'
+          type: string
+          x-go-name: Entrypoint
+        privileged:
+          description: 'Privileged is whether the exec session will be started with elevated
+
+            privileges.'
+          type: boolean
+          x-go-name: Privileged
+        tty:
+          description: Tty is whether the exec session created a terminal.
+          type: boolean
+          x-go-name: Tty
+        user:
+          description: User is the user the exec session was started as.
+          type: string
+          x-go-name: User
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+  responses:
+    execSessionNotFound:
+      description: No such exec instance
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    execSessionInspect:
+      description: Exec Session Inspect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+    containerNotFound:
+      description: No such container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
