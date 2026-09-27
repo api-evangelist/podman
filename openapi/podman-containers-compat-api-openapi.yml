@@ -952,82 +952,300 @@ paths:
       - containers (compat)
 components:
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
+    Ulimit:
+      description: Users are recommended to use this alias instead of using [units.Ulimit] directly.
+      title: 'Ulimit is an alias for [units.Ulimit], which may be moving to a different
+
+        location or become a local type. This alias is to help transitioning.'
       type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    NetworkMode:
-      title: NetworkMode represents the container network stack.
+      x-go-package: github.com/moby/moby/api/types/container
+    UsernsMode:
+      title: UsernsMode represents userns mode in the container.
       type: string
       x-go-package: github.com/moby/moby/api/types/container
-    TmpfsOptions:
+    ContainerState:
+      title: ContainerState is a string representation of the container's current state.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    Descriptor:
+      description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
+
+        when marshalled to JSON.'
       properties:
-        Mode:
-          $ref: '#/components/schemas/FileMode'
-        Options:
-          description: 'Options to be passed to the tmpfs mount. An array of arrays. Flag
+        annotations:
+          additionalProperties:
+            type: string
+          description: Annotations contains arbitrary metadata relating to the targeted content.
+          type: object
+          x-go-name: Annotations
+        artifactType:
+          description: ArtifactType is the IANA media type of this artifact.
+          type: string
+          x-go-name: ArtifactType
+        data:
+          description: 'Data is an embedding of the targeted content. This is encoded as a base64
 
-            options should be provided as 1-length arrays. Other types should be
+            string when marshalled to JSON (automatically, by encoding/json). If
 
-            provided as 2-length arrays, where the first item is the key and the
-
-            second the value.'
+            present, Data can be used directly to avoid fetching the targeted content.'
+          items:
+            format: uint8
+            type: integer
+          type: array
+          x-go-name: Data
+        digest:
+          $ref: '#/components/schemas/Digest'
+        mediaType:
+          description: MediaType is the media type of the object this schema refers to.
+          type: string
+          x-go-name: MediaType
+        platform:
+          $ref: '#/components/schemas/Platform'
+        size:
+          description: Size specifies the size in bytes of the blob.
+          format: int64
+          type: integer
+          x-go-name: Size
+        urls:
+          description: URLs specifies a list of URLs from which this object MAY be downloaded
+          items:
+            type: string
+          type: array
+          x-go-name: URLs
+      title: Descriptor describes the disposition of targeted content.
+      type: object
+      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+    RestartPolicyMode:
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    DeviceRequest:
+      description: Used by GPU device drivers.
+      properties:
+        Capabilities:
           items:
             items:
               type: string
             type: array
           type: array
-        SizeBytes:
-          description: 'Size sets the size of the tmpfs, in bytes.
-
-
-            This will be converted to an operating system specific value
-
-            depending on the host. For example, on linux, it will be converted to
-
-            use a ''k'', ''m'' or ''g'' syntax. BSD, though not widely supported with
-
-            docker, uses a straight byte value.
-
-
-            Percentages are not supported.'
+        Count:
           format: int64
           type: integer
-      title: TmpfsOptions defines options specific to mounts of type "tmpfs".
+        DeviceIDs:
+          items:
+            type: string
+          type: array
+        Driver:
+          type: string
+        Options:
+          additionalProperties:
+            type: string
+          type: object
+      title: DeviceRequest represents a request for devices from a device driver.
       type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    UTSMode:
-      title: UTSMode represents the UTS namespace of the container.
-      type: string
       x-go-package: github.com/moby/moby/api/types/container
-    RootFSStorage:
+    Storage:
       properties:
-        Snapshot:
-          $ref: '#/components/schemas/RootFSStorageSnapshot'
-      title: RootFSStorage Information about the storage used for the container's root filesystem.
+        RootFS:
+          $ref: '#/components/schemas/RootFSStorage'
+      title: Storage Information about the storage used by the container.
       type: object
       x-go-package: github.com/moby/moby/api/types/storage
-    ClusterOptions:
-      title: ClusterOptions specifies options for a Cluster volume.
+    NetworkingConfig:
+      description: 'NetworkingConfig represents the container''s networking configuration for each of its interfaces
+
+        Carries the networking configs specified in the `docker run` and `docker network connect` commands'
+      properties:
+        EndpointsConfig:
+          additionalProperties:
+            $ref: '#/components/schemas/EndpointSettings'
+          type: object
+      type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    HealthcheckResult:
+      description: HealthcheckResult stores information about a single run of a healthcheck probe
+      properties:
+        End:
+          format: date-time
+          type: string
+        ExitCode:
+          format: int64
+          type: integer
+        Output:
+          type: string
+        Start:
+          format: date-time
+          type: string
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    Health:
+      description: Health stores information about the container's healthcheck results
+      properties:
+        FailingStreak:
+          format: int64
+          type: integer
+        Log:
+          items:
+            $ref: '#/components/schemas/HealthcheckResult'
+          type: array
+        Status:
+          $ref: '#/components/schemas/HealthStatus'
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    WeightDevice:
+      description: WeightDevice is a structure that holds device:weight pair
+      properties:
+        Path:
+          type: string
+        Weight:
+          format: uint16
+          type: integer
+      type: object
+      x-go-package: github.com/moby/moby/api/types/blkiodev
+    DeviceMapping:
+      properties:
+        CgroupPermissions:
+          type: string
+        PathInContainer:
+          type: string
+        PathOnHost:
+          type: string
+      title: DeviceMapping represents the device mapping between the host and the container.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    BindOptions:
+      properties:
+        CreateMountpoint:
+          type: boolean
+        NonRecursive:
+          type: boolean
+        Propagation:
+          $ref: '#/components/schemas/Propagation'
+        ReadOnlyForceRecursive:
+          description: ReadOnlyForceRecursive raises an error if the mount cannot be made recursively read-only.
+          type: boolean
+        ReadOnlyNonRecursive:
+          description: 'ReadOnlyNonRecursive makes the mount non-recursively read-only, but still leaves the mount recursive
+
+            (unless NonRecursive is set to true in conjunction).'
+          type: boolean
+      title: BindOptions defines options specific to mounts of type "bind".
       type: object
       x-go-package: github.com/moby/moby/api/types/mount
+    PidMode:
+      title: PidMode represents the pid namespace of the container.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    HealthSummary:
+      properties:
+        FailingStreak:
+          format: int64
+          type: integer
+        Status:
+          $ref: '#/components/schemas/HealthStatus'
+      title: HealthSummary stores a summary of the container's healthcheck results.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    HealthStatus:
+      title: HealthStatus is a string representation of the container's health.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    Propagation:
+      title: Propagation represents the propagation of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
+    RestartPolicy:
+      properties:
+        MaximumRetryCount:
+          format: int64
+          type: integer
+        Name:
+          $ref: '#/components/schemas/RestartPolicyMode'
+      title: RestartPolicy represents the restart policies of the container.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    PortMap:
+      additionalProperties:
+        items:
+          properties:
+            HostIp:
+              description: HostIP is the host IP Address
+              type: string
+              x-go-name: HostIP
+              x-go-type: net/netip.Addr
+            HostPort:
+              description: HostPort is the host port number
+              type: string
+          type: object
+        type: array
+      title: PortMap is a collection of [PortBinding] indexed by [Port].
+      type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    LogConfig:
+      properties:
+        Config:
+          additionalProperties:
+            type: string
+          type: object
+        Type:
+          type: string
+      title: LogConfig represents the logging configuration of the container.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    PortSet:
+      additionalProperties:
+        type: object
+      title: PortSet is a collection of structs indexed by [Port].
+      type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    RootFSStorageSnapshot:
+      properties:
+        Name:
+          description: Name of the snapshotter.
+          type: string
+      title: RootFSStorageSnapshot Information about a snapshot backend of the container's root filesystem.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/storage
+    Mount:
+      properties:
+        BindOptions:
+          $ref: '#/components/schemas/BindOptions'
+        ClusterOptions:
+          $ref: '#/components/schemas/ClusterOptions'
+        Consistency:
+          $ref: '#/components/schemas/Consistency'
+        ImageOptions:
+          $ref: '#/components/schemas/ImageOptions'
+        ReadOnly:
+          type: boolean
+        Source:
+          description: 'Source specifies the name of the mount. Depending on mount type, this
+
+            may be a volume name or a host path, or even ignored.
+
+            Source is not supported for tmpfs (must be an empty value)'
+          type: string
+        Target:
+          type: string
+        TmpfsOptions:
+          $ref: '#/components/schemas/TmpfsOptions'
+        Type:
+          $ref: '#/components/schemas/Type'
+        VolumeOptions:
+          $ref: '#/components/schemas/VolumeOptions'
+      title: Mount represents a mount (volume).
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    NetworkSettingsSummary:
+      description: 'NetworkSettingsSummary provides a summary of container''s networks
+
+        in /containers/json'
+      properties:
+        Networks:
+          additionalProperties:
+            $ref: '#/components/schemas/EndpointSettings'
+          type: object
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
     FileMode:
       description: 'The bits have the same definition on all systems, so that
 
@@ -1040,37 +1258,232 @@ components:
       title: A FileMode represents a file's mode and permission bits.
       type: integer
       x-go-package: os
-    ContainerCreateResponse:
-      description: ContainerCreateResponse is the response struct for creating a container
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    HealthSummary:
+    Consistency:
+      title: Consistency represents the consistency requirements of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
+    Container:
       properties:
-        FailingStreak:
+        Command:
+          type: string
+        Config:
+          $ref: '#/components/schemas/Config'
+        Created:
           format: int64
           type: integer
+        DefaultReadOnlyNonRecursive:
+          type: boolean
+        Health:
+          $ref: '#/components/schemas/HealthSummary'
+        HostConfig:
+          $ref: '#/components/schemas/HostConfig'
+          type: object
+        Id:
+          type: string
+          x-go-name: ID
+        Image:
+          type: string
+        ImageID:
+          type: string
+        ImageManifestDescriptor:
+          $ref: '#/components/schemas/Descriptor'
+        Labels:
+          additionalProperties:
+            type: string
+          type: object
+        Mounts:
+          items:
+            $ref: '#/components/schemas/MountPoint'
+          type: array
+        Name:
+          type: string
+        Names:
+          items:
+            type: string
+          type: array
+        NetworkSettings:
+          $ref: '#/components/schemas/NetworkSettingsSummary'
+        NetworkingConfig:
+          $ref: '#/components/schemas/NetworkingConfig'
+        Platform:
+          $ref: '#/components/schemas/Platform'
+        Ports:
+          items:
+            $ref: '#/components/schemas/PortSummary'
+          type: array
+        SizeRootFs:
+          format: int64
+          type: integer
+        SizeRw:
+          format: int64
+          type: integer
+        State:
+          $ref: '#/components/schemas/ContainerState'
         Status:
-          $ref: '#/components/schemas/HealthStatus'
-      title: HealthSummary stores a summary of the container's healthcheck results.
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    InspectResponse:
+      description: endpoint.
+      properties:
+        AppArmorProfile:
+          type: string
+        Args:
+          items:
+            type: string
+          type: array
+        Config:
+          $ref: '#/components/schemas/Config'
+        Created:
+          type: string
+        Driver:
+          type: string
+        ExecIDs:
+          items:
+            type: string
+          type: array
+        GraphDriver:
+          $ref: '#/components/schemas/DriverData'
+        HostConfig:
+          $ref: '#/components/schemas/HostConfig'
+        HostnamePath:
+          type: string
+        HostsPath:
+          type: string
+        Id:
+          type: string
+          x-go-name: ID
+        Image:
+          type: string
+        ImageManifestDescriptor:
+          $ref: '#/components/schemas/Descriptor'
+        LogPath:
+          type: string
+        MountLabel:
+          type: string
+        Mounts:
+          items:
+            $ref: '#/components/schemas/MountPoint'
+          type: array
+        Name:
+          type: string
+        NetworkSettings:
+          $ref: '#/components/schemas/NetworkSettings'
+        Path:
+          type: string
+        Platform:
+          type: string
+        ProcessLabel:
+          type: string
+        ResolvConfPath:
+          type: string
+        RestartCount:
+          format: int64
+          type: integer
+        SizeRootFs:
+          format: int64
+          type: integer
+        SizeRw:
+          format: int64
+          type: integer
+        State:
+          $ref: '#/components/schemas/State'
+        Storage:
+          $ref: '#/components/schemas/Storage'
+      title: InspectResponse is the response for the GET "/containers/{name:.*}/json"
       type: object
       x-go-package: github.com/moby/moby/api/types/container
-    PortSet:
-      additionalProperties:
-        type: object
-      title: PortSet is a collection of structs indexed by [Port].
+    DriverData:
+      description: DriverData handles the data for a storage driver
+      properties:
+        Data:
+          additionalProperties:
+            type: string
+          description: 'Low-level storage metadata, provided as key/value pairs.
+
+
+            This information is driver-specific, and depends on the storage-driver
+
+            in use, and should be used for informational purposes only.'
+          example:
+            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
+            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
+            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
+          type: object
+        Name:
+          description: Name of the storage driver.
+          example: overlay2
+          type: string
+      required:
+      - Data
+      - Name
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    Isolation:
+      description: 'Isolation represents the isolation technology of a container. The supported
+
+        values are platform specific'
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    Type:
+      title: Type represents the type of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
+    IpcMode:
+      title: IpcMode represents the container ipc stack.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    EndpointIPAMConfig:
+      description: EndpointIPAMConfig represents IPAM configurations for the endpoint
+      properties:
+        IPv4Address:
+          type: string
+          x-go-type: net/netip.Addr
+        IPv6Address:
+          type: string
+          x-go-type: net/netip.Addr
+        LinkLocalIPs:
+          items:
+            type: string
+            x-go-type: net/netip.Addr
+          type: array
       type: object
       x-go-package: github.com/moby/moby/api/types/network
-    DeviceMapping:
+    Platform:
       properties:
-        CgroupPermissions:
+        architecture:
+          description: 'Architecture field specifies the CPU architecture, for example
+
+            `amd64` or `ppc64le`.'
           type: string
-        PathInContainer:
+          x-go-name: Architecture
+        os:
+          description: OS specifies the operating system, for example `linux` or `windows`.
           type: string
-        PathOnHost:
+          x-go-name: OS
+        os.features:
+          description: 'OSFeatures is an optional field specifying an array of strings,
+
+            each listing a required OS feature (for example on Windows `win32k`).'
+          items:
+            type: string
+          type: array
+          x-go-name: OSFeatures
+        os.version:
+          description: 'OSVersion is an optional field specifying the operating system
+
+            version, for example on Windows `10.0.14393.1066`.'
           type: string
-      title: DeviceMapping represents the device mapping between the host and the container.
+          x-go-name: OSVersion
+        variant:
+          description: 'Variant is an optional field specifying a variant of the CPU, for
+
+            example `v7` to specify ARMv7 when architecture is `arm`.'
+          type: string
+          x-go-name: Variant
+      title: Platform describes the platform which the image in the manifest runs on.
       type: object
-      x-go-package: github.com/moby/moby/api/types/container
+      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
     State:
       description: 'State stores container''s running state
 
@@ -1104,15 +1517,357 @@ components:
           $ref: '#/components/schemas/ContainerState'
       type: object
       x-go-package: github.com/moby/moby/api/types/container
-    RestartPolicy:
+    EndpointSettings:
+      description: EndpointSettings stores the network endpoint details
       properties:
-        MaximumRetryCount:
+        Aliases:
+          items:
+            type: string
+          type: array
+        DNSNames:
+          description: 'DNSNames holds all the (non fully qualified) DNS names associated to this
+
+            endpoint. The first entry is used to generate PTR records.'
+          items:
+            type: string
+          type: array
+        DriverOpts:
+          additionalProperties:
+            type: string
+          type: object
+        EndpointID:
+          type: string
+        Gateway:
+          type: string
+          x-go-type: net/netip.Addr
+        GlobalIPv6Address:
+          type: string
+          x-go-type: net/netip.Addr
+        GlobalIPv6PrefixLen:
           format: int64
           type: integer
-        Name:
-          $ref: '#/components/schemas/RestartPolicyMode'
-      title: RestartPolicy represents the restart policies of the container.
+        GwPriority:
+          description: 'GwPriority determines which endpoint will provide the default gateway
+
+            for the container. The endpoint with the highest priority will be used.
+
+            If multiple endpoints have the same priority, they are lexicographically
+
+            sorted based on their network name, and the one that sorts first is picked.'
+          format: int64
+          type: integer
+        IPAMConfig:
+          $ref: '#/components/schemas/EndpointIPAMConfig'
+        IPAddress:
+          type: string
+          x-go-type: net/netip.Addr
+        IPPrefixLen:
+          format: int64
+          type: integer
+        IPv6Gateway:
+          type: string
+          x-go-type: net/netip.Addr
+        Links:
+          items:
+            type: string
+          type: array
+        MacAddress:
+          description: 'MacAddress may be used to specify a MAC address when the container is created.
+
+            Once the container is running, it becomes operational data (it may contain a
+
+            generated address).'
+          type: string
+          x-go-type: github.com/moby/moby/api/types/network.HardwareAddr
+        NetworkID:
+          type: string
       type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    containerUpdateRequest:
+      description: Container update
+      properties:
+        BlkioDeviceReadBps:
+          items:
+            $ref: '#/components/schemas/ThrottleDevice'
+          type: array
+        BlkioDeviceReadIOps:
+          items:
+            $ref: '#/components/schemas/ThrottleDevice'
+          type: array
+        BlkioDeviceWriteBps:
+          items:
+            $ref: '#/components/schemas/ThrottleDevice'
+          type: array
+        BlkioDeviceWriteIOps:
+          items:
+            $ref: '#/components/schemas/ThrottleDevice'
+          type: array
+        BlkioWeight:
+          format: uint16
+          type: integer
+        BlkioWeightDevice:
+          items:
+            $ref: '#/components/schemas/WeightDevice'
+          type: array
+        CgroupParent:
+          description: Applicable to UNIX platforms
+          type: string
+        CpuCount:
+          description: Applicable to Windows
+          format: int64
+          type: integer
+          x-go-name: CPUCount
+        CpuPercent:
+          format: int64
+          type: integer
+          x-go-name: CPUPercent
+        CpuPeriod:
+          format: int64
+          type: integer
+          x-go-name: CPUPeriod
+        CpuQuota:
+          format: int64
+          type: integer
+          x-go-name: CPUQuota
+        CpuRealtimePeriod:
+          format: int64
+          type: integer
+          x-go-name: CPURealtimePeriod
+        CpuRealtimeRuntime:
+          format: int64
+          type: integer
+          x-go-name: CPURealtimeRuntime
+        CpuShares:
+          description: Applicable to all platforms
+          format: int64
+          type: integer
+          x-go-name: CPUShares
+        CpusetCpus:
+          type: string
+        CpusetMems:
+          type: string
+        DeviceCgroupRules:
+          items:
+            type: string
+          type: array
+        DeviceRequests:
+          items:
+            $ref: '#/components/schemas/DeviceRequest'
+          type: array
+        Devices:
+          items:
+            $ref: '#/components/schemas/DeviceMapping'
+          type: array
+        IOMaximumBandwidth:
+          format: uint64
+          type: integer
+        IOMaximumIOps:
+          format: uint64
+          type: integer
+        Memory:
+          format: int64
+          type: integer
+        MemoryReservation:
+          format: int64
+          type: integer
+        MemorySwap:
+          format: int64
+          type: integer
+        MemorySwappiness:
+          format: int64
+          type: integer
+        NanoCpus:
+          format: int64
+          type: integer
+          x-go-name: NanoCPUs
+        OomKillDisable:
+          type: boolean
+        PidsLimit:
+          format: int64
+          type: integer
+        RestartPolicy:
+          $ref: '#/components/schemas/RestartPolicy'
+        Ulimits:
+          items:
+            $ref: '#/components/schemas/Ulimit'
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
+    Digest:
+      description: 'The following is an example of the contents of Digest types:
+
+
+        sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
+
+
+        This allows to abstract the digest behind this type and work only in those
+
+        terms.'
+      title: 'Digest allows simple protection of hex formatted digest strings, prefixed
+
+        by their algorithm. Strings of type Digest have some guarantee of being in
+
+        the correct format and it provides quick access to the components of a
+
+        digest string.'
+      type: string
+      x-go-package: github.com/opencontainers/go-digest
+    ContainerCreateResponse:
+      description: ContainerCreateResponse is the response struct for creating a container
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    VolumeOptions:
+      properties:
+        DriverConfig:
+          $ref: '#/components/schemas/Driver'
+        Labels:
+          additionalProperties:
+            type: string
+          type: object
+        NoCopy:
+          type: boolean
+        Subpath:
+          type: string
+      title: VolumeOptions represents the options for a mount of type volume.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    NetworkMode:
+      title: NetworkMode represents the container network stack.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    MountPoint:
+      description: This is used for reporting the mountpoints in use by a container.
+      properties:
+        Destination:
+          description: 'Destination is the path relative to the container root (`/`) where the
+
+            Source is mounted inside the container.'
+          type: string
+        Driver:
+          description: Driver is the volume driver used to create the volume (if it is a volume).
+          type: string
+        Mode:
+          description: 'Mode is a comma separated list of options supplied by the user when
+
+            creating the bind/volume mount.
+
+
+            The default is platform-specific (`"z"` on Linux, empty on Windows).'
+          type: string
+        Name:
+          description: 'Name is the name reference to the underlying data defined by `Source`
+
+            e.g., the volume name.'
+          type: string
+        Propagation:
+          $ref: '#/components/schemas/Propagation'
+        RW:
+          description: RW indicates whether the mount is mounted writable (read-write).
+          type: boolean
+        Source:
+          description: 'Source is the source location of the mount.
+
+
+            For volumes, this contains the storage location of the volume (within
+
+            `/var/lib/docker/volumes/`). For bind-mounts, and `npipe`, this contains
+
+            the source (host) part of the bind-mount. For `tmpfs` mount points, this
+
+            field is empty.'
+          type: string
+        Type:
+          $ref: '#/components/schemas/Type'
+      title: MountPoint represents a mount point configuration inside the container.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    ImageOptions:
+      properties:
+        Subpath:
+          type: string
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    Driver:
+      properties:
+        Name:
+          type: string
+        Options:
+          additionalProperties:
+            type: string
+          type: object
+      title: Driver represents a volume driver.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    NetworkSettings:
+      description: NetworkSettings exposes the network settings in the api
+      properties:
+        Networks:
+          additionalProperties:
+            $ref: '#/components/schemas/EndpointSettings'
+          type: object
+        Ports:
+          $ref: '#/components/schemas/PortMap'
+        SandboxID:
+          type: string
+        SandboxKey:
+          type: string
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    RootFSStorage:
+      properties:
+        Snapshot:
+          $ref: '#/components/schemas/RootFSStorageSnapshot'
+      title: RootFSStorage Information about the storage used for the container's root filesystem.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/storage
+    ContainerTopOKBody:
+      properties:
+        Processes:
+          description: 'Each process running in the container, where each process
+
+            is an array of values corresponding to the titles.'
+          example: '{"Processes":[["root","13642","882","0","17:03","pts/0","00:00:00","/bin/bash"],["root","13735","13642","0","17:06","pts/0","00:00:00","sleep 10"]]}'
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        Titles:
+          description: The ps column titles
+          example: '{"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}'
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    ClusterOptions:
+      title: ClusterOptions specifies options for a Cluster volume.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    CgroupnsMode:
+      description: CgroupnsMode represents the cgroup namespace mode of the container
+      type: string
       x-go-package: github.com/moby/moby/api/types/container
     HostConfig:
       description: 'Here, "non-portable" means "dependent of the host we are running on".
@@ -1356,16 +2111,10 @@ components:
       title: HostConfig the non-portable Config structure of a container.
       type: object
       x-go-package: github.com/moby/moby/api/types/container
-    WeightDevice:
-      description: WeightDevice is a structure that holds device:weight pair
-      properties:
-        Path:
-          type: string
-        Weight:
-          format: uint16
-          type: integer
-      type: object
-      x-go-package: github.com/moby/moby/api/types/blkiodev
+    CgroupSpec:
+      title: CgroupSpec represents the cgroup to use for the container.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
     ContainersPruneReport:
       properties:
         ContainersDeleted:
@@ -1377,6 +2126,50 @@ components:
           type: integer
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    UTSMode:
+      title: UTSMode represents the UTS namespace of the container.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/container
+    TmpfsOptions:
+      properties:
+        Mode:
+          $ref: '#/components/schemas/FileMode'
+        Options:
+          description: 'Options to be passed to the tmpfs mount. An array of arrays. Flag
+
+            options should be provided as 1-length arrays. Other types should be
+
+            provided as 2-length arrays, where the first item is the key and the
+
+            second the value.'
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        SizeBytes:
+          description: 'Size sets the size of the tmpfs, in bytes.
+
+
+            This will be converted to an operating system specific value
+
+            depending on the host. For example, on linux, it will be converted to
+
+            use a ''k'', ''m'' or ''g'' syntax. BSD, though not widely supported with
+
+            docker, uses a straight byte value.
+
+
+            Percentages are not supported.'
+          format: int64
+          type: integer
+      title: TmpfsOptions defines options specific to mounts of type "tmpfs".
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    HealthConfig:
+      title: HealthConfig holds configuration settings for the HEALTHCHECK feature.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
     PortSummary:
       example: '{"PrivatePort":8080,"PublicPort":80,"Type":"tcp"}'
       properties:
@@ -1405,129 +2198,16 @@ components:
       title: PortSummary Describes a port-mapping between the container and the host.
       type: object
       x-go-package: github.com/moby/moby/api/types/container
-    Driver:
+    ThrottleDevice:
+      description: ThrottleDevice is a structure that holds device:rate_per_second pair
       properties:
-        Name:
+        Path:
           type: string
-        Options:
-          additionalProperties:
-            type: string
-          type: object
-      title: Driver represents a volume driver.
+        Rate:
+          format: uint64
+          type: integer
       type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    NetworkSettingsSummary:
-      description: 'NetworkSettingsSummary provides a summary of container''s networks
-
-        in /containers/json'
-      properties:
-        Networks:
-          additionalProperties:
-            $ref: '#/components/schemas/EndpointSettings'
-          type: object
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    UsernsMode:
-      title: UsernsMode represents userns mode in the container.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    RestartPolicyMode:
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    MountPoint:
-      description: This is used for reporting the mountpoints in use by a container.
-      properties:
-        Destination:
-          description: 'Destination is the path relative to the container root (`/`) where the
-
-            Source is mounted inside the container.'
-          type: string
-        Driver:
-          description: Driver is the volume driver used to create the volume (if it is a volume).
-          type: string
-        Mode:
-          description: 'Mode is a comma separated list of options supplied by the user when
-
-            creating the bind/volume mount.
-
-
-            The default is platform-specific (`"z"` on Linux, empty on Windows).'
-          type: string
-        Name:
-          description: 'Name is the name reference to the underlying data defined by `Source`
-
-            e.g., the volume name.'
-          type: string
-        Propagation:
-          $ref: '#/components/schemas/Propagation'
-        RW:
-          description: RW indicates whether the mount is mounted writable (read-write).
-          type: boolean
-        Source:
-          description: 'Source is the source location of the mount.
-
-
-            For volumes, this contains the storage location of the volume (within
-
-            `/var/lib/docker/volumes/`). For bind-mounts, and `npipe`, this contains
-
-            the source (host) part of the bind-mount. For `tmpfs` mount points, this
-
-            field is empty.'
-          type: string
-        Type:
-          $ref: '#/components/schemas/Type'
-      title: MountPoint represents a mount point configuration inside the container.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    Ulimit:
-      description: Users are recommended to use this alias instead of using [units.Ulimit] directly.
-      title: 'Ulimit is an alias for [units.Ulimit], which may be moving to a different
-
-        location or become a local type. This alias is to help transitioning.'
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    LogConfig:
-      properties:
-        Config:
-          additionalProperties:
-            type: string
-          type: object
-        Type:
-          type: string
-      title: LogConfig represents the logging configuration of the container.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    RootFSStorageSnapshot:
-      properties:
-        Name:
-          description: Name of the snapshotter.
-          type: string
-      title: RootFSStorageSnapshot Information about a snapshot backend of the container's root filesystem.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/storage
-    NetworkSettings:
-      description: NetworkSettings exposes the network settings in the api
-      properties:
-        Networks:
-          additionalProperties:
-            $ref: '#/components/schemas/EndpointSettings'
-          type: object
-        Ports:
-          $ref: '#/components/schemas/PortMap'
-        SandboxID:
-          type: string
-        SandboxKey:
-          type: string
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    Storage:
-      properties:
-        RootFS:
-          $ref: '#/components/schemas/RootFSStorage'
-      title: Storage Information about the storage used by the container.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/storage
+      x-go-package: github.com/moby/moby/api/types/blkiodev
     CreateContainerConfig:
       description: CreateContainerConfig used when compatible endpoint creates a container
       properties:
@@ -1614,149 +2294,6 @@ components:
           type: string
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    Health:
-      description: Health stores information about the container's healthcheck results
-      properties:
-        FailingStreak:
-          format: int64
-          type: integer
-        Log:
-          items:
-            $ref: '#/components/schemas/HealthcheckResult'
-          type: array
-        Status:
-          $ref: '#/components/schemas/HealthStatus'
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    CgroupSpec:
-      title: CgroupSpec represents the cgroup to use for the container.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    IpcMode:
-      title: IpcMode represents the container ipc stack.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    CgroupnsMode:
-      description: CgroupnsMode represents the cgroup namespace mode of the container
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    ContainerTopOKBody:
-      properties:
-        Processes:
-          description: 'Each process running in the container, where each process
-
-            is an array of values corresponding to the titles.'
-          example: '{"Processes":[["root","13642","882","0","17:03","pts/0","00:00:00","/bin/bash"],["root","13735","13642","0","17:06","pts/0","00:00:00","sleep 10"]]}'
-          items:
-            items:
-              type: string
-            type: array
-          type: array
-        Titles:
-          description: The ps column titles
-          example: '{"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}'
-          items:
-            type: string
-          type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    DriverData:
-      description: DriverData handles the data for a storage driver
-      properties:
-        Data:
-          additionalProperties:
-            type: string
-          description: 'Low-level storage metadata, provided as key/value pairs.
-
-
-            This information is driver-specific, and depends on the storage-driver
-
-            in use, and should be used for informational purposes only.'
-          example:
-            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
-            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
-            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
-          type: object
-        Name:
-          description: Name of the storage driver.
-          example: overlay2
-          type: string
-      required:
-      - Data
-      - Name
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    ImageOptions:
-      properties:
-        Subpath:
-          type: string
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    HealthConfig:
-      title: HealthConfig holds configuration settings for the HEALTHCHECK feature.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    Container:
-      properties:
-        Command:
-          type: string
-        Config:
-          $ref: '#/components/schemas/Config'
-        Created:
-          format: int64
-          type: integer
-        DefaultReadOnlyNonRecursive:
-          type: boolean
-        Health:
-          $ref: '#/components/schemas/HealthSummary'
-        HostConfig:
-          $ref: '#/components/schemas/HostConfig'
-          type: object
-        Id:
-          type: string
-          x-go-name: ID
-        Image:
-          type: string
-        ImageID:
-          type: string
-        ImageManifestDescriptor:
-          $ref: '#/components/schemas/Descriptor'
-        Labels:
-          additionalProperties:
-            type: string
-          type: object
-        Mounts:
-          items:
-            $ref: '#/components/schemas/MountPoint'
-          type: array
-        Name:
-          type: string
-        Names:
-          items:
-            type: string
-          type: array
-        NetworkSettings:
-          $ref: '#/components/schemas/NetworkSettingsSummary'
-        NetworkingConfig:
-          $ref: '#/components/schemas/NetworkingConfig'
-        Platform:
-          $ref: '#/components/schemas/Platform'
-        Ports:
-          items:
-            $ref: '#/components/schemas/PortSummary'
-          type: array
-        SizeRootFs:
-          format: int64
-          type: integer
-        SizeRw:
-          format: int64
-          type: integer
-        State:
-          $ref: '#/components/schemas/ContainerState'
-        Status:
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
     Config:
       description: 'It should hold only portable information about the container.
 
@@ -1834,580 +2371,7 @@ components:
       title: Config contains the configuration data about a container.
       type: object
       x-go-package: github.com/moby/moby/api/types/container
-    VolumeOptions:
-      properties:
-        DriverConfig:
-          $ref: '#/components/schemas/Driver'
-        Labels:
-          additionalProperties:
-            type: string
-          type: object
-        NoCopy:
-          type: boolean
-        Subpath:
-          type: string
-      title: VolumeOptions represents the options for a mount of type volume.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    Isolation:
-      description: 'Isolation represents the isolation technology of a container. The supported
-
-        values are platform specific'
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    Mount:
-      properties:
-        BindOptions:
-          $ref: '#/components/schemas/BindOptions'
-        ClusterOptions:
-          $ref: '#/components/schemas/ClusterOptions'
-        Consistency:
-          $ref: '#/components/schemas/Consistency'
-        ImageOptions:
-          $ref: '#/components/schemas/ImageOptions'
-        ReadOnly:
-          type: boolean
-        Source:
-          description: 'Source specifies the name of the mount. Depending on mount type, this
-
-            may be a volume name or a host path, or even ignored.
-
-            Source is not supported for tmpfs (must be an empty value)'
-          type: string
-        Target:
-          type: string
-        TmpfsOptions:
-          $ref: '#/components/schemas/TmpfsOptions'
-        Type:
-          $ref: '#/components/schemas/Type'
-        VolumeOptions:
-          $ref: '#/components/schemas/VolumeOptions'
-      title: Mount represents a mount (volume).
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    HealthStatus:
-      title: HealthStatus is a string representation of the container's health.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    EndpointIPAMConfig:
-      description: EndpointIPAMConfig represents IPAM configurations for the endpoint
-      properties:
-        IPv4Address:
-          type: string
-          x-go-type: net/netip.Addr
-        IPv6Address:
-          type: string
-          x-go-type: net/netip.Addr
-        LinkLocalIPs:
-          items:
-            type: string
-            x-go-type: net/netip.Addr
-          type: array
-      type: object
-      x-go-package: github.com/moby/moby/api/types/network
-    Consistency:
-      title: Consistency represents the consistency requirements of a mount.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    InspectResponse:
-      description: endpoint.
-      properties:
-        AppArmorProfile:
-          type: string
-        Args:
-          items:
-            type: string
-          type: array
-        Config:
-          $ref: '#/components/schemas/Config'
-        Created:
-          type: string
-        Driver:
-          type: string
-        ExecIDs:
-          items:
-            type: string
-          type: array
-        GraphDriver:
-          $ref: '#/components/schemas/DriverData'
-        HostConfig:
-          $ref: '#/components/schemas/HostConfig'
-        HostnamePath:
-          type: string
-        HostsPath:
-          type: string
-        Id:
-          type: string
-          x-go-name: ID
-        Image:
-          type: string
-        ImageManifestDescriptor:
-          $ref: '#/components/schemas/Descriptor'
-        LogPath:
-          type: string
-        MountLabel:
-          type: string
-        Mounts:
-          items:
-            $ref: '#/components/schemas/MountPoint'
-          type: array
-        Name:
-          type: string
-        NetworkSettings:
-          $ref: '#/components/schemas/NetworkSettings'
-        Path:
-          type: string
-        Platform:
-          type: string
-        ProcessLabel:
-          type: string
-        ResolvConfPath:
-          type: string
-        RestartCount:
-          format: int64
-          type: integer
-        SizeRootFs:
-          format: int64
-          type: integer
-        SizeRw:
-          format: int64
-          type: integer
-        State:
-          $ref: '#/components/schemas/State'
-        Storage:
-          $ref: '#/components/schemas/Storage'
-      title: InspectResponse is the response for the GET "/containers/{name:.*}/json"
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    EndpointSettings:
-      description: EndpointSettings stores the network endpoint details
-      properties:
-        Aliases:
-          items:
-            type: string
-          type: array
-        DNSNames:
-          description: 'DNSNames holds all the (non fully qualified) DNS names associated to this
-
-            endpoint. The first entry is used to generate PTR records.'
-          items:
-            type: string
-          type: array
-        DriverOpts:
-          additionalProperties:
-            type: string
-          type: object
-        EndpointID:
-          type: string
-        Gateway:
-          type: string
-          x-go-type: net/netip.Addr
-        GlobalIPv6Address:
-          type: string
-          x-go-type: net/netip.Addr
-        GlobalIPv6PrefixLen:
-          format: int64
-          type: integer
-        GwPriority:
-          description: 'GwPriority determines which endpoint will provide the default gateway
-
-            for the container. The endpoint with the highest priority will be used.
-
-            If multiple endpoints have the same priority, they are lexicographically
-
-            sorted based on their network name, and the one that sorts first is picked.'
-          format: int64
-          type: integer
-        IPAMConfig:
-          $ref: '#/components/schemas/EndpointIPAMConfig'
-        IPAddress:
-          type: string
-          x-go-type: net/netip.Addr
-        IPPrefixLen:
-          format: int64
-          type: integer
-        IPv6Gateway:
-          type: string
-          x-go-type: net/netip.Addr
-        Links:
-          items:
-            type: string
-          type: array
-        MacAddress:
-          description: 'MacAddress may be used to specify a MAC address when the container is created.
-
-            Once the container is running, it becomes operational data (it may contain a
-
-            generated address).'
-          type: string
-          x-go-type: github.com/moby/moby/api/types/network.HardwareAddr
-        NetworkID:
-          type: string
-      type: object
-      x-go-package: github.com/moby/moby/api/types/network
-    Descriptor:
-      description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
-
-        when marshalled to JSON.'
-      properties:
-        annotations:
-          additionalProperties:
-            type: string
-          description: Annotations contains arbitrary metadata relating to the targeted content.
-          type: object
-          x-go-name: Annotations
-        artifactType:
-          description: ArtifactType is the IANA media type of this artifact.
-          type: string
-          x-go-name: ArtifactType
-        data:
-          description: 'Data is an embedding of the targeted content. This is encoded as a base64
-
-            string when marshalled to JSON (automatically, by encoding/json). If
-
-            present, Data can be used directly to avoid fetching the targeted content.'
-          items:
-            format: uint8
-            type: integer
-          type: array
-          x-go-name: Data
-        digest:
-          $ref: '#/components/schemas/Digest'
-        mediaType:
-          description: MediaType is the media type of the object this schema refers to.
-          type: string
-          x-go-name: MediaType
-        platform:
-          $ref: '#/components/schemas/Platform'
-        size:
-          description: Size specifies the size in bytes of the blob.
-          format: int64
-          type: integer
-          x-go-name: Size
-        urls:
-          description: URLs specifies a list of URLs from which this object MAY be downloaded
-          items:
-            type: string
-          type: array
-          x-go-name: URLs
-      title: Descriptor describes the disposition of targeted content.
-      type: object
-      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
-    DeviceRequest:
-      description: Used by GPU device drivers.
-      properties:
-        Capabilities:
-          items:
-            items:
-              type: string
-            type: array
-          type: array
-        Count:
-          format: int64
-          type: integer
-        DeviceIDs:
-          items:
-            type: string
-          type: array
-        Driver:
-          type: string
-        Options:
-          additionalProperties:
-            type: string
-          type: object
-      title: DeviceRequest represents a request for devices from a device driver.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    ThrottleDevice:
-      description: ThrottleDevice is a structure that holds device:rate_per_second pair
-      properties:
-        Path:
-          type: string
-        Rate:
-          format: uint64
-          type: integer
-      type: object
-      x-go-package: github.com/moby/moby/api/types/blkiodev
-    Digest:
-      description: 'The following is an example of the contents of Digest types:
-
-
-        sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
-
-
-        This allows to abstract the digest behind this type and work only in those
-
-        terms.'
-      title: 'Digest allows simple protection of hex formatted digest strings, prefixed
-
-        by their algorithm. Strings of type Digest have some guarantee of being in
-
-        the correct format and it provides quick access to the components of a
-
-        digest string.'
-      type: string
-      x-go-package: github.com/opencontainers/go-digest
-    Platform:
-      properties:
-        architecture:
-          description: 'Architecture field specifies the CPU architecture, for example
-
-            `amd64` or `ppc64le`.'
-          type: string
-          x-go-name: Architecture
-        os:
-          description: OS specifies the operating system, for example `linux` or `windows`.
-          type: string
-          x-go-name: OS
-        os.features:
-          description: 'OSFeatures is an optional field specifying an array of strings,
-
-            each listing a required OS feature (for example on Windows `win32k`).'
-          items:
-            type: string
-          type: array
-          x-go-name: OSFeatures
-        os.version:
-          description: 'OSVersion is an optional field specifying the operating system
-
-            version, for example on Windows `10.0.14393.1066`.'
-          type: string
-          x-go-name: OSVersion
-        variant:
-          description: 'Variant is an optional field specifying a variant of the CPU, for
-
-            example `v7` to specify ARMv7 when architecture is `arm`.'
-          type: string
-          x-go-name: Variant
-      title: Platform describes the platform which the image in the manifest runs on.
-      type: object
-      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
-    NetworkingConfig:
-      description: 'NetworkingConfig represents the container''s networking configuration for each of its interfaces
-
-        Carries the networking configs specified in the `docker run` and `docker network connect` commands'
-      properties:
-        EndpointsConfig:
-          additionalProperties:
-            $ref: '#/components/schemas/EndpointSettings'
-          type: object
-      type: object
-      x-go-package: github.com/moby/moby/api/types/network
-    Propagation:
-      title: Propagation represents the propagation of a mount.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    PortMap:
-      additionalProperties:
-        items:
-          properties:
-            HostIp:
-              description: HostIP is the host IP Address
-              type: string
-              x-go-name: HostIP
-              x-go-type: net/netip.Addr
-            HostPort:
-              description: HostPort is the host port number
-              type: string
-          type: object
-        type: array
-      title: PortMap is a collection of [PortBinding] indexed by [Port].
-      type: object
-      x-go-package: github.com/moby/moby/api/types/network
-    Type:
-      title: Type represents the type of a mount.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    ContainerState:
-      title: ContainerState is a string representation of the container's current state.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
-    BindOptions:
-      properties:
-        CreateMountpoint:
-          type: boolean
-        NonRecursive:
-          type: boolean
-        Propagation:
-          $ref: '#/components/schemas/Propagation'
-        ReadOnlyForceRecursive:
-          description: ReadOnlyForceRecursive raises an error if the mount cannot be made recursively read-only.
-          type: boolean
-        ReadOnlyNonRecursive:
-          description: 'ReadOnlyNonRecursive makes the mount non-recursively read-only, but still leaves the mount recursive
-
-            (unless NonRecursive is set to true in conjunction).'
-          type: boolean
-      title: BindOptions defines options specific to mounts of type "bind".
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    containerUpdateRequest:
-      description: Container update
-      properties:
-        BlkioDeviceReadBps:
-          items:
-            $ref: '#/components/schemas/ThrottleDevice'
-          type: array
-        BlkioDeviceReadIOps:
-          items:
-            $ref: '#/components/schemas/ThrottleDevice'
-          type: array
-        BlkioDeviceWriteBps:
-          items:
-            $ref: '#/components/schemas/ThrottleDevice'
-          type: array
-        BlkioDeviceWriteIOps:
-          items:
-            $ref: '#/components/schemas/ThrottleDevice'
-          type: array
-        BlkioWeight:
-          format: uint16
-          type: integer
-        BlkioWeightDevice:
-          items:
-            $ref: '#/components/schemas/WeightDevice'
-          type: array
-        CgroupParent:
-          description: Applicable to UNIX platforms
-          type: string
-        CpuCount:
-          description: Applicable to Windows
-          format: int64
-          type: integer
-          x-go-name: CPUCount
-        CpuPercent:
-          format: int64
-          type: integer
-          x-go-name: CPUPercent
-        CpuPeriod:
-          format: int64
-          type: integer
-          x-go-name: CPUPeriod
-        CpuQuota:
-          format: int64
-          type: integer
-          x-go-name: CPUQuota
-        CpuRealtimePeriod:
-          format: int64
-          type: integer
-          x-go-name: CPURealtimePeriod
-        CpuRealtimeRuntime:
-          format: int64
-          type: integer
-          x-go-name: CPURealtimeRuntime
-        CpuShares:
-          description: Applicable to all platforms
-          format: int64
-          type: integer
-          x-go-name: CPUShares
-        CpusetCpus:
-          type: string
-        CpusetMems:
-          type: string
-        DeviceCgroupRules:
-          items:
-            type: string
-          type: array
-        DeviceRequests:
-          items:
-            $ref: '#/components/schemas/DeviceRequest'
-          type: array
-        Devices:
-          items:
-            $ref: '#/components/schemas/DeviceMapping'
-          type: array
-        IOMaximumBandwidth:
-          format: uint64
-          type: integer
-        IOMaximumIOps:
-          format: uint64
-          type: integer
-        Memory:
-          format: int64
-          type: integer
-        MemoryReservation:
-          format: int64
-          type: integer
-        MemorySwap:
-          format: int64
-          type: integer
-        MemorySwappiness:
-          format: int64
-          type: integer
-        NanoCpus:
-          format: int64
-          type: integer
-          x-go-name: NanoCPUs
-        OomKillDisable:
-          type: boolean
-        PidsLimit:
-          format: int64
-          type: integer
-        RestartPolicy:
-          $ref: '#/components/schemas/RestartPolicy'
-        Ulimits:
-          items:
-            $ref: '#/components/schemas/Ulimit'
-          type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
-    HealthcheckResult:
-      description: HealthcheckResult stores information about a single run of a healthcheck probe
-      properties:
-        End:
-          format: date-time
-          type: string
-        ExitCode:
-          format: int64
-          type: integer
-        Output:
-          type: string
-        Start:
-          format: date-time
-          type: string
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    PidMode:
-      title: PidMode represents the pid namespace of the container.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/container
   responses:
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    imageNotFound:
-      description: No such image
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    containerInspectResponse:
-      description: Inspect container
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InspectResponse'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/InspectResponse'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/InspectResponse'
     conflictError:
       description: Conflict error in operation
       content:
@@ -2420,42 +2384,24 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    ok:
-      description: Success
+    containersPrune:
+      description: Prune Containers
       content:
         application/json:
           schema:
-            type: object
+            items:
+              $ref: '#/components/schemas/ContainersPruneReport'
+            type: array
         application/octet-stream:
           schema:
-            type: object
+            items:
+              $ref: '#/components/schemas/ContainersPruneReport'
+            type: array
         text/plain:
           schema:
-            type: object
-    containerCreateResponse:
-      description: Create container
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ContainerCreateResponse'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ContainerCreateResponse'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ContainerCreateResponse'
-    containerAlreadyStoppedError:
-      description: Container already stopped
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
+            items:
+              $ref: '#/components/schemas/ContainersPruneReport'
+            type: array
     containerWaitResponse:
       description: Wait container
       content:
@@ -2498,6 +2444,114 @@ components:
                 format: int64
                 type: integer
             type: object
+    containerAlreadyStoppedError:
+      description: Container already stopped
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    containerInspectResponse:
+      description: Inspect container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InspectResponse'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/InspectResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/InspectResponse'
+    containerNotFound:
+      description: No such container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    containerAlreadyStartedError:
+      description: Container already started
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    ok:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+        application/octet-stream:
+          schema:
+            type: object
+        text/plain:
+          schema:
+            type: object
+    imageNotFound:
+      description: No such image
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    containerCreateResponse:
+      description: Create container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContainerCreateResponse'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ContainerCreateResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ContainerCreateResponse'
+    containerTopResponse:
+      description: List processes in container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContainerTopOKBody'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ContainerTopOKBody'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ContainerTopOKBody'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
     containersList:
       description: List Containers
       content:
@@ -2516,62 +2570,8 @@ components:
             items:
               $ref: '#/components/schemas/Container'
             type: array
-    containersPrune:
-      description: Prune Containers
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ContainersPruneReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ContainersPruneReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ContainersPruneReport'
-            type: array
-    containerNotFound:
-      description: No such container
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    containerTopResponse:
-      description: List processes in container
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ContainerTopOKBody'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ContainerTopOKBody'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ContainerTopOKBody'
-    containerAlreadyStartedError:
-      description: Container already started
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    badParamError:
-      description: Bad parameter in request
+    internalError:
+      description: Internal server error
       content:
         application/json:
           schema:

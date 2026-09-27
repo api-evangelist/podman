@@ -249,44 +249,147 @@ paths:
       tags:
       - Networks
 components:
+  responses:
+    conflictError:
+      description: Conflict error in operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    networkRmResponse:
+      description: Network Delete
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
+            type: array
+    networkCreateResponse:
+      description: Network create
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Network'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/Network'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/Network'
+    networkInspectResponse:
+      description: Network inspect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+    networkNotFound:
+      description: No such network
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    networkPruneResponse:
+      description: Network prune
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkPruneReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkPruneReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkPruneReport'
+            type: array
+    networkListLibpod:
+      description: Network list
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/Network'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/Network'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/Network'
+            type: array
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
+    NetworkUpdateOptions:
+      description: NetworkUpdateOptions describes options to update a network
       properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    NetworkPruneReport:
-      description: 'NetworkPruneReport containers the name of network and an error
-
-        associated in its pruning (removal)'
-      properties:
-        Error:
-          type: string
-          x-go-type: error
-        Name:
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    NetworkConnectOptions:
-      description: 'NetworkConnectOptions describes options for connecting
-
-        a container to a network'
+        adddnsservers:
+          items:
+            type: string
+          type: array
+          x-go-name: AddDNSServers
+        removednsservers:
+          items:
+            type: string
+          type: array
+          x-go-name: RemoveDNSServers
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     LeaseRange:
@@ -304,6 +407,26 @@ components:
           x-go-name: StartIP
           x-go-type: net.IP
       title: LeaseRange contains the range where IP are leased.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    networkDisconnectRequest:
+      $ref: '#/components/schemas/DisconnectRequest'
+      description: Network disconnect
+    Subnet:
+      properties:
+        gateway:
+          description: Gateway IP for this Network.
+          format: string
+          type: string
+          x-go-name: Gateway
+          x-go-type: net.IP
+        lease_range:
+          $ref: '#/components/schemas/LeaseRange'
+        subnet:
+          description: Subnet for this Network in CIDR form.
+          format: string
+          type: string
+          x-go-name: Subnet
       type: object
       x-go-package: go.podman.io/common/libnetwork/types
     networkCreateLibpod:
@@ -392,9 +515,27 @@ components:
           x-go-name: Subnets
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
-    networkConnectRequestLibpod:
-      $ref: '#/components/schemas/NetworkConnectOptions'
-      description: Network connect
+    DisconnectRequest:
+      properties:
+        Container:
+          description: The ID or name of the container to disconnect from the network.
+          example: 3613f73ba0e4
+          type: string
+        Force:
+          description: Force the container to disconnect from the network.
+          example: false
+          type: boolean
+      required:
+      - Container
+      title: DisconnectRequest NetworkDisconnectRequest represents the data to be used to disconnect a container from a network.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    NetworkInspectReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    networkUpdateRequestLibpod:
+      $ref: '#/components/schemas/NetworkUpdateOptions'
+      description: Network update
     Network:
       properties:
         created:
@@ -481,49 +622,52 @@ components:
       title: Network describes the Network attributes.
       type: object
       x-go-package: go.podman.io/common/libnetwork/types
-    RouteType:
-      title: RouteType represents the type of a route.
-      type: string
-      x-go-package: go.podman.io/common/libnetwork/types
-    NetworkUpdateOptions:
-      description: NetworkUpdateOptions describes options to update a network
+    NetworkPruneReport:
+      description: 'NetworkPruneReport containers the name of network and an error
+
+        associated in its pruning (removal)'
       properties:
-        adddnsservers:
-          items:
-            type: string
-          type: array
-          x-go-name: AddDNSServers
-        removednsservers:
-          items:
-            type: string
-          type: array
-          x-go-name: RemoveDNSServers
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    networkUpdateRequestLibpod:
-      $ref: '#/components/schemas/NetworkUpdateOptions'
-      description: Network update
-    networkDisconnectRequest:
-      $ref: '#/components/schemas/DisconnectRequest'
-      description: Network disconnect
-    NetworkInspectReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    DisconnectRequest:
-      properties:
-        Container:
-          description: The ID or name of the container to disconnect from the network.
-          example: 3613f73ba0e4
+        Error:
           type: string
-        Force:
-          description: Force the container to disconnect from the network.
-          example: false
-          type: boolean
-      required:
-      - Container
-      title: DisconnectRequest NetworkDisconnectRequest represents the data to be used to disconnect a container from a network.
+          x-go-type: error
+        Name:
+          type: string
       type: object
-      x-go-package: github.com/moby/moby/api/types/network
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+    NetworkRmReport:
+      description: NetworkRmReport describes the results of network removal
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    NetworkConnectOptions:
+      description: 'NetworkConnectOptions describes options for connecting
+
+        a container to a network'
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    networkConnectRequestLibpod:
+      $ref: '#/components/schemas/NetworkConnectOptions'
+      description: Network connect
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
     Route:
       properties:
         destination:
@@ -546,151 +690,7 @@ components:
           $ref: '#/components/schemas/RouteType'
       type: object
       x-go-package: go.podman.io/common/libnetwork/types
-    NetworkRmReport:
-      description: NetworkRmReport describes the results of network removal
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    Subnet:
-      properties:
-        gateway:
-          description: Gateway IP for this Network.
-          format: string
-          type: string
-          x-go-name: Gateway
-          x-go-type: net.IP
-        lease_range:
-          $ref: '#/components/schemas/LeaseRange'
-        subnet:
-          description: Subnet for this Network in CIDR form.
-          format: string
-          type: string
-          x-go-name: Subnet
-      type: object
+    RouteType:
+      title: RouteType represents the type of a route.
+      type: string
       x-go-package: go.podman.io/common/libnetwork/types
-  responses:
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    networkListLibpod:
-      description: Network list
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/Network'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/Network'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/Network'
-            type: array
-    networkRmResponse:
-      description: Network Delete
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-    conflictError:
-      description: Conflict error in operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    networkNotFound:
-      description: No such network
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    networkCreateResponse:
-      description: Network create
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Network'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/Network'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/Network'
-    networkInspectResponse:
-      description: Network inspect
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    networkPruneResponse:
-      description: Network prune
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkPruneReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkPruneReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkPruneReport'
-            type: array

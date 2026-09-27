@@ -364,41 +364,6 @@ paths:
       - Manifests
 components:
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    LibpodImagesRemoveReport:
-      allOf:
-      - $ref: '#/components/schemas/ImageRemoveReport'
-      - properties:
-          Errors:
-            description: Image removal requires is to return data and an error.
-            items:
-              type: string
-            type: array
-        type: object
-      description: 'LibpodImagesRemoveReport is the return type for image removal via the rest
-
-        api.'
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
     ManifestModifyReport:
       properties:
         Id:
@@ -426,12 +391,6 @@ components:
           x-go-name: Images
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    ImageRemoveReport:
-      description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
-
-        and images what was untagged vs actually removed.'
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ManifestAddOptions:
       description: ManifestAddOptions provides model for adding digests to manifest list
       properties:
@@ -503,6 +462,31 @@ components:
           x-go-name: Variant
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    Schema2List:
+      title: Schema2List is a list of platform-specific manifests.
+      type: object
+      x-go-package: go.podman.io/image/v5/manifest
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
     ManifestModifyOptions:
       description: 'swagger 2.0 does not support oneOf for schema validation.
 
@@ -620,10 +604,20 @@ components:
       title: ManifestModifyOptions provides the model for mutating a manifest
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    Schema2List:
-      title: Schema2List is a list of platform-specific manifests.
-      type: object
-      x-go-package: go.podman.io/image/v5/manifest
+    LibpodImagesRemoveReport:
+      allOf:
+      - $ref: '#/components/schemas/ImageRemoveReport'
+      - properties:
+          Errors:
+            description: Image removal requires is to return data and an error.
+            items:
+              type: string
+            type: array
+        type: object
+      description: 'LibpodImagesRemoveReport is the return type for image removal via the rest
+
+        api.'
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
     IDResponse:
       properties:
         Id:
@@ -634,7 +628,25 @@ components:
       - Id
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+    ImageRemoveReport:
+      description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
+
+        and images what was untagged vs actually removed.'
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
   responses:
+    imagesRemoveResponseLibpod:
+      description: Image Remove
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
     imageNotFound:
       description: No such image
       content:
@@ -647,8 +659,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
+    badParamError:
+      description: Bad parameter in request
       content:
         application/json:
           schema:
@@ -683,8 +695,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/Schema2List'
-    badParamError:
-      description: Bad parameter in request
+    internalError:
+      description: Internal server error
       content:
         application/json:
           schema:
@@ -695,15 +707,3 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    imagesRemoveResponseLibpod:
-      description: Image Remove
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'

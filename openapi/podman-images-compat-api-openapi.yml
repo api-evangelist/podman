@@ -819,28 +819,709 @@ paths:
       tags:
       - images (compat)
 components:
+  responses:
+    conflictError:
+      description: Conflict error in operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    registrySearchResponse:
+      description: Registry Search
+      content:
+        application/json:
+          schema:
+            properties:
+              Automated:
+                description: Automated indicates if the image was created by an automated build.
+                type: string
+              Description:
+                description: Description of the image.
+                type: string
+              Index:
+                description: Index is the image index
+                example: quay.io
+                type: string
+              Name:
+                description: Name is the canonical name of the image
+                example: docker.io/library/alpine"
+                type: string
+              Official:
+                description: Official indicates if it's an official image.
+                type: string
+              Stars:
+                description: Stars is the number of stars of the image.
+                format: int64
+                type: integer
+              Tag:
+                description: Tag is the image tag
+                type: string
+            type: object
+        application/octet-stream:
+          schema:
+            properties:
+              Automated:
+                description: Automated indicates if the image was created by an automated build.
+                type: string
+              Description:
+                description: Description of the image.
+                type: string
+              Index:
+                description: Index is the image index
+                example: quay.io
+                type: string
+              Name:
+                description: Name is the canonical name of the image
+                example: docker.io/library/alpine"
+                type: string
+              Official:
+                description: Official indicates if it's an official image.
+                type: string
+              Stars:
+                description: Stars is the number of stars of the image.
+                format: int64
+                type: integer
+              Tag:
+                description: Tag is the image tag
+                type: string
+            type: object
+        text/plain:
+          schema:
+            properties:
+              Automated:
+                description: Automated indicates if the image was created by an automated build.
+                type: string
+              Description:
+                description: Description of the image.
+                type: string
+              Index:
+                description: Index is the image index
+                example: quay.io
+                type: string
+              Name:
+                description: Name is the canonical name of the image
+                example: docker.io/library/alpine"
+                type: string
+              Official:
+                description: Official indicates if it's an official image.
+                type: string
+              Stars:
+                description: Stars is the number of stars of the image.
+                format: int64
+                type: integer
+              Tag:
+                description: Tag is the image tag
+                type: string
+            type: object
+    imageInspect:
+      description: Image Inspect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageInspect'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ImageInspect'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ImageInspect'
+    imageDeleteResponse:
+      description: Image Delete
+      content:
+        application/json:
+          schema:
+            items:
+              properties:
+                deleted:
+                  type: string
+                  x-go-name: Deleted
+                untagged:
+                  items:
+                    type: string
+                  type: array
+                  x-go-name: Untagged
+              type: object
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              properties:
+                deleted:
+                  type: string
+                  x-go-name: Deleted
+                untagged:
+                  items:
+                    type: string
+                  type: array
+                  x-go-name: Untagged
+              type: object
+            type: array
+        text/plain:
+          schema:
+            items:
+              properties:
+                deleted:
+                  type: string
+                  x-go-name: Deleted
+                untagged:
+                  items:
+                    type: string
+                  type: array
+                  x-go-name: Untagged
+              type: object
+            type: array
+    imageNotFound:
+      description: No such image
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    imageList:
+      description: Image summary for compat API
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/Summary'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/Summary'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/Summary'
+            type: array
+    history:
+      description: Image History
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HistoryResponse'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/HistoryResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/HistoryResponse'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
+    Descriptor:
+      description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
+
+        when marshalled to JSON.'
       properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
+        annotations:
+          additionalProperties:
+            type: string
+          description: Annotations contains arbitrary metadata relating to the targeted content.
+          type: object
+          x-go-name: Annotations
+        artifactType:
+          description: ArtifactType is the IANA media type of this artifact.
           type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
+          x-go-name: ArtifactType
+        data:
+          description: 'Data is an embedding of the targeted content. This is encoded as a base64
+
+            string when marshalled to JSON (automatically, by encoding/json). If
+
+            present, Data can be used directly to avoid fetching the targeted content.'
+          items:
+            format: uint8
+            type: integer
+          type: array
+          x-go-name: Data
+        digest:
+          $ref: '#/components/schemas/Digest'
+        mediaType:
+          description: MediaType is the media type of the object this schema refers to.
           type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
+          x-go-name: MediaType
+        platform:
+          $ref: '#/components/schemas/Platform'
+        size:
+          description: Size specifies the size in bytes of the blob.
           format: int64
-          minimum: 400
           type: integer
-          x-go-name: ResponseCode
+          x-go-name: Size
+        urls:
+          description: URLs specifies a list of URLs from which this object MAY be downloaded
+          items:
+            type: string
+          type: array
+          x-go-name: URLs
+      title: Descriptor describes the disposition of targeted content.
       type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+    HistoryResponse:
+      description: HistoryResponse provides details on image layers
+      properties:
+        Comment:
+          type: string
+        Created:
+          format: int64
+          type: integer
+        CreatedBy:
+          type: string
+        Id:
+          type: string
+          x-go-name: ID
+        Size:
+          format: int64
+          type: integer
+        Tags:
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    AttestationProperties:
+      properties:
+        For:
+          $ref: '#/components/schemas/Digest'
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    Identity:
+      description: 'This is trusted information verified by the daemon and cannot be modified
+
+        by tagging an image to a different name.'
+      properties:
+        Build:
+          description: Build contains build reference information if image was created via build.
+          items:
+            $ref: '#/components/schemas/BuildIdentity'
+          type: array
+        Pull:
+          description: 'Pull contains remote location information if image was created via pull.
+
+            If image was pulled via mirror, this contains the original repository location.
+
+            After successful push this images also contains the pushed repository location.'
+          items:
+            $ref: '#/components/schemas/PullIdentity'
+          type: array
+        Signature:
+          description: Signature contains the properties of verified signatures for the image.
+          items:
+            $ref: '#/components/schemas/SignatureIdentity'
+          type: array
+      title: Identity holds information about the identity and origin of the image.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    SignatureIdentity:
+      properties:
+        DockerReference:
+          description: 'DockerReference is the Docker image reference associated with the signature.
+
+            This is an optional field only present in older hashedrecord signatures.'
+          type: string
+        Error:
+          description: 'Error contains error information if signature verification failed.
+
+            Other fields will be empty in this case.'
+          type: string
+        KnownSigner:
+          $ref: '#/components/schemas/KnownSignerIdentity'
+        Name:
+          description: Name is a textual description summarizing the type of signature.
+          type: string
+        SignatureType:
+          $ref: '#/components/schemas/SignatureType'
+        Signer:
+          $ref: '#/components/schemas/SignerIdentity'
+        Timestamps:
+          description: Timestamps contains a list of verified signed timestamps for the signature.
+          items:
+            $ref: '#/components/schemas/SignatureTimestamp'
+          type: array
+        Warnings:
+          description: 'Warnings contains any warnings that occurred during signature verification.
+
+            For example, if there was no internet connectivity and cached trust roots were used.
+
+            Warning does not indicate a failed verification but may point to configuration issues.'
+          items:
+            type: string
+          type: array
+      title: SignatureIdentity contains the properties of verified signatures for the image.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    PortSet:
+      additionalProperties:
+        type: object
+      title: PortSet is a collection of structs indexed by [Port].
+      type: object
+      x-go-package: github.com/moby/moby/api/types/network
+    Metadata:
+      properties:
+        LastTagTime:
+          description: LastTagTime is the date and time at which the image was last tagged.
+          format: date-time
+          type: string
+      title: Metadata contains engine-local data about the image.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    SignatureTimestamp:
+      properties:
+        Timestamp:
+          format: date-time
+          type: string
+        Type:
+          $ref: '#/components/schemas/SignatureTimestampType'
+        URI:
+          type: string
+      title: SignatureTimestamp contains information about a verified signed timestamp for an image signature.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    KnownSignerIdentity:
+      title: KnownSignerIdentity is an identifier for a special signer identity that is known to the implementation.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/image
+    DockerOCIImageConfig:
+      properties:
+        ArgsEscaped:
+          description: 'ArgsEscaped
+
+
+            Deprecated: This field is present only for legacy compatibility with
+
+            Docker and should not be used by new image builders.  It is used by Docker
+
+            for Windows images to indicate that the `Entrypoint` or `Cmd` or both,
+
+            contains only a single element array, that is a pre-escaped, and combined
+
+            into a single string `CommandLine`. If `true` the value in `Entrypoint` or
+
+            `Cmd` should be used as-is to avoid double escaping.
+
+            https://github.com/opencontainers/image-spec/pull/892'
+          type: boolean
+        Cmd:
+          description: Cmd defines the default arguments to the entrypoint of the container.
+          items:
+            type: string
+          type: array
+        Entrypoint:
+          description: Entrypoint defines a list of arguments to use as the command to execute when the container starts.
+          items:
+            type: string
+          type: array
+        Env:
+          description: Env is a list of environment variables to be used in a container.
+          items:
+            type: string
+          type: array
+        ExposedPorts:
+          additionalProperties:
+            type: object
+          description: ExposedPorts a set of ports to expose from a container running this image.
+          type: object
+        Healthcheck:
+          $ref: '#/components/schemas/HealthcheckConfig'
+        Labels:
+          additionalProperties:
+            type: string
+          description: Labels contains arbitrary metadata for the container.
+          type: object
+        OnBuild:
+          items:
+            type: string
+          type: array
+        Shell:
+          items:
+            type: string
+          type: array
+        StopSignal:
+          description: StopSignal contains the system call signal that will be sent to the container to exit.
+          type: string
+        User:
+          description: User defines the username or UID which the process in the container should run as.
+          type: string
+        Volumes:
+          additionalProperties:
+            type: object
+          description: Volumes is a set of directories describing where the process is likely write data specific to a container instance.
+          type: object
+        WorkingDir:
+          description: WorkingDir sets the current working directory of the entrypoint process in the container.
+          type: string
+      title: DockerOCIImageConfig is a ocispec.ImageConfig extended with Docker specific fields.
+      type: object
+      x-go-package: github.com/moby/docker-image-spec/specs-go/v1
+    DriverData:
+      description: DriverData handles the data for a storage driver
+      properties:
+        Data:
+          additionalProperties:
+            type: string
+          description: 'Low-level storage metadata, provided as key/value pairs.
+
+
+            This information is driver-specific, and depends on the storage-driver
+
+            in use, and should be used for informational purposes only.'
+          example:
+            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
+            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
+            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
+          type: object
+        Name:
+          description: Name of the storage driver.
+          example: overlay2
+          type: string
+      required:
+      - Data
+      - Name
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    ManifestSummary:
+      properties:
+        AttestationData:
+          $ref: '#/components/schemas/AttestationProperties'
+        Available:
+          description: 'Indicates whether all the child content (image config, layers) is
+
+            fully available locally'
+          type: boolean
+        Descriptor:
+          $ref: '#/components/schemas/Descriptor'
+        ID:
+          description: 'ID is the content-addressable ID of an image and is the same as the
+
+            digest of the image manifest.'
+          type: string
+        ImageData:
+          $ref: '#/components/schemas/ImageProperties'
+        Kind:
+          $ref: '#/components/schemas/ManifestKind'
+        Size:
+          description: 'Size is the size information of the content related to this manifest.
+
+            Note: These sizes only take the locally available content into account.'
+          properties:
+            Content:
+              description: 'Content is the size (in bytes) of all the locally present
+
+                content in the content store (e.g. image config, layers)
+
+                referenced by this manifest and its children.
+
+                This only includes blobs in the content store.'
+              format: int64
+              type: integer
+            Total:
+              description: 'Total is the total size (in bytes) of all the locally present
+
+                data (both distributable and non-distributable) that''s related to
+
+                this manifest and its children.
+
+                This equal to the sum of [Content] size AND all the sizes in the
+
+                [Size] struct present in the Kind-specific data struct.
+
+                For example, for an image kind (Kind == ManifestKindImage),
+
+                this would include the size of the image content and unpacked
+
+                image snapshots ([Size.Content] + [ImageData.Size.Unpacked]).'
+              format: int64
+              type: integer
+          type: object
+      required:
+      - ID
+      - Descriptor
+      - Available
+      - Size
+      - Kind
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    PullIdentity:
+      description: If image was pulled via mirror, this contains the original repository location.
+      properties:
+        Repository:
+          description: Repository is the remote repository location the image was pulled from.
+          type: string
+      title: PullIdentity contains remote location information if image was created via pull.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    Config:
+      description: 'It should hold only portable information about the container.
+
+        Here, "portable" means "independent from the host we are running on".
+
+        Non-portable information *should* appear in HostConfig.
+
+        All fields added to this struct must be marked `omitempty` to keep getting
+
+        predictable hashes from the old `v1Compatibility` configuration.'
+      properties:
+        ArgsEscaped:
+          type: boolean
+        AttachStderr:
+          type: boolean
+        AttachStdin:
+          type: boolean
+        AttachStdout:
+          type: boolean
+        Cmd:
+          items:
+            type: string
+          type: array
+        Domainname:
+          type: string
+        Entrypoint:
+          items:
+            type: string
+          type: array
+        Env:
+          items:
+            type: string
+          type: array
+        ExposedPorts:
+          $ref: '#/components/schemas/PortSet'
+        Healthcheck:
+          $ref: '#/components/schemas/HealthConfig'
+        Hostname:
+          type: string
+        Image:
+          type: string
+        Labels:
+          additionalProperties:
+            type: string
+          type: object
+        NetworkDisabled:
+          type: boolean
+        OnBuild:
+          items:
+            type: string
+          type: array
+        OpenStdin:
+          type: boolean
+        Shell:
+          items:
+            type: string
+          type: array
+        StdinOnce:
+          type: boolean
+        StopSignal:
+          type: string
+        StopTimeout:
+          format: int64
+          type: integer
+        Tty:
+          type: boolean
+        User:
+          type: string
+        Volumes:
+          additionalProperties:
+            type: object
+          type: object
+        WorkingDir:
+          type: string
+      title: Config contains the configuration data about a container.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    Platform:
+      properties:
+        architecture:
+          description: 'Architecture field specifies the CPU architecture, for example
+
+            `amd64` or `ppc64le`.'
+          type: string
+          x-go-name: Architecture
+        os:
+          description: OS specifies the operating system, for example `linux` or `windows`.
+          type: string
+          x-go-name: OS
+        os.features:
+          description: 'OSFeatures is an optional field specifying an array of strings,
+
+            each listing a required OS feature (for example on Windows `win32k`).'
+          items:
+            type: string
+          type: array
+          x-go-name: OSFeatures
+        os.version:
+          description: 'OSVersion is an optional field specifying the operating system
+
+            version, for example on Windows `10.0.14393.1066`.'
+          type: string
+          x-go-name: OSVersion
+        variant:
+          description: 'Variant is an optional field specifying a variant of the CPU, for
+
+            example `v7` to specify ARMv7 when architecture is `arm`.'
+          type: string
+          x-go-name: Variant
+      title: Platform describes the platform which the image in the manifest runs on.
+      type: object
+      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+    Digest:
+      description: 'The following is an example of the contents of Digest types:
+
+
+        sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
+
+
+        This allows to abstract the digest behind this type and work only in those
+
+        terms.'
+      title: 'Digest allows simple protection of hex formatted digest strings, prefixed
+
+        by their algorithm. Strings of type Digest have some guarantee of being in
+
+        the correct format and it provides quick access to the components of a
+
+        digest string.'
+      type: string
+      x-go-package: github.com/opencontainers/go-digest
+    SignatureType:
+      title: SignatureType is the type of signature format.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/image
+    ManifestKind:
+      type: string
+      x-go-package: github.com/moby/moby/api/types/image
     SignerIdentity:
       description: '[certificate.Summary]: https://pkg.go.dev/github.com/sigstore/sigstore-go/pkg/fulcio/certificate#Summary'
       properties:
@@ -903,191 +1584,6 @@ components:
 
         This is [certificate.Summary] with deprecated fields removed and keys in Moby uppercase style.'
       type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    BuildIdentity:
-      properties:
-        CreatedAt:
-          description: CreatedAt is the time when the build ran.
-          format: date-time
-          type: string
-        Ref:
-          description: 'Ref is the identifier for the build request. This reference can be used to
-
-            look up the build details in BuildKit history API.'
-          type: string
-      title: BuildIdentity contains build reference information if image was created via build.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    ImageProperties:
-      properties:
-        Containers:
-          description: 'Containers is an array containing the IDs of the containers that are
-
-            using this image.'
-          items:
-            type: string
-          type: array
-        Identity:
-          $ref: '#/components/schemas/Identity'
-        Platform:
-          $ref: '#/components/schemas/Platform'
-        Size:
-          properties:
-            Unpacked:
-              description: 'Unpacked is the size (in bytes) of the locally unpacked
-
-                (uncompressed) image content that''s directly usable by the containers
-
-                running this image.
-
-                It''s independent of the distributable content - e.g.
-
-                the image might still have an unpacked data that''s still used by
-
-                some container even when the distributable/compressed content is
-
-                already gone.'
-              format: int64
-              type: integer
-          required:
-          - Unpacked
-          type: object
-      required:
-      - Platform
-      - Containers
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    Metadata:
-      properties:
-        LastTagTime:
-          description: LastTagTime is the date and time at which the image was last tagged.
-          format: date-time
-          type: string
-      title: Metadata contains engine-local data about the image.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    PullIdentity:
-      description: If image was pulled via mirror, this contains the original repository location.
-      properties:
-        Repository:
-          description: Repository is the remote repository location the image was pulled from.
-          type: string
-      title: PullIdentity contains remote location information if image was created via pull.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    PortSet:
-      additionalProperties:
-        type: object
-      title: PortSet is a collection of structs indexed by [Port].
-      type: object
-      x-go-package: github.com/moby/moby/api/types/network
-    SignatureIdentity:
-      properties:
-        DockerReference:
-          description: 'DockerReference is the Docker image reference associated with the signature.
-
-            This is an optional field only present in older hashedrecord signatures.'
-          type: string
-        Error:
-          description: 'Error contains error information if signature verification failed.
-
-            Other fields will be empty in this case.'
-          type: string
-        KnownSigner:
-          $ref: '#/components/schemas/KnownSignerIdentity'
-        Name:
-          description: Name is a textual description summarizing the type of signature.
-          type: string
-        SignatureType:
-          $ref: '#/components/schemas/SignatureType'
-        Signer:
-          $ref: '#/components/schemas/SignerIdentity'
-        Timestamps:
-          description: Timestamps contains a list of verified signed timestamps for the signature.
-          items:
-            $ref: '#/components/schemas/SignatureTimestamp'
-          type: array
-        Warnings:
-          description: 'Warnings contains any warnings that occurred during signature verification.
-
-            For example, if there was no internet connectivity and cached trust roots were used.
-
-            Warning does not indicate a failed verification but may point to configuration issues.'
-          items:
-            type: string
-          type: array
-      title: SignatureIdentity contains the properties of verified signatures for the image.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    HealthcheckConfig:
-      properties:
-        Interval:
-          $ref: '#/components/schemas/Duration'
-        Retries:
-          description: 'Retries is the number of consecutive failures needed to consider a container as unhealthy.
-
-            Zero means inherit.'
-          format: int64
-          type: integer
-        StartInterval:
-          $ref: '#/components/schemas/Duration'
-        StartPeriod:
-          $ref: '#/components/schemas/Duration'
-        Test:
-          description: 'Test is the test to perform to check that the container is healthy.
-
-            An empty slice means to inherit the default.
-
-            The options are:
-
-            {} : inherit healthcheck
-
-            {"NONE"} : disable healthcheck
-
-            {"CMD", args...} : exec arguments directly
-
-            {"CMD-SHELL", command} : run command with system''s default shell'
-          items:
-            type: string
-          type: array
-        Timeout:
-          $ref: '#/components/schemas/Duration'
-      title: HealthcheckConfig holds configuration settings for the HEALTHCHECK feature.
-      type: object
-      x-go-package: github.com/moby/docker-image-spec/specs-go/v1
-    SignatureTimestampType:
-      title: SignatureTimestampType is the type of timestamp used in the signature.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/image
-    Identity:
-      description: 'This is trusted information verified by the daemon and cannot be modified
-
-        by tagging an image to a different name.'
-      properties:
-        Build:
-          description: Build contains build reference information if image was created via build.
-          items:
-            $ref: '#/components/schemas/BuildIdentity'
-          type: array
-        Pull:
-          description: 'Pull contains remote location information if image was created via pull.
-
-            If image was pulled via mirror, this contains the original repository location.
-
-            After successful push this images also contains the pushed repository location.'
-          items:
-            $ref: '#/components/schemas/PullIdentity'
-          type: array
-        Signature:
-          description: Signature contains the properties of verified signatures for the image.
-          items:
-            $ref: '#/components/schemas/SignatureIdentity'
-          type: array
-      title: Identity holds information about the identity and origin of the image.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    ManifestKind:
-      type: string
       x-go-package: github.com/moby/moby/api/types/image
     Summary:
       properties:
@@ -1213,418 +1709,66 @@ components:
       - Size
       type: object
       x-go-package: github.com/moby/moby/api/types/image
-    HistoryResponse:
-      description: HistoryResponse provides details on image layers
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
       properties:
-        Comment:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
           type: string
-        Created:
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
           format: int64
+          minimum: 400
           type: integer
-        CreatedBy:
-          type: string
-        Id:
-          type: string
-          x-go-name: ID
-        Size:
-          format: int64
-          type: integer
-        Tags:
-          items:
-            type: string
-          type: array
+          x-go-name: ResponseCode
       type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    DriverData:
-      description: DriverData handles the data for a storage driver
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    ImageProperties:
       properties:
-        Data:
-          additionalProperties:
-            type: string
-          description: 'Low-level storage metadata, provided as key/value pairs.
+        Containers:
+          description: 'Containers is an array containing the IDs of the containers that are
 
-
-            This information is driver-specific, and depends on the storage-driver
-
-            in use, and should be used for informational purposes only.'
-          example:
-            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
-            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
-            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
-          type: object
-        Name:
-          description: Name of the storage driver.
-          example: overlay2
-          type: string
-      required:
-      - Data
-      - Name
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    Duration:
-      description: 'A Duration represents the elapsed time between two instants
-
-        as an int64 nanosecond count. The representation limits the
-
-        largest representable duration to approximately 290 years.'
-      format: int64
-      type: integer
-      x-go-package: time
-    HealthConfig:
-      title: HealthConfig holds configuration settings for the HEALTHCHECK feature.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    RootFS:
-      properties:
-        Layers:
-          items:
-            $ref: '#/components/schemas/Digest'
-            type: string
-          type: array
-        Type:
-          type: string
-      title: RootFS holds the root fs information of an image.
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/inspect
-    Config:
-      description: 'It should hold only portable information about the container.
-
-        Here, "portable" means "independent from the host we are running on".
-
-        Non-portable information *should* appear in HostConfig.
-
-        All fields added to this struct must be marked `omitempty` to keep getting
-
-        predictable hashes from the old `v1Compatibility` configuration.'
-      properties:
-        ArgsEscaped:
-          type: boolean
-        AttachStderr:
-          type: boolean
-        AttachStdin:
-          type: boolean
-        AttachStdout:
-          type: boolean
-        Cmd:
+            using this image.'
           items:
             type: string
           type: array
-        Domainname:
-          type: string
-        Entrypoint:
-          items:
-            type: string
-          type: array
-        Env:
-          items:
-            type: string
-          type: array
-        ExposedPorts:
-          $ref: '#/components/schemas/PortSet'
-        Healthcheck:
-          $ref: '#/components/schemas/HealthConfig'
-        Hostname:
-          type: string
-        Image:
-          type: string
-        Labels:
-          additionalProperties:
-            type: string
-          type: object
-        NetworkDisabled:
-          type: boolean
-        OnBuild:
-          items:
-            type: string
-          type: array
-        OpenStdin:
-          type: boolean
-        Shell:
-          items:
-            type: string
-          type: array
-        StdinOnce:
-          type: boolean
-        StopSignal:
-          type: string
-        StopTimeout:
-          format: int64
-          type: integer
-        Tty:
-          type: boolean
-        User:
-          type: string
-        Volumes:
-          additionalProperties:
-            type: object
-          type: object
-        WorkingDir:
-          type: string
-      title: Config contains the configuration data about a container.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/container
-    SignatureTimestamp:
-      properties:
-        Timestamp:
-          format: date-time
-          type: string
-        Type:
-          $ref: '#/components/schemas/SignatureTimestampType'
-        URI:
-          type: string
-      title: SignatureTimestamp contains information about a verified signed timestamp for an image signature.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    AttestationProperties:
-      properties:
-        For:
-          $ref: '#/components/schemas/Digest'
-      type: object
-      x-go-package: github.com/moby/moby/api/types/image
-    Descriptor:
-      description: 'This structure provides `application/vnd.oci.descriptor.v1+json` mediatype
-
-        when marshalled to JSON.'
-      properties:
-        annotations:
-          additionalProperties:
-            type: string
-          description: Annotations contains arbitrary metadata relating to the targeted content.
-          type: object
-          x-go-name: Annotations
-        artifactType:
-          description: ArtifactType is the IANA media type of this artifact.
-          type: string
-          x-go-name: ArtifactType
-        data:
-          description: 'Data is an embedding of the targeted content. This is encoded as a base64
-
-            string when marshalled to JSON (automatically, by encoding/json). If
-
-            present, Data can be used directly to avoid fetching the targeted content.'
-          items:
-            format: uint8
-            type: integer
-          type: array
-          x-go-name: Data
-        digest:
-          $ref: '#/components/schemas/Digest'
-        mediaType:
-          description: MediaType is the media type of the object this schema refers to.
-          type: string
-          x-go-name: MediaType
-        platform:
+        Identity:
+          $ref: '#/components/schemas/Identity'
+        Platform:
           $ref: '#/components/schemas/Platform'
-        size:
-          description: Size specifies the size in bytes of the blob.
-          format: int64
-          type: integer
-          x-go-name: Size
-        urls:
-          description: URLs specifies a list of URLs from which this object MAY be downloaded
-          items:
-            type: string
-          type: array
-          x-go-name: URLs
-      title: Descriptor describes the disposition of targeted content.
-      type: object
-      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
-    ManifestSummary:
-      properties:
-        AttestationData:
-          $ref: '#/components/schemas/AttestationProperties'
-        Available:
-          description: 'Indicates whether all the child content (image config, layers) is
-
-            fully available locally'
-          type: boolean
-        Descriptor:
-          $ref: '#/components/schemas/Descriptor'
-        ID:
-          description: 'ID is the content-addressable ID of an image and is the same as the
-
-            digest of the image manifest.'
-          type: string
-        ImageData:
-          $ref: '#/components/schemas/ImageProperties'
-        Kind:
-          $ref: '#/components/schemas/ManifestKind'
         Size:
-          description: 'Size is the size information of the content related to this manifest.
-
-            Note: These sizes only take the locally available content into account.'
           properties:
-            Content:
-              description: 'Content is the size (in bytes) of all the locally present
+            Unpacked:
+              description: 'Unpacked is the size (in bytes) of the locally unpacked
 
-                content in the content store (e.g. image config, layers)
+                (uncompressed) image content that''s directly usable by the containers
 
-                referenced by this manifest and its children.
+                running this image.
 
-                This only includes blobs in the content store.'
+                It''s independent of the distributable content - e.g.
+
+                the image might still have an unpacked data that''s still used by
+
+                some container even when the distributable/compressed content is
+
+                already gone.'
               format: int64
               type: integer
-            Total:
-              description: 'Total is the total size (in bytes) of all the locally present
-
-                data (both distributable and non-distributable) that''s related to
-
-                this manifest and its children.
-
-                This equal to the sum of [Content] size AND all the sizes in the
-
-                [Size] struct present in the Kind-specific data struct.
-
-                For example, for an image kind (Kind == ManifestKindImage),
-
-                this would include the size of the image content and unpacked
-
-                image snapshots ([Size.Content] + [ImageData.Size.Unpacked]).'
-              format: int64
-              type: integer
+          required:
+          - Unpacked
           type: object
       required:
-      - ID
-      - Descriptor
-      - Available
-      - Size
-      - Kind
+      - Platform
+      - Containers
       type: object
       x-go-package: github.com/moby/moby/api/types/image
-    Digest:
-      description: 'The following is an example of the contents of Digest types:
-
-
-        sha256:7173b809ca12ec5dee4506cd86be934c4596dd234ee82c0662eac04a8c2c71dc
-
-
-        This allows to abstract the digest behind this type and work only in those
-
-        terms.'
-      title: 'Digest allows simple protection of hex formatted digest strings, prefixed
-
-        by their algorithm. Strings of type Digest have some guarantee of being in
-
-        the correct format and it provides quick access to the components of a
-
-        digest string.'
-      type: string
-      x-go-package: github.com/opencontainers/go-digest
-    Platform:
-      properties:
-        architecture:
-          description: 'Architecture field specifies the CPU architecture, for example
-
-            `amd64` or `ppc64le`.'
-          type: string
-          x-go-name: Architecture
-        os:
-          description: OS specifies the operating system, for example `linux` or `windows`.
-          type: string
-          x-go-name: OS
-        os.features:
-          description: 'OSFeatures is an optional field specifying an array of strings,
-
-            each listing a required OS feature (for example on Windows `win32k`).'
-          items:
-            type: string
-          type: array
-          x-go-name: OSFeatures
-        os.version:
-          description: 'OSVersion is an optional field specifying the operating system
-
-            version, for example on Windows `10.0.14393.1066`.'
-          type: string
-          x-go-name: OSVersion
-        variant:
-          description: 'Variant is an optional field specifying a variant of the CPU, for
-
-            example `v7` to specify ARMv7 when architecture is `arm`.'
-          type: string
-          x-go-name: Variant
-      title: Platform describes the platform which the image in the manifest runs on.
-      type: object
-      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
-    SignatureType:
-      title: SignatureType is the type of signature format.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/image
-    KnownSignerIdentity:
-      title: KnownSignerIdentity is an identifier for a special signer identity that is known to the implementation.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/image
-    DockerOCIImageConfig:
-      properties:
-        ArgsEscaped:
-          description: 'ArgsEscaped
-
-
-            Deprecated: This field is present only for legacy compatibility with
-
-            Docker and should not be used by new image builders.  It is used by Docker
-
-            for Windows images to indicate that the `Entrypoint` or `Cmd` or both,
-
-            contains only a single element array, that is a pre-escaped, and combined
-
-            into a single string `CommandLine`. If `true` the value in `Entrypoint` or
-
-            `Cmd` should be used as-is to avoid double escaping.
-
-            https://github.com/opencontainers/image-spec/pull/892'
-          type: boolean
-        Cmd:
-          description: Cmd defines the default arguments to the entrypoint of the container.
-          items:
-            type: string
-          type: array
-        Entrypoint:
-          description: Entrypoint defines a list of arguments to use as the command to execute when the container starts.
-          items:
-            type: string
-          type: array
-        Env:
-          description: Env is a list of environment variables to be used in a container.
-          items:
-            type: string
-          type: array
-        ExposedPorts:
-          additionalProperties:
-            type: object
-          description: ExposedPorts a set of ports to expose from a container running this image.
-          type: object
-        Healthcheck:
-          $ref: '#/components/schemas/HealthcheckConfig'
-        Labels:
-          additionalProperties:
-            type: string
-          description: Labels contains arbitrary metadata for the container.
-          type: object
-        OnBuild:
-          items:
-            type: string
-          type: array
-        Shell:
-          items:
-            type: string
-          type: array
-        StopSignal:
-          description: StopSignal contains the system call signal that will be sent to the container to exit.
-          type: string
-        User:
-          description: User defines the username or UID which the process in the container should run as.
-          type: string
-        Volumes:
-          additionalProperties:
-            type: object
-          description: Volumes is a set of directories describing where the process is likely write data specific to a container instance.
-          type: object
-        WorkingDir:
-          description: WorkingDir sets the current working directory of the entrypoint process in the container.
-          type: string
-      title: DockerOCIImageConfig is a ocispec.ImageConfig extended with Docker specific fields.
-      type: object
-      x-go-package: github.com/moby/docker-image-spec/specs-go/v1
     ImageInspect:
       properties:
         Architecture:
@@ -1764,226 +1908,82 @@ components:
           type: integer
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-  responses:
-    imageNotFound:
-      description: No such image
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    registrySearchResponse:
-      description: Registry Search
-      content:
-        application/json:
-          schema:
-            properties:
-              Automated:
-                description: Automated indicates if the image was created by an automated build.
-                type: string
-              Description:
-                description: Description of the image.
-                type: string
-              Index:
-                description: Index is the image index
-                example: quay.io
-                type: string
-              Name:
-                description: Name is the canonical name of the image
-                example: docker.io/library/alpine"
-                type: string
-              Official:
-                description: Official indicates if it's an official image.
-                type: string
-              Stars:
-                description: Stars is the number of stars of the image.
-                format: int64
-                type: integer
-              Tag:
-                description: Tag is the image tag
-                type: string
-            type: object
-        application/octet-stream:
-          schema:
-            properties:
-              Automated:
-                description: Automated indicates if the image was created by an automated build.
-                type: string
-              Description:
-                description: Description of the image.
-                type: string
-              Index:
-                description: Index is the image index
-                example: quay.io
-                type: string
-              Name:
-                description: Name is the canonical name of the image
-                example: docker.io/library/alpine"
-                type: string
-              Official:
-                description: Official indicates if it's an official image.
-                type: string
-              Stars:
-                description: Stars is the number of stars of the image.
-                format: int64
-                type: integer
-              Tag:
-                description: Tag is the image tag
-                type: string
-            type: object
-        text/plain:
-          schema:
-            properties:
-              Automated:
-                description: Automated indicates if the image was created by an automated build.
-                type: string
-              Description:
-                description: Description of the image.
-                type: string
-              Index:
-                description: Index is the image index
-                example: quay.io
-                type: string
-              Name:
-                description: Name is the canonical name of the image
-                example: docker.io/library/alpine"
-                type: string
-              Official:
-                description: Official indicates if it's an official image.
-                type: string
-              Stars:
-                description: Stars is the number of stars of the image.
-                format: int64
-                type: integer
-              Tag:
-                description: Tag is the image tag
-                type: string
-            type: object
-    conflictError:
-      description: Conflict error in operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    imageDeleteResponse:
-      description: Image Delete
-      content:
-        application/json:
-          schema:
-            items:
-              properties:
-                deleted:
-                  type: string
-                  x-go-name: Deleted
-                untagged:
-                  items:
-                    type: string
-                  type: array
-                  x-go-name: Untagged
-              type: object
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              properties:
-                deleted:
-                  type: string
-                  x-go-name: Deleted
-                untagged:
-                  items:
-                    type: string
-                  type: array
-                  x-go-name: Untagged
-              type: object
-            type: array
-        text/plain:
-          schema:
-            items:
-              properties:
-                deleted:
-                  type: string
-                  x-go-name: Deleted
-                untagged:
-                  items:
-                    type: string
-                  type: array
-                  x-go-name: Untagged
-              type: object
-            type: array
-    imageInspect:
-      description: Image Inspect
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImageInspect'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ImageInspect'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ImageInspect'
-    imageList:
-      description: Image summary for compat API
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/Summary'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/Summary'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/Summary'
-            type: array
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    history:
-      description: Image History
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/HistoryResponse'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/HistoryResponse'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/HistoryResponse'
+    HealthcheckConfig:
+      properties:
+        Interval:
+          $ref: '#/components/schemas/Duration'
+        Retries:
+          description: 'Retries is the number of consecutive failures needed to consider a container as unhealthy.
+
+            Zero means inherit.'
+          format: int64
+          type: integer
+        StartInterval:
+          $ref: '#/components/schemas/Duration'
+        StartPeriod:
+          $ref: '#/components/schemas/Duration'
+        Test:
+          description: 'Test is the test to perform to check that the container is healthy.
+
+            An empty slice means to inherit the default.
+
+            The options are:
+
+            {} : inherit healthcheck
+
+            {"NONE"} : disable healthcheck
+
+            {"CMD", args...} : exec arguments directly
+
+            {"CMD-SHELL", command} : run command with system''s default shell'
+          items:
+            type: string
+          type: array
+        Timeout:
+          $ref: '#/components/schemas/Duration'
+      title: HealthcheckConfig holds configuration settings for the HEALTHCHECK feature.
+      type: object
+      x-go-package: github.com/moby/docker-image-spec/specs-go/v1
+    Duration:
+      description: 'A Duration represents the elapsed time between two instants
+
+        as an int64 nanosecond count. The representation limits the
+
+        largest representable duration to approximately 290 years.'
+      format: int64
+      type: integer
+      x-go-package: time
+    HealthConfig:
+      title: HealthConfig holds configuration settings for the HEALTHCHECK feature.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/container
+    BuildIdentity:
+      properties:
+        CreatedAt:
+          description: CreatedAt is the time when the build ran.
+          format: date-time
+          type: string
+        Ref:
+          description: 'Ref is the identifier for the build request. This reference can be used to
+
+            look up the build details in BuildKit history API.'
+          type: string
+      title: BuildIdentity contains build reference information if image was created via build.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/image
+    RootFS:
+      properties:
+        Layers:
+          items:
+            $ref: '#/components/schemas/Digest'
+            type: string
+          type: array
+        Type:
+          type: string
+      title: RootFS holds the root fs information of an image.
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/inspect
+    SignatureTimestampType:
+      title: SignatureTimestampType is the type of timestamp used in the signature.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/image

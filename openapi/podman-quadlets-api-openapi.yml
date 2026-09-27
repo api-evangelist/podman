@@ -233,6 +233,22 @@ paths:
       - quadlets
 components:
   schemas:
+    QuadletRemoveReport:
+      description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
+      properties:
+        Errors:
+          additionalProperties:
+            type: string
+            x-go-type: error
+          description: Errors is a map of Quadlet name to error that occurred during removal.
+          type: object
+        Removed:
+          description: Removed is a list of quadlets that were successfully removed
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ErrorModel:
       description: ErrorModel is used in remote connections with podman
       properties:
@@ -254,22 +270,6 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    QuadletRemoveReport:
-      description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
-      properties:
-        Errors:
-          additionalProperties:
-            type: string
-            x-go-type: error
-          description: Errors is a map of Quadlet name to error that occurred during removal.
-          type: object
-        Removed:
-          description: Removed is a list of quadlets that were successfully removed
-          items:
-            type: string
-          type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ListQuadlet:
       description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
       properties:
@@ -302,8 +302,34 @@ components:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
   responses:
-    internalError:
-      description: Internal server error
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    quadletRemoveResponse:
+      description: Quadlet remove
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+    quadletFileResponse:
+      description: Quadlet file
+    quadletNotFound:
+      description: No such quadlet
       content:
         application/json:
           schema:
@@ -332,10 +358,8 @@ components:
             items:
               $ref: '#/components/schemas/ListQuadlet'
             type: array
-    quadletFileResponse:
-      description: Quadlet file
-    quadletNotFound:
-      description: No such quadlet
+    internalError:
+      description: Internal server error
       content:
         application/json:
           schema:
@@ -346,27 +370,3 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    quadletRemoveResponse:
-      description: Quadlet remove
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'

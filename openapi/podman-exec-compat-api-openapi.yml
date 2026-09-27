@@ -352,20 +352,8 @@ components:
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
   responses:
-    execSessionNotFound:
-      description: No such exec instance
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
+    containerNotFound:
+      description: No such container
       content:
         application/json:
           schema:
@@ -388,8 +376,20 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/InspectExecSession'
-    containerNotFound:
-      description: No such container
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    execSessionNotFound:
+      description: No such exec instance
       content:
         application/json:
           schema:
