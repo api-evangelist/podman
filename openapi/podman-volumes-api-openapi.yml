@@ -208,101 +208,21 @@ paths:
       tags:
       - Volumes
 components:
-  responses:
-    volumeListLibpod:
-      description: Volume list
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/VolumeConfigResponse'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/VolumeConfigResponse'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/VolumeConfigResponse'
-            type: array
-    volumePruneLibpod:
-      description: Volume Prune
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
-    volumeNotFound:
-      description: No such volume
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    volumeCreateResponse:
-      description: Volume details
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/VolumeConfigResponse'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/VolumeConfigResponse'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/VolumeConfigResponse'
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
+    PruneReport:
+      description: POST "/volumes/prune"
       properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
+        Err:
           type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
+          x-go-type: error
+        Id:
           type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
+        Size:
+          format: uint64
           type: integer
-          x-go-name: ResponseCode
+      title: 'PruneReport contains the response for Engine API:'
       type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
     VolumeCreateOptions:
       properties:
         Driver:
@@ -339,20 +259,100 @@ components:
           type: integer
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
     VolumeConfigResponse:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    PruneReport:
-      description: POST "/volumes/prune"
-      properties:
-        Err:
-          type: string
-          x-go-type: error
-        Id:
-          type: string
-        Size:
-          format: uint64
-          type: integer
-      title: 'PruneReport contains the response for Engine API:'
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+  responses:
+    volumeNotFound:
+      description: No such volume
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    volumePruneLibpod:
+      description: Volume Prune
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+    volumeCreateResponse:
+      description: Volume details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VolumeConfigResponse'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/VolumeConfigResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/VolumeConfigResponse'
+    volumeListLibpod:
+      description: Volume list
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/VolumeConfigResponse'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/VolumeConfigResponse'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/VolumeConfigResponse'
+            type: array
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'

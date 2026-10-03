@@ -232,7 +232,107 @@ paths:
       tags:
       - quadlets
 components:
+  responses:
+    quadletListResponse:
+      description: Quadlet list
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    quadletNotFound:
+      description: No such quadlet
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    quadletFileResponse:
+      description: Quadlet file
+    quadletRemoveResponse:
+      description: Quadlet remove
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/QuadletRemoveReport'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
   schemas:
+    ListQuadlet:
+      description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
+      properties:
+        App:
+          description: 'If multiple quadlets were installed together they will belong
+
+            to common App.'
+          type: string
+        Name:
+          description: Name is the name of the Quadlet file
+          type: string
+        Path:
+          description: Path to the Quadlet on disk
+          type: string
+        Pod:
+          description: 'Pod is the pod Quadlet file referenced by Pod= in [Container]
+
+            Empty for quadlet types that do not support Pod='
+          type: string
+        Status:
+          description: 'What is the status of the Quadlet - if present in systemd, will be a
+
+            systemd status, else will mention if the Quadlet has syntax errors'
+          type: string
+        UnitName:
+          description: 'UnitName is the name of the systemd unit created from the Quadlet.
+
+            May be empty if systemd has not be reloaded since it was installed.'
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     QuadletRemoveReport:
       description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
       properties:
@@ -270,103 +370,3 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    ListQuadlet:
-      description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
-      properties:
-        App:
-          description: 'If multiple quadlets were installed together they will belong
-
-            to common App.'
-          type: string
-        Name:
-          description: Name is the name of the Quadlet file
-          type: string
-        Path:
-          description: Path to the Quadlet on disk
-          type: string
-        Pod:
-          description: 'Pod is the pod Quadlet file referenced by Pod= in [Container]
-
-            Empty for quadlet types that do not support Pod='
-          type: string
-        Status:
-          description: 'What is the status of the Quadlet - if present in systemd, will be a
-
-            systemd status, else will mention if the Quadlet has syntax errors'
-          type: string
-        UnitName:
-          description: 'UnitName is the name of the systemd unit created from the Quadlet.
-
-            May be empty if systemd has not be reloaded since it was installed.'
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-  responses:
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    quadletRemoveResponse:
-      description: Quadlet remove
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/QuadletRemoveReport'
-    quadletFileResponse:
-      description: Quadlet file
-    quadletNotFound:
-      description: No such quadlet
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    quadletListResponse:
-      description: Quadlet list
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'

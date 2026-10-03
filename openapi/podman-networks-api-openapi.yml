@@ -250,72 +250,6 @@ paths:
       - Networks
 components:
   responses:
-    conflictError:
-      description: Conflict error in operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    networkRmResponse:
-      description: Network Delete
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/NetworkRmReport'
-            type: array
-    networkCreateResponse:
-      description: Network create
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Network'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/Network'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/Network'
-    networkInspectResponse:
-      description: Network inspect
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/NetworkInspectReport'
-    networkNotFound:
-      description: No such network
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
     networkPruneResponse:
       description: Network prune
       content:
@@ -333,6 +267,60 @@ components:
           schema:
             items:
               $ref: '#/components/schemas/NetworkPruneReport'
+            type: array
+    conflictError:
+      description: Conflict error in operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    networkInspectResponse:
+      description: Network inspect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/NetworkInspectReport'
+    networkRmResponse:
+      description: Network Delete
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/NetworkRmReport'
             type: array
     networkListLibpod:
       description: Network list
@@ -352,18 +340,6 @@ components:
             items:
               $ref: '#/components/schemas/Network'
             type: array
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
     internalError:
       description: Internal server error
       content:
@@ -376,59 +352,31 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
+    networkNotFound:
+      description: No such network
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    networkCreateResponse:
+      description: Network create
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Network'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/Network'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/Network'
   schemas:
-    NetworkUpdateOptions:
-      description: NetworkUpdateOptions describes options to update a network
-      properties:
-        adddnsservers:
-          items:
-            type: string
-          type: array
-          x-go-name: AddDNSServers
-        removednsservers:
-          items:
-            type: string
-          type: array
-          x-go-name: RemoveDNSServers
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    LeaseRange:
-      properties:
-        end_ip:
-          description: EndIP last IP in the subnet which should be used to assign ips.
-          format: string
-          type: string
-          x-go-name: EndIP
-          x-go-type: net.IP
-        start_ip:
-          description: StartIP first IP in the subnet which should be used to assign ips.
-          format: string
-          type: string
-          x-go-name: StartIP
-          x-go-type: net.IP
-      title: LeaseRange contains the range where IP are leased.
-      type: object
-      x-go-package: go.podman.io/common/libnetwork/types
-    networkDisconnectRequest:
-      $ref: '#/components/schemas/DisconnectRequest'
-      description: Network disconnect
-    Subnet:
-      properties:
-        gateway:
-          description: Gateway IP for this Network.
-          format: string
-          type: string
-          x-go-name: Gateway
-          x-go-type: net.IP
-        lease_range:
-          $ref: '#/components/schemas/LeaseRange'
-        subnet:
-          description: Subnet for this Network in CIDR form.
-          format: string
-          type: string
-          x-go-name: Subnet
-      type: object
-      x-go-package: go.podman.io/common/libnetwork/types
     networkCreateLibpod:
       description: Network create
       properties:
@@ -515,6 +463,63 @@ components:
           x-go-name: Subnets
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers/swagger
+    NetworkConnectOptions:
+      description: 'NetworkConnectOptions describes options for connecting
+
+        a container to a network'
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    Route:
+      properties:
+        destination:
+          description: Destination for this route in CIDR form.
+          format: string
+          type: string
+          x-go-name: Destination
+        gateway:
+          description: Gateway IP for this route. Required for unicast routes, must be empty for blackhole/unreachable/prohibit.
+          format: string
+          type: string
+          x-go-name: Gateway
+          x-go-type: net.IP
+        metric:
+          description: Metric for this route. Optional.
+          format: uint32
+          type: integer
+          x-go-name: Metric
+        route_type:
+          $ref: '#/components/schemas/RouteType'
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    NetworkPruneReport:
+      description: 'NetworkPruneReport containers the name of network and an error
+
+        associated in its pruning (removal)'
+      properties:
+        Error:
+          type: string
+          x-go-type: error
+        Name:
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+    LeaseRange:
+      properties:
+        end_ip:
+          description: EndIP last IP in the subnet which should be used to assign ips.
+          format: string
+          type: string
+          x-go-name: EndIP
+          x-go-type: net.IP
+        start_ip:
+          description: StartIP first IP in the subnet which should be used to assign ips.
+          format: string
+          type: string
+          x-go-name: StartIP
+          x-go-type: net.IP
+      title: LeaseRange contains the range where IP are leased.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
     DisconnectRequest:
       properties:
         Container:
@@ -533,9 +538,10 @@ components:
     NetworkInspectReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    networkUpdateRequestLibpod:
-      $ref: '#/components/schemas/NetworkUpdateOptions'
-      description: Network update
+    NetworkRmReport:
+      description: NetworkRmReport describes the results of network removal
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     Network:
       properties:
         created:
@@ -622,31 +628,15 @@ components:
       title: Network describes the Network attributes.
       type: object
       x-go-package: go.podman.io/common/libnetwork/types
-    NetworkPruneReport:
-      description: 'NetworkPruneReport containers the name of network and an error
-
-        associated in its pruning (removal)'
-      properties:
-        Error:
-          type: string
-          x-go-type: error
-        Name:
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    NetworkRmReport:
-      description: NetworkRmReport describes the results of network removal
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    NetworkConnectOptions:
-      description: 'NetworkConnectOptions describes options for connecting
-
-        a container to a network'
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     networkConnectRequestLibpod:
       $ref: '#/components/schemas/NetworkConnectOptions'
       description: Network connect
+    networkDisconnectRequest:
+      $ref: '#/components/schemas/DisconnectRequest'
+      description: Network disconnect
+    networkUpdateRequestLibpod:
+      $ref: '#/components/schemas/NetworkUpdateOptions'
+      description: Network update
     ErrorModel:
       description: ErrorModel is used in remote connections with podman
       properties:
@@ -668,29 +658,39 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    Route:
+    NetworkUpdateOptions:
+      description: NetworkUpdateOptions describes options to update a network
       properties:
-        destination:
-          description: Destination for this route in CIDR form.
-          format: string
-          type: string
-          x-go-name: Destination
+        adddnsservers:
+          items:
+            type: string
+          type: array
+          x-go-name: AddDNSServers
+        removednsservers:
+          items:
+            type: string
+          type: array
+          x-go-name: RemoveDNSServers
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    RouteType:
+      title: RouteType represents the type of a route.
+      type: string
+      x-go-package: go.podman.io/common/libnetwork/types
+    Subnet:
+      properties:
         gateway:
-          description: Gateway IP for this route. Required for unicast routes, must be empty for blackhole/unreachable/prohibit.
+          description: Gateway IP for this Network.
           format: string
           type: string
           x-go-name: Gateway
           x-go-type: net.IP
-        metric:
-          description: Metric for this route. Optional.
-          format: uint32
-          type: integer
-          x-go-name: Metric
-        route_type:
-          $ref: '#/components/schemas/RouteType'
+        lease_range:
+          $ref: '#/components/schemas/LeaseRange'
+        subnet:
+          description: Subnet for this Network in CIDR form.
+          format: string
+          type: string
+          x-go-name: Subnet
       type: object
-      x-go-package: go.podman.io/common/libnetwork/types
-    RouteType:
-      title: RouteType represents the type of a route.
-      type: string
       x-go-package: go.podman.io/common/libnetwork/types

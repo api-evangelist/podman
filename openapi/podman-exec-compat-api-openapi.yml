@@ -238,27 +238,41 @@ paths:
         description: Attributes for start
 components:
   schemas:
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
+    InspectExecProcess:
+      description: 'InspectExecProcess contains information about the process in a given exec
+
+        session.'
       properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
+        arguments:
+          description: 'Arguments are the arguments to the entrypoint command of the exec
+
+            session.'
+          items:
+            type: string
+          type: array
+          x-go-name: Arguments
+        entrypoint:
+          description: 'Entrypoint is the entrypoint for the exec session (the command that
+
+            will be executed in the container).'
           type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
+          x-go-name: Entrypoint
+        privileged:
+          description: 'Privileged is whether the exec session will be started with elevated
+
+            privileges.'
+          type: boolean
+          x-go-name: Privileged
+        tty:
+          description: Tty is whether the exec session created a terminal.
+          type: boolean
+          x-go-name: Tty
+        user:
+          description: User is the user the exec session was started as.
           type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
+          x-go-name: User
       type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+      x-go-package: go.podman.io/podman/v6/libpod/define
     InspectExecSession:
       properties:
         CanRemove:
@@ -316,41 +330,27 @@ components:
       title: InspectExecSession contains information about a given exec session.
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    InspectExecProcess:
-      description: 'InspectExecProcess contains information about the process in a given exec
-
-        session.'
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
       properties:
-        arguments:
-          description: 'Arguments are the arguments to the entrypoint command of the exec
-
-            session.'
-          items:
-            type: string
-          type: array
-          x-go-name: Arguments
-        entrypoint:
-          description: 'Entrypoint is the entrypoint for the exec session (the command that
-
-            will be executed in the container).'
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
           type: string
-          x-go-name: Entrypoint
-        privileged:
-          description: 'Privileged is whether the exec session will be started with elevated
-
-            privileges.'
-          type: boolean
-          x-go-name: Privileged
-        tty:
-          description: Tty is whether the exec session created a terminal.
-          type: boolean
-          x-go-name: Tty
-        user:
-          description: User is the user the exec session was started as.
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
           type: string
-          x-go-name: User
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
       type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
   responses:
     containerNotFound:
       description: No such container
@@ -376,8 +376,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/InspectExecSession'
-    internalError:
-      description: Internal server error
+    execSessionNotFound:
+      description: No such exec instance
       content:
         application/json:
           schema:
@@ -388,8 +388,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    execSessionNotFound:
-      description: No such exec instance
+    internalError:
+      description: Internal server error
       content:
         application/json:
           schema:

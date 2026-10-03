@@ -163,34 +163,6 @@ paths:
       - system (compat)
 components:
   schemas:
-    ComponentVersion:
-      description: ServiceOptions provides the input for starting an API and sidecar pprof services
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    AuthReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     SystemDfReport:
       description: ServiceOptions provides the input for starting an API and sidecar pprof services
       type: object
@@ -230,19 +202,35 @@ components:
           x-go-name: Username
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
+    AuthReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ComponentVersion:
+      description: ServiceOptions provides the input for starting an API and sidecar pprof services
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
   responses:
-    systemDiskUsage:
-      description: Disk usage
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
     versionResponse:
       description: Version
       content:
@@ -255,6 +243,18 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ComponentVersion'
+    systemDiskUsage:
+      description: Disk usage
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
     systemAuthResponse:
       description: Auth response
       content:
