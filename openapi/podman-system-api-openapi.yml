@@ -222,51 +222,256 @@ paths:
       tags:
       - System
 components:
+  responses:
+    infoResponse:
+      description: Info
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LibpodInfo'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/LibpodInfo'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/LibpodInfo'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    versionResponse:
+      description: Version
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
+    systemPruneResponse:
+      description: System Prune results
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPruneReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/SystemPruneReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/SystemPruneReport'
+    systemDiskUsage:
+      description: Disk usage
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+    systemCheckResponse:
+      description: Check
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemCheckReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/SystemCheckReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/SystemCheckReport'
   schemas:
-    SecurityInfo:
-      description: SecurityInfo describes the libpod host
+    NetworkInfo:
       properties:
-        apparmorEnabled:
-          type: boolean
-          x-go-name: AppArmorEnabled
-        capabilities:
+        backend:
+          $ref: '#/components/schemas/NetworkBackend'
+        defaultNetwork:
           type: string
-          x-go-name: DefaultCapabilities
-        rootless:
-          type: boolean
-          x-go-name: Rootless
-        seccompEnabled:
-          type: boolean
-          x-go-name: SECCOMPEnabled
-        seccompProfilePath:
+          x-go-name: DefaultNetwork
+        dns:
+          $ref: '#/components/schemas/DNSNetworkInfo'
+        package:
           type: string
-          x-go-name: SECCOMPProfilePath
-        selinuxEnabled:
-          type: boolean
-          x-go-name: SELinuxEnabled
+          x-go-name: Package
+        path:
+          type: string
+          x-go-name: Path
+        version:
+          type: string
+          x-go-name: Version
+      title: NetworkInfo contains the network information.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    LibpodInfo:
+      description: 'Info is the overall struct that describes the host system
+
+        running libpod/podman'
+      properties:
+        host:
+          $ref: '#/components/schemas/HostInfo'
+        plugins:
+          $ref: '#/components/schemas/Plugins'
+        registries:
+          additionalProperties: {}
+          type: object
+          x-go-name: Registries
+        store:
+          $ref: '#/components/schemas/StoreInfo'
+        version:
+          $ref: '#/components/schemas/Version'
+      type: object
+      x-go-name: Info
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    CPUUsage:
+      properties:
+        idlePercent:
+          format: double
+          type: number
+          x-go-name: IdlePercent
+        systemPercent:
+          format: double
+          type: number
+          x-go-name: SystemPercent
+        userPercent:
+          format: double
+          type: number
+          x-go-name: UserPercent
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    IDMap:
-      description: 'IDMap contains a single entry for user namespace range remapping. An array
+    StoreInfo:
+      description: 'StoreInfo describes the container storage and its
 
-        of IDMap entries represents the structure that will be provided to the Linux
-
-        kernel for creating a user namespace.'
+        attributes'
       properties:
-        container_id:
-          format: int64
+        containerStore:
+          $ref: '#/components/schemas/ContainerStore'
+        graphDriverName:
+          type: string
+          x-go-name: GraphDriverName
+        graphOptions:
+          additionalProperties: {}
+          type: object
+          x-go-name: GraphOptions
+        graphRoot:
+          type: string
+          x-go-name: GraphRoot
+        graphRootAllocated:
+          description: GraphRootAllocated is how much space the graphroot has in bytes
+          format: uint64
           type: integer
-          x-go-name: ContainerID
-        host_id:
-          format: int64
+          x-go-name: GraphRootAllocated
+        graphRootUsed:
+          description: GraphRootUsed is how much of graphroot is used in bytes
+          format: uint64
           type: integer
-          x-go-name: HostID
-        size:
-          format: int64
-          type: integer
-          x-go-name: Size
+          x-go-name: GraphRootUsed
+        graphStatus:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: GraphStatus
+        imageCopyTmpDir:
+          type: string
+          x-go-name: ImageCopyTmpDir
+        imageStore:
+          $ref: '#/components/schemas/ImageStore'
+        runRoot:
+          type: string
+          x-go-name: RunRoot
+        transientStore:
+          type: boolean
+          x-go-name: TransientStore
+        volumePath:
+          type: string
+          x-go-name: VolumePath
       type: object
-      x-go-package: go.podman.io/storage/pkg/idtools
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    DNSNetworkInfo:
+      properties:
+        package:
+          type: string
+          x-go-name: Package
+        path:
+          type: string
+          x-go-name: Path
+        version:
+          type: string
+          x-go-name: Version
+      title: DNSNetworkInfo contains the DNS information.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    ConmonInfo:
+      description: ConmonInfo describes the conmon executable being used
+      properties:
+        package:
+          type: string
+          x-go-name: Package
+        path:
+          type: string
+          x-go-name: Path
+        version:
+          type: string
+          x-go-name: Version
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    NetworkBackend:
+      type: string
+      x-go-package: go.podman.io/common/libnetwork/types
+    ImageStore:
+      description: 'ImageStore describes the image store.  Right now only the number
+
+        of images present'
+      properties:
+        number:
+          format: int64
+          type: integer
+          x-go-name: Number
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    DistributionInfo:
+      description: DistributionInfo describes the host distribution for libpod
+      properties:
+        codename:
+          type: string
+          x-go-name: Codename
+        distribution:
+          type: string
+          x-go-name: Distribution
+        variant:
+          type: string
+          x-go-name: Variant
+        version:
+          type: string
+          x-go-name: Version
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
     OCIRuntimeInfo:
       description: 'OCIRuntimeInfo describes the runtime (crun or runc) being
 
@@ -286,21 +491,47 @@ components:
           x-go-name: Version
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    DistributionInfo:
-      description: DistributionInfo describes the host distribution for libpod
+    ComponentVersion:
+      description: ServiceOptions provides the input for starting an API and sidecar pprof services
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    Version:
+      description: Version is an output struct for API
       properties:
-        codename:
+        APIVersion:
           type: string
-          x-go-name: Codename
-        distribution:
+        BuildOrigin:
           type: string
-          x-go-name: Distribution
-        variant:
+        Built:
+          format: int64
+          type: integer
+        BuiltTime:
           type: string
-          x-go-name: Variant
-        version:
+        GitCommit:
           type: string
-          x-go-name: Version
+        GoVersion:
+          type: string
+        Os:
+          type: string
+        OsArch:
+          type: string
+        Version:
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    IDMappings:
+      description: IDMappings describe the GID and UID mappings
+      properties:
+        gidmap:
+          items:
+            $ref: '#/components/schemas/IDMap'
+          type: array
+          x-go-name: GIDMap
+        uidmap:
+          items:
+            $ref: '#/components/schemas/IDMap'
+          type: array
+          x-go-name: UIDMap
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
     Plugins:
@@ -328,28 +559,93 @@ components:
           x-go-name: Volume
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    SystemPruneReport:
-      description: ServiceOptions provides the input for starting an API and sidecar pprof services
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     SystemDfReport:
       description: ServiceOptions provides the input for starting an API and sidecar pprof services
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    DNSNetworkInfo:
+    SecurityInfo:
+      description: SecurityInfo describes the libpod host
       properties:
+        apparmorEnabled:
+          type: boolean
+          x-go-name: AppArmorEnabled
+        capabilities:
+          type: string
+          x-go-name: DefaultCapabilities
+        rootless:
+          type: boolean
+          x-go-name: Rootless
+        seccompEnabled:
+          type: boolean
+          x-go-name: SECCOMPEnabled
+        seccompProfilePath:
+          type: string
+          x-go-name: SECCOMPProfilePath
+        selinuxEnabled:
+          type: boolean
+          x-go-name: SELinuxEnabled
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    IDMap:
+      description: 'IDMap contains a single entry for user namespace range remapping. An array
+
+        of IDMap entries represents the structure that will be provided to the Linux
+
+        kernel for creating a user namespace.'
+      properties:
+        container_id:
+          format: int64
+          type: integer
+          x-go-name: ContainerID
+        host_id:
+          format: int64
+          type: integer
+          x-go-name: HostID
+        size:
+          format: int64
+          type: integer
+          x-go-name: Size
+      type: object
+      x-go-package: go.podman.io/storage/pkg/idtools
+    SystemPruneReport:
+      description: ServiceOptions provides the input for starting an API and sidecar pprof services
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    PastaInfo:
+      description: PastaInfo describes the pasta executable that is being used
+      properties:
+        executable:
+          type: string
+          x-go-name: Executable
         package:
           type: string
           x-go-name: Package
-        path:
-          type: string
-          x-go-name: Path
         version:
           type: string
           x-go-name: Version
-      title: DNSNetworkInfo contains the DNS information.
       type: object
-      x-go-package: go.podman.io/common/libnetwork/types
+      x-go-package: go.podman.io/podman/v6/libpod/define
     HostInfo:
       description: HostInfo describes the libpod host
       properties:
@@ -461,221 +757,6 @@ components:
           x-go-name: Variant
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    CPUUsage:
-      properties:
-        idlePercent:
-          format: double
-          type: number
-          x-go-name: IdlePercent
-        systemPercent:
-          format: double
-          type: number
-          x-go-name: SystemPercent
-        userPercent:
-          format: double
-          type: number
-          x-go-name: UserPercent
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    IDMappings:
-      description: IDMappings describe the GID and UID mappings
-      properties:
-        gidmap:
-          items:
-            $ref: '#/components/schemas/IDMap'
-          type: array
-          x-go-name: GIDMap
-        uidmap:
-          items:
-            $ref: '#/components/schemas/IDMap'
-          type: array
-          x-go-name: UIDMap
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    PastaInfo:
-      description: PastaInfo describes the pasta executable that is being used
-      properties:
-        executable:
-          type: string
-          x-go-name: Executable
-        package:
-          type: string
-          x-go-name: Package
-        version:
-          type: string
-          x-go-name: Version
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    NetworkInfo:
-      properties:
-        backend:
-          $ref: '#/components/schemas/NetworkBackend'
-        defaultNetwork:
-          type: string
-          x-go-name: DefaultNetwork
-        dns:
-          $ref: '#/components/schemas/DNSNetworkInfo'
-        package:
-          type: string
-          x-go-name: Package
-        path:
-          type: string
-          x-go-name: Path
-        version:
-          type: string
-          x-go-name: Version
-      title: NetworkInfo contains the network information.
-      type: object
-      x-go-package: go.podman.io/common/libnetwork/types
-    StoreInfo:
-      description: 'StoreInfo describes the container storage and its
-
-        attributes'
-      properties:
-        containerStore:
-          $ref: '#/components/schemas/ContainerStore'
-        graphDriverName:
-          type: string
-          x-go-name: GraphDriverName
-        graphOptions:
-          additionalProperties: {}
-          type: object
-          x-go-name: GraphOptions
-        graphRoot:
-          type: string
-          x-go-name: GraphRoot
-        graphRootAllocated:
-          description: GraphRootAllocated is how much space the graphroot has in bytes
-          format: uint64
-          type: integer
-          x-go-name: GraphRootAllocated
-        graphRootUsed:
-          description: GraphRootUsed is how much of graphroot is used in bytes
-          format: uint64
-          type: integer
-          x-go-name: GraphRootUsed
-        graphStatus:
-          additionalProperties:
-            type: string
-          type: object
-          x-go-name: GraphStatus
-        imageCopyTmpDir:
-          type: string
-          x-go-name: ImageCopyTmpDir
-        imageStore:
-          $ref: '#/components/schemas/ImageStore'
-        runRoot:
-          type: string
-          x-go-name: RunRoot
-        transientStore:
-          type: boolean
-          x-go-name: TransientStore
-        volumePath:
-          type: string
-          x-go-name: VolumePath
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    Version:
-      description: Version is an output struct for API
-      properties:
-        APIVersion:
-          type: string
-        BuildOrigin:
-          type: string
-        Built:
-          format: int64
-          type: integer
-        BuiltTime:
-          type: string
-        GitCommit:
-          type: string
-        GoVersion:
-          type: string
-        Os:
-          type: string
-        OsArch:
-          type: string
-        Version:
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    LibpodInfo:
-      description: 'Info is the overall struct that describes the host system
-
-        running libpod/podman'
-      properties:
-        host:
-          $ref: '#/components/schemas/HostInfo'
-        plugins:
-          $ref: '#/components/schemas/Plugins'
-        registries:
-          additionalProperties: {}
-          type: object
-          x-go-name: Registries
-        store:
-          $ref: '#/components/schemas/StoreInfo'
-        version:
-          $ref: '#/components/schemas/Version'
-      type: object
-      x-go-name: Info
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    ConmonInfo:
-      description: ConmonInfo describes the conmon executable being used
-      properties:
-        package:
-          type: string
-          x-go-name: Package
-        path:
-          type: string
-          x-go-name: Path
-        version:
-          type: string
-          x-go-name: Version
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    ImageStore:
-      description: 'ImageStore describes the image store.  Right now only the number
-
-        of images present'
-      properties:
-        number:
-          format: int64
-          type: integer
-          x-go-name: Number
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    SystemCheckReport:
-      description: ServiceOptions provides the input for starting an API and sidecar pprof services
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ComponentVersion:
-      description: ServiceOptions provides the input for starting an API and sidecar pprof services
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    NetworkBackend:
-      type: string
-      x-go-package: go.podman.io/common/libnetwork/types
     RemoteSocket:
       description: RemoteSocket describes information about the API socket
       properties:
@@ -687,6 +768,10 @@ components:
           x-go-name: Path
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
+    SystemCheckReport:
+      description: ServiceOptions provides the input for starting an API and sidecar pprof services
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ContainerStore:
       description: 'ContainerStore describes the quantity of containers in the
 
@@ -710,88 +795,3 @@ components:
           x-go-name: Stopped
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-  responses:
-    infoResponse:
-      description: Info
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LibpodInfo'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/LibpodInfo'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/LibpodInfo'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    versionResponse:
-      description: Version
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-    systemDiskUsage:
-      description: Disk usage
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-    systemCheckResponse:
-      description: Check
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SystemCheckReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/SystemCheckReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/SystemCheckReport'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    systemPruneResponse:
-      description: System Prune results
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SystemPruneReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/SystemPruneReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/SystemPruneReport'

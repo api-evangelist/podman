@@ -232,25 +232,76 @@ paths:
       tags:
       - quadlets
 components:
+  schemas:
+    QuadletRemoveReport:
+      description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
+      properties:
+        Errors:
+          additionalProperties:
+            type: string
+            x-go-type: error
+          description: Errors is a map of Quadlet name to error that occurred during removal.
+          type: object
+        Removed:
+          description: Removed is a list of quadlets that were successfully removed
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    ListQuadlet:
+      description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
+      properties:
+        App:
+          description: 'If multiple quadlets were installed together they will belong
+
+            to common App.'
+          type: string
+        Name:
+          description: Name is the name of the Quadlet file
+          type: string
+        Path:
+          description: Path to the Quadlet on disk
+          type: string
+        Pod:
+          description: 'Pod is the pod Quadlet file referenced by Pod= in [Container]
+
+            Empty for quadlet types that do not support Pod='
+          type: string
+        Status:
+          description: 'What is the status of the Quadlet - if present in systemd, will be a
+
+            systemd status, else will mention if the Quadlet has syntax errors'
+          type: string
+        UnitName:
+          description: 'UnitName is the name of the systemd unit created from the Quadlet.
+
+            May be empty if systemd has not be reloaded since it was installed.'
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
   responses:
-    quadletListResponse:
-      description: Quadlet list
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListQuadlet'
-            type: array
     badParamError:
       description: Bad parameter in request
       content:
@@ -289,6 +340,24 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/QuadletRemoveReport'
+    quadletListResponse:
+      description: Quadlet list
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListQuadlet'
+            type: array
     internalError:
       description: Internal server error
       content:
@@ -301,72 +370,3 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-  schemas:
-    ListQuadlet:
-      description: A ListQuadlet is a single Quadlet to be listed by `podman quadlet list`
-      properties:
-        App:
-          description: 'If multiple quadlets were installed together they will belong
-
-            to common App.'
-          type: string
-        Name:
-          description: Name is the name of the Quadlet file
-          type: string
-        Path:
-          description: Path to the Quadlet on disk
-          type: string
-        Pod:
-          description: 'Pod is the pod Quadlet file referenced by Pod= in [Container]
-
-            Empty for quadlet types that do not support Pod='
-          type: string
-        Status:
-          description: 'What is the status of the Quadlet - if present in systemd, will be a
-
-            systemd status, else will mention if the Quadlet has syntax errors'
-          type: string
-        UnitName:
-          description: 'UnitName is the name of the systemd unit created from the Quadlet.
-
-            May be empty if systemd has not be reloaded since it was installed.'
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    QuadletRemoveReport:
-      description: QuadletRemoveReport contains the results of an operation to remove obe or more quadlets
-      properties:
-        Errors:
-          additionalProperties:
-            type: string
-            x-go-type: error
-          description: Errors is a map of Quadlet name to error that occurred during removal.
-          type: object
-        Removed:
-          description: Removed is a list of quadlets that were successfully removed
-          items:
-            type: string
-          type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling

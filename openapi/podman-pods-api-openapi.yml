@@ -844,236 +844,131 @@ paths:
       tags:
       - Pods
 components:
-  responses:
-    podStopResponse:
-      description: Stop pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodStopReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodStopReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodStopReport'
-    playKubeResponseLibpod:
-      description: PlayKube response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PlayKubeReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PlayKubeReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PlayKubeReport'
-    podNotFound:
-      description: No such pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    podRmResponse:
-      description: Rm pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodRmReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodRmReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodRmReport'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    podStatsResponse:
-      description: Pod Statistics
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/PodStatsReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/PodStatsReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/PodStatsReport'
-            type: array
-    podsListResponse:
-      description: List pods
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListPodsReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListPodsReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ListPodsReport'
-            type: array
-    podKillResponse:
-      description: Kill Pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodKillReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodKillReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodKillReport'
-    podTopResponse:
-      description: List processes in pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodTopOKBody'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodTopOKBody'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodTopOKBody'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    podPruneResponse:
-      description: Prune pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodPruneReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodPruneReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodPruneReport'
-    podUnpauseResponse:
-      description: Unpause pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodUnpauseReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodUnpauseReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodUnpauseReport'
-    podInspectResponse:
-      description: Inspect pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InspectPodData'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/InspectPodData'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/InspectPodData'
-    podAlreadyStoppedError:
-      description: Pod already stopped
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    podPauseResponse:
-      description: Pause pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodPauseReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodPauseReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodPauseReport'
-    podRestartResponse:
-      description: Restart pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodRestartReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodRestartReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodRestartReport'
-    podAlreadyStartedError:
-      description: Pod already started
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    podStartResponse:
-      description: Start pod
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PodStartReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/PodStartReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/PodStartReport'
   schemas:
+    PodStopReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    PodRestartReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    PodTopOKBody:
+      properties:
+        Processes:
+          description: 'Each process running in the container, where each process
+
+            is an array of values corresponding to the titles.'
+          example: '{"Processes":[["root","13642","882","0","17:03","pts/0","00:00:00","/bin/bash"],["root","13735","13642","0","17:06","pts/0","00:00:00","sleep 10"]]}'
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        Titles:
+          description: The ps column titles
+          example: '{"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}'
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    InspectBlkioThrottleDevice:
+      description: 'InspectBlkioThrottleDevice holds information about a speed cap for a device
+
+        node. This cap applies to a specific operation (read, write, etc) on the given
+
+        node.'
+      properties:
+        Path:
+          description: Path is the path to the device this applies to.
+          type: string
+        Rate:
+          description: 'Rate is the maximum rate. It is in either bytes per second or iops
+
+            per second, determined by where it is used - documentation will
+
+            indicate which is appropriate.'
+          format: uint64
+          type: integer
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    LinuxNetwork:
+      description: LinuxNetwork identification and priority configuration
+      properties:
+        classID:
+          description: Set class identifier for container's network packets
+          format: uint32
+          type: integer
+          x-go-name: ClassID
+        priorities:
+          description: Set priority of network traffic for container
+          items:
+            $ref: '#/components/schemas/LinuxInterfacePriority'
+          type: array
+          x-go-name: Priorities
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    InspectBlkioWeightDevice:
+      description: 'InspectBlkioWeightDevice holds information about the relative weight
+
+        of an individual device node. Weights are used in the I/O scheduler to give
+
+        relative priority to some accesses.'
+      properties:
+        Path:
+          description: Path is the path to the device this applies to.
+          type: string
+        Weight:
+          description: 'Weight is the relative weight the scheduler will use when scheduling
+
+            I/O.'
+          format: uint16
+          type: integer
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    LinuxDeviceCgroup:
+      description: 'LinuxDeviceCgroup represents a device rule for the devices specified to
+
+        the device controller'
+      properties:
+        access:
+          description: Cgroup access permissions format, rwm.
+          type: string
+          x-go-name: Access
+        allow:
+          description: Allow or deny
+          type: boolean
+          x-go-name: Allow
+        major:
+          description: Major is the device's major number.
+          format: int64
+          type: integer
+          x-go-name: Major
+        minor:
+          description: Minor is the device's minor number.
+          format: int64
+          type: integer
+          x-go-name: Minor
+        type:
+          description: Device type, block, char, etc.
+          type: string
+          x-go-name: Type
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    VolumeOptions:
+      properties:
+        DriverConfig:
+          $ref: '#/components/schemas/Driver'
+        Labels:
+          additionalProperties:
+            type: string
+          type: object
+        NoCopy:
+          type: boolean
+        Subpath:
+          type: string
+      title: VolumeOptions represents the options for a mount of type volume.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
     InspectDevice:
       properties:
         CgroupPermissions:
@@ -1092,44 +987,38 @@ components:
       title: InspectDevice is a single device that will be mounted into the container.
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    PodKillReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ClusterOptions:
-      title: ClusterOptions specifies options for a Cluster volume.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    ImageOptions:
-      properties:
-        Subpath:
-          type: string
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    InspectHostPort:
-      description: 'InspectHostPort provides information on a port on the host that a container''s
-
-        port is bound to.'
-      properties:
-        HostIp:
-          description: 'IP on the host we are bound to. "" if not specified (binding to all
-
-            IPs).'
-          type: string
-          x-go-name: HostIP
-        HostPort:
-          description: 'Port on the host we are bound to. No special formatting - just an
-
-            integer stuffed into a string.'
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    Consistency:
-      title: Consistency represents the consistency requirements of a mount.
+    NamespaceMode:
       type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    ListPodsReport:
+      x-go-package: go.podman.io/podman/v6/pkg/specgen
+    PodUnpauseReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ImageVolume:
+      description: 'ImageVolume is a volume based on a container image.  The container image is
+
+        first mounted on the host and is then bind-mounted into the container.  An
+
+        ImageVolume is always mounted read-only.'
+      properties:
+        Destination:
+          description: Destination is the absolute path of the mount in the container.
+          type: string
+        ReadWrite:
+          description: ReadWrite sets the volume writable.
+          type: boolean
+        Source:
+          description: 'Source is the source of the image volume.  The image can be referred
+
+            to by name and by ID.'
+          type: string
+        subPath:
+          description: 'SubPath mounts a particular path within the image.
+
+            If empty, the whole image is mounted.'
+          type: string
+          x-go-name: SubPath
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/specgen
     NamedVolume:
       description: 'NamedVolume holds information about a named volume that will be mounted into
 
@@ -1162,262 +1051,6 @@ components:
           type: string
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/specgen
-    InspectBlkioWeightDevice:
-      description: 'InspectBlkioWeightDevice holds information about the relative weight
-
-        of an individual device node. Weights are used in the I/O scheduler to give
-
-        relative priority to some accesses.'
-      properties:
-        Path:
-          description: Path is the path to the device this applies to.
-          type: string
-        Weight:
-          description: 'Weight is the relative weight the scheduler will use when scheduling
-
-            I/O.'
-          format: uint16
-          type: integer
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    IDMap:
-      description: 'IDMap contains a single entry for user namespace range remapping. An array
-
-        of IDMap entries represents the structure that will be provided to the Linux
-
-        kernel for creating a user namespace.'
-      properties:
-        container_id:
-          format: int64
-          type: integer
-          x-go-name: ContainerID
-        host_id:
-          format: int64
-          type: integer
-          x-go-name: HostID
-        size:
-          format: int64
-          type: integer
-          x-go-name: Size
-      type: object
-      x-go-package: go.podman.io/storage/pkg/idtools
-    PodRmReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    InspectPodInfraConfig:
-      description: 'InspectPodInfraConfig contains the configuration of the pod''s infra
-
-        container.'
-      properties:
-        DNSOption:
-          description: 'DNSOption is a set of DNS options that will be used by the infra
-
-            container''s resolv.conf and shared with the remainder of the pod.'
-          items:
-            type: string
-          type: array
-        DNSSearch:
-          description: 'DNSSearch is a set of DNS search domains that will be used by the
-
-            infra container''s resolv.conf and shared with the remainder of the
-
-            pod.'
-          items:
-            type: string
-          type: array
-        DNSServer:
-          description: 'DNSServer is a set of DNS Servers that will be used by the infra
-
-            container''s resolv.conf and shared with the remainder of the pod.'
-          items:
-            type: string
-          type: array
-        HostAdd:
-          description: 'HostAdd adds a number of hosts to the infra container''s resolv.conf
-
-            which will be shared with the rest of the pod.'
-          items:
-            type: string
-          type: array
-        HostNetwork:
-          description: 'HostNetwork is whether the infra container (and thus the whole pod)
-
-            will use the host''s network and not create a network namespace.'
-          type: boolean
-        HostsFile:
-          description: 'HostsFile is the base file to create the `/etc/hosts` file inside the infra container
-
-            which will be shared with the rest of the pod.'
-          type: string
-        NetworkOptions:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          description: NetworkOptions are additional options for each network
-          type: object
-        Networks:
-          description: Networks is a list of networks the pod will join.
-          items:
-            type: string
-          type: array
-        NoManageHostname:
-          description: 'NoManageHostname indicates that the pod will not manage /etc/hostname
-
-            and instead each container will handle their own.'
-          type: boolean
-        NoManageHosts:
-          description: 'NoManageHosts indicates that the pod will not manage /etc/hosts and
-
-            instead each container will handle their own.'
-          type: boolean
-        NoManageResolvConf:
-          description: 'NoManageResolvConf indicates that the pod will not manage resolv.conf
-
-            and instead each container will handle their own.'
-          type: boolean
-        PortBindings:
-          additionalProperties:
-            items:
-              $ref: '#/components/schemas/InspectHostPort'
-            type: array
-          description: 'PortBindings are ports that will be forwarded to the infra container
-
-            and then shared with the pod.'
-          type: object
-        StaticIP:
-          description: 'StaticIP is a static IPv4 that will be assigned to the infra
-
-            container and then used by the pod.'
-          format: ipv4
-          type: string
-          x-go-type: net.IP
-        StaticMAC:
-          description: 'StaticMAC is a static MAC address that will be assigned to the infra
-
-            container and then used by the pod.'
-          type: string
-        cpu_period:
-          description: CPUPeriod contains the CPU period of the pod
-          format: uint64
-          type: integer
-          x-go-name: CPUPeriod
-        cpu_quota:
-          description: CPUQuota contains the CPU quota of the pod
-          format: int64
-          type: integer
-          x-go-name: CPUQuota
-        cpuset_cpus:
-          description: CPUSetCPUs contains linux specific CPU data for the container
-          type: string
-          x-go-name: CPUSetCPUs
-        pid_ns:
-          description: Pid is the PID namespace mode of the pod's infra container
-          type: string
-          x-go-name: PidNS
-        userns:
-          description: UserNS is the usernamespace that all the containers in the pod will join.
-          type: string
-          x-go-name: UserNS
-        uts_ns:
-          description: UtsNS is the uts namespace that all containers in the pod will join
-          type: string
-          x-go-name: UtsNS
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    LinuxDeviceCgroup:
-      description: 'LinuxDeviceCgroup represents a device rule for the devices specified to
-
-        the device controller'
-      properties:
-        access:
-          description: Cgroup access permissions format, rwm.
-          type: string
-          x-go-name: Access
-        allow:
-          description: Allow or deny
-          type: boolean
-          x-go-name: Allow
-        major:
-          description: Major is the device's major number.
-          format: int64
-          type: integer
-          x-go-name: Major
-        minor:
-          description: Minor is the device's minor number.
-          format: int64
-          type: integer
-          x-go-name: Minor
-        type:
-          description: Device type, block, char, etc.
-          type: string
-          x-go-name: Type
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    BindOptions:
-      properties:
-        CreateMountpoint:
-          type: boolean
-        NonRecursive:
-          type: boolean
-        Propagation:
-          $ref: '#/components/schemas/Propagation'
-        ReadOnlyForceRecursive:
-          description: ReadOnlyForceRecursive raises an error if the mount cannot be made recursively read-only.
-          type: boolean
-        ReadOnlyNonRecursive:
-          description: 'ReadOnlyNonRecursive makes the mount non-recursively read-only, but still leaves the mount recursive
-
-            (unless NonRecursive is set to true in conjunction).'
-          type: boolean
-      title: BindOptions defines options specific to mounts of type "bind".
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
-    PodStatsReport:
-      title: PodStatsReport includes pod-resource statistics data.
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    IDResponse:
-      properties:
-        Id:
-          description: The id of the newly created object.
-          type: string
-          x-go-name: ID
-      required:
-      - Id
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    LinuxHugepageLimit:
-      description: Default to reservation limits if supported. Otherwise fallback to page fault limits.
-      properties:
-        limit:
-          description: Limit is the limit of "hugepagesize" hugetlb reservations (if supported) or usage.
-          format: uint64
-          type: integer
-          x-go-name: Limit
-        pageSize:
-          description: 'Pagesize is the hugepage size.
-
-            Format: "<size><unit-prefix>B'' (e.g. 64KB, 2MB, 1GB, etc.).'
-          type: string
-          x-go-name: Pagesize
-      title: LinuxHugepageLimit structure corresponds to limiting kernel hugepages.
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    NamespaceMode:
-      type: string
-      x-go-package: go.podman.io/podman/v6/pkg/specgen
-    Driver:
-      properties:
-        Name:
-          type: string
-        Options:
-          additionalProperties:
-            type: string
-          type: object
-      title: Driver represents a volume driver.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
     LinuxCPU:
       description: LinuxCPU for Linux cgroup 'cpu' resource management
       properties:
@@ -1468,6 +1101,429 @@ components:
           x-go-name: Shares
       type: object
       x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    ClusterOptions:
+      title: ClusterOptions specifies options for a Cluster volume.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    LinuxHugepageLimit:
+      description: Default to reservation limits if supported. Otherwise fallback to page fault limits.
+      properties:
+        limit:
+          description: Limit is the limit of "hugepagesize" hugetlb reservations (if supported) or usage.
+          format: uint64
+          type: integer
+          x-go-name: Limit
+        pageSize:
+          description: 'Pagesize is the hugepage size.
+
+            Format: "<size><unit-prefix>B'' (e.g. 64KB, 2MB, 1GB, etc.).'
+          type: string
+          x-go-name: Pagesize
+      title: LinuxHugepageLimit structure corresponds to limiting kernel hugepages.
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    PodStartReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    LinuxMemory:
+      description: LinuxMemory for Linux cgroup 'memory' resource management
+      properties:
+        checkBeforeUpdate:
+          description: 'CheckBeforeUpdate enables checking if a new memory limit is lower
+
+            than the current usage during update, and if so, rejecting the new
+
+            limit.'
+          type: boolean
+          x-go-name: CheckBeforeUpdate
+        disableOOMKiller:
+          description: DisableOOMKiller disables the OOM killer for out of memory conditions
+          type: boolean
+          x-go-name: DisableOOMKiller
+        kernel:
+          description: 'Kernel memory limit (in bytes).
+
+
+            Deprecated: kernel-memory limits are not supported in cgroups v2, and
+
+            were obsoleted in [kernel v5.4]. This field should no longer be used,
+
+            as it may be ignored by runtimes.
+
+
+            [kernel v5.4]: https://github.com/torvalds/linux/commit/0158115f702b0ba208ab0'
+          format: int64
+          type: integer
+          x-go-name: Kernel
+        kernelTCP:
+          description: Kernel memory limit for tcp (in bytes)
+          format: int64
+          type: integer
+          x-go-name: KernelTCP
+        limit:
+          description: Memory limit (in bytes).
+          format: int64
+          type: integer
+          x-go-name: Limit
+        reservation:
+          description: Memory reservation or soft_limit (in bytes).
+          format: int64
+          type: integer
+          x-go-name: Reservation
+        swap:
+          description: Total memory limit (memory + swap).
+          format: int64
+          type: integer
+          x-go-name: Swap
+        swappiness:
+          description: How aggressive the kernel will swap memory pages.
+          format: uint64
+          type: integer
+          x-go-name: Swappiness
+        useHierarchy:
+          description: Enables hierarchical memory accounting
+          type: boolean
+          x-go-name: UseHierarchy
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    LinuxResources:
+      description: LinuxResources has container runtime resource constraints
+      properties:
+        blockIO:
+          $ref: '#/components/schemas/LinuxBlockIO'
+        cpu:
+          $ref: '#/components/schemas/LinuxCPU'
+        devices:
+          description: Devices configures the device allowlist.
+          items:
+            $ref: '#/components/schemas/LinuxDeviceCgroup'
+          type: array
+          x-go-name: Devices
+        hugepageLimits:
+          description: Hugetlb limits (in bytes). Default to reservation limits if supported.
+          items:
+            $ref: '#/components/schemas/LinuxHugepageLimit'
+          type: array
+          x-go-name: HugepageLimits
+        memory:
+          $ref: '#/components/schemas/LinuxMemory'
+        network:
+          $ref: '#/components/schemas/LinuxNetwork'
+        pids:
+          $ref: '#/components/schemas/LinuxPids'
+        rdma:
+          additionalProperties:
+            $ref: '#/components/schemas/LinuxRdma'
+          description: 'Rdma resource restriction configuration.
+
+            Limits are a set of key value pairs that define RDMA resource limits,
+
+            where the key is device name and value is resource limits.'
+          type: object
+          x-go-name: Rdma
+        unified:
+          additionalProperties:
+            type: string
+          description: Unified resources.
+          type: object
+          x-go-name: Unified
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    Driver:
+      properties:
+        Name:
+          type: string
+        Options:
+          additionalProperties:
+            type: string
+          type: object
+      title: Driver represents a volume driver.
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    LinuxInterfacePriority:
+      description: LinuxInterfacePriority for network interfaces
+      properties:
+        name:
+          description: Name is the name of the network interface
+          type: string
+          x-go-name: Name
+        priority:
+          description: Priority for the interface
+          format: uint32
+          type: integer
+          x-go-name: Priority
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    ListPodsReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    PerNetworkOptions:
+      properties:
+        aliases:
+          description: 'Aliases contains a list of names which the dns server should resolve
+
+            to this container. Should only be set when DNSEnabled is true on the Network.
+
+            If aliases are set but there is no dns support for this network the
+
+            network interface implementation should ignore this and NOT error.
+
+            Optional.'
+          items:
+            type: string
+          type: array
+          x-go-name: Aliases
+        interface_name:
+          description: 'InterfaceName for this container. Required in the backend.
+
+            Optional in the frontend. Will be filled with ethX (where X is a integer) when empty.'
+          type: string
+          x-go-name: InterfaceName
+        options:
+          additionalProperties:
+            type: string
+          description: Driver-specific options for this container.
+          type: object
+          x-go-name: Options
+        static_ips:
+          description: StaticIPs for this container. Optional.
+          items:
+            type: string
+            x-go-type: net.IP
+          type: array
+          x-go-name: StaticIPs
+        static_mac:
+          description: StaticMac for this container. Optional.
+          format: string
+          type: string
+          x-go-name: StaticMAC
+          x-go-type: go.podman.io/common/libnetwork/types.HardwareAddr
+      title: PerNetworkOptions are options which should be set on a per network basis.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    Consistency:
+      title: Consistency represents the consistency requirements of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
+    OverlayVolume:
+      description: 'OverlayVolume holds information about an overlay volume that will be mounted into
+
+        the container.'
+      properties:
+        destination:
+          description: Destination is the absolute path where the mount will be placed in the container.
+          type: string
+          x-go-name: Destination
+        options:
+          description: Options holds overlay volume options.
+          items:
+            type: string
+          type: array
+          x-go-name: Options
+        source:
+          description: Source specifies the source path of the mount.
+          type: string
+          x-go-name: Source
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/specgen
+    LinuxPids:
+      description: LinuxPids for Linux cgroup 'pids' resource management (Linux 4.3)
+      properties:
+        limit:
+          description: Maximum number of PIDs. Default is "no limit".
+          format: int64
+          type: integer
+          x-go-name: Limit
+      type: object
+      x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    FileMode:
+      description: 'The bits have the same definition on all systems, so that
+
+        information about files can be moved from one system
+
+        to another portably. Not all bits apply to all systems.
+
+        The only required bit is [ModeDir] for directories.'
+      format: uint32
+      title: A FileMode represents a file's mode and permission bits.
+      type: integer
+      x-go-package: os
+    Type:
+      title: Type represents the type of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
+    PodStatsReport:
+      title: PodStatsReport includes pod-resource statistics data.
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    PortMapping:
+      properties:
+        container_port:
+          description: 'ContainerPort is the port number that will be exposed from the
+
+            container.
+
+            Mandatory.'
+          format: uint16
+          type: integer
+          x-go-name: ContainerPort
+        host_ip:
+          description: 'HostIP is the IP that we will bind to on the host.
+
+            If unset, assumed to be 0.0.0.0 (all interfaces).'
+          type: string
+          x-go-name: HostIP
+        host_port:
+          description: 'HostPort is the port number that will be forwarded from the host into
+
+            the container.
+
+            If omitted, a random port on the host (guaranteed to be over 1024)
+
+            will be assigned.'
+          format: uint16
+          type: integer
+          x-go-name: HostPort
+        protocol:
+          description: 'Protocol is the protocol forward.
+
+            Must be either "tcp", "udp", and "sctp", or some combination of these
+
+            separated by commas.
+
+            If unset, assumed to be TCP.'
+          type: string
+          x-go-name: Protocol
+        range:
+          description: 'Range is the number of ports that will be forwarded, starting at
+
+            HostPort and ContainerPort and counting up.
+
+            This is 1-indexed, so 1 is assumed to be a single port (only the
+
+            Hostport:Containerport mapping will be added), 2 is two ports (both
+
+            Hostport:Containerport and Hostport+1:Containerport+1), etc.
+
+            If unset, assumed to be 1 (a single port).
+
+            Both hostport + range and containerport + range must be less than
+
+            65536.'
+          format: uint16
+          type: integer
+          x-go-name: Range
+      title: PortMapping is one or more ports that will be mapped into the container.
+      type: object
+      x-go-package: go.podman.io/common/libnetwork/types
+    InspectMount:
+      description: 'InspectMount provides a record of a single mount in a container. It contains
+
+        fields for both named and normal volumes. Only user-specified volumes will be
+
+        included, and tmpfs volumes are not included even if the user specified them.'
+      properties:
+        Destination:
+          description: 'The destination directory for the volume. Specified as a path within
+
+            the container, as it would be passed into the OCI runtime.'
+          type: string
+        Driver:
+          description: The driver used for the named volume. Empty for bind mounts.
+          type: string
+        Mode:
+          description: 'Contains SELinux :z/:Z mount options. Unclear what, if anything, else
+
+            goes in here.'
+          type: string
+        Name:
+          description: The name of the volume. Empty for bind mounts.
+          type: string
+        Options:
+          description: 'All remaining mount options. Additional data, not present in the
+
+            original output.'
+          items:
+            type: string
+          type: array
+        Propagation:
+          description: 'Mount propagation for the mount. Can be empty if not specified, but
+
+            is always printed - no omitempty.'
+          type: string
+        RW:
+          description: Whether the volume is read-write
+          type: boolean
+        Source:
+          description: The source directory for the volume.
+          type: string
+        SubPath:
+          description: 'SubPath object from the volume. Specified as a path within
+
+            the source volume to be mounted at the Destination.'
+          type: string
+        Type:
+          description: 'Whether the mount is a volume or bind mount. Allowed values are
+
+            "volume" and "bind".'
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    Namespace:
+      description: Namespace describes the namespace
+      properties:
+        nsmode:
+          $ref: '#/components/schemas/NamespaceMode'
+        value:
+          type: string
+          x-go-name: Value
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/specgen
+    IDMap:
+      description: 'IDMap contains a single entry for user namespace range remapping. An array
+
+        of IDMap entries represents the structure that will be provided to the Linux
+
+        kernel for creating a user namespace.'
+      properties:
+        container_id:
+          format: int64
+          type: integer
+          x-go-name: ContainerID
+        host_id:
+          format: int64
+          type: integer
+          x-go-name: HostID
+        size:
+          format: int64
+          type: integer
+          x-go-name: Size
+      type: object
+      x-go-package: go.podman.io/storage/pkg/idtools
+    PodKillReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     LinuxWeightDevice:
       description: LinuxWeightDevice struct holds a `major:minor weight` pair for weightDevice
       properties:
@@ -1493,42 +1549,182 @@ components:
           x-go-name: Weight
       type: object
       x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    PodStartReport:
+    PlayKubeReport:
+      title: PlayKubeReport contains the results of running play kube.
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    InspectPodContainerInfo:
+    InspectPodData:
+      description: 'InspectPodData contains detailed information on a pod''s configuration and
+
+        state. It is used as the output of Inspect on pods.'
       properties:
+        CgroupParent:
+          description: CgroupParent is the parent of the pod's Cgroup.
+          type: string
+        CgroupPath:
+          description: CgroupPath is the path to the pod's Cgroup.
+          type: string
+        Containers:
+          description: 'Containers gives a brief summary of all containers in the pod and
+
+            their current status.'
+          items:
+            $ref: '#/components/schemas/InspectPodContainerInfo'
+          type: array
+        CreateCgroup:
+          description: 'CreateCgroup is whether this pod will create its own Cgroup to group
+
+            containers under.'
+          type: boolean
+        CreateCommand:
+          description: 'CreateCommand is the full command plus arguments of the process the
+
+            container has been created with.'
+          items:
+            type: string
+          type: array
+        CreateInfra:
+          description: 'CreateInfra is whether this pod will create an infra container to
+
+            share namespaces.'
+          type: boolean
+        Created:
+          description: Created is the time when the pod was created.
+          format: date-time
+          type: string
+        ExitPolicy:
+          description: ExitPolicy of the pod.
+          type: string
+        Hostname:
+          description: Hostname is the hostname that the pod will set.
+          type: string
         Id:
-          description: ID is the ID of the container.
+          description: ID is the ID of the pod.
           type: string
           x-go-name: ID
+        InfraConfig:
+          $ref: '#/components/schemas/InspectPodInfraConfig'
+        InfraContainerID:
+          description: 'InfraContainerID is the ID of the pod''s infra container, if one is
+
+            present.'
+          type: string
+        Labels:
+          additionalProperties:
+            type: string
+          description: 'Labels is a set of key-value labels that have been applied to the
+
+            pod.'
+          type: object
+        LockNumber:
+          description: Number of the pod's Libpod lock.
+          format: uint32
+          type: integer
         Name:
-          description: Name is the name of the container.
+          description: Name is the name of the pod.
           type: string
-        State:
-          description: State is the current status of the container.
+        Namespace:
+          description: Namespace is the Libpod namespace the pod is placed in.
           type: string
-      title: InspectPodContainerInfo contains information on a container in a pod.
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    InspectBlkioThrottleDevice:
-      description: 'InspectBlkioThrottleDevice holds information about a speed cap for a device
+        NumContainers:
+          description: 'NumContainers is the number of containers in the pod, including the
 
-        node. This cap applies to a specific operation (read, write, etc) on the given
-
-        node.'
-      properties:
-        Path:
-          description: Path is the path to the device this applies to.
-          type: string
-        Rate:
-          description: 'Rate is the maximum rate. It is in either bytes per second or iops
-
-            per second, determined by where it is used - documentation will
-
-            indicate which is appropriate.'
+            infra container.'
           format: uint64
           type: integer
+        RestartPolicy:
+          description: RestartPolicy of the pod.
+          type: string
+        SharedNamespaces:
+          description: 'SharedNamespaces contains a list of namespaces that will be shared by
+
+            containers within the pod. Can only be set if CreateInfra is true.'
+          items:
+            type: string
+          type: array
+        State:
+          description: State represents the current state of the pod.
+          type: string
+        blkio_weight:
+          description: BlkioWeight contains the blkio weight limit for the pod
+          format: uint64
+          type: integer
+          x-go-name: BlkioWeight
+        blkio_weight_device:
+          description: BlkioWeightDevice contains the blkio weight device limits for the pod
+          items:
+            $ref: '#/components/schemas/InspectBlkioWeightDevice'
+          type: array
+          x-go-name: BlkioWeightDevice
+        cpu_period:
+          description: CPUPeriod contains the CPU period of the pod
+          format: uint64
+          type: integer
+          x-go-name: CPUPeriod
+        cpu_quota:
+          description: CPUQuota contains the CPU quota of the pod
+          format: int64
+          type: integer
+          x-go-name: CPUQuota
+        cpu_shares:
+          description: CPUShares contains the cpu shares for the pod
+          format: uint64
+          type: integer
+          x-go-name: CPUShares
+        cpuset_cpus:
+          description: CPUSetCPUs contains linux specific CPU data for the pod
+          type: string
+          x-go-name: CPUSetCPUs
+        cpuset_mems:
+          description: CPUSetMems contains linux specific CPU data for the pod
+          type: string
+          x-go-name: CPUSetMems
+        device_read_bps:
+          description: BlkioDeviceReadBps contains the Read/Access limit for the pod's devices
+          items:
+            $ref: '#/components/schemas/InspectBlkioThrottleDevice'
+          type: array
+          x-go-name: BlkioDeviceReadBps
+        device_write_bps:
+          description: BlkioDeviceReadBps contains the Read/Access limit for the pod's devices
+          items:
+            $ref: '#/components/schemas/InspectBlkioThrottleDevice'
+          type: array
+          x-go-name: BlkioDeviceWriteBps
+        devices:
+          description: Devices contains the specified host devices
+          items:
+            $ref: '#/components/schemas/InspectDevice'
+          type: array
+          x-go-name: Devices
+        memory_limit:
+          description: MemoryLimit contains the specified cgroup memory limit for the pod
+          format: uint64
+          type: integer
+          x-go-name: MemoryLimit
+        memory_swap:
+          description: MemorySwap contains the specified memory swap limit for the pod
+          format: uint64
+          type: integer
+          x-go-name: MemorySwap
+        mounts:
+          description: Mounts contains volume related information for the pod
+          items:
+            $ref: '#/components/schemas/InspectMount'
+          type: array
+          x-go-name: Mounts
+        security_opt:
+          description: SecurityOpt contains the specified security labels and related SELinux information
+          items:
+            type: string
+          type: array
+          x-go-name: SecurityOpts
+        volumes_from:
+          description: VolumesFrom contains the containers that the pod inherits mounts from
+          items:
+            type: string
+          type: array
+          x-go-name: VolumesFrom
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
     PodSpecGenerator:
@@ -1993,155 +2189,170 @@ components:
           type: array
       type: object
       x-go-package: go.podman.io/storage/types
-    Propagation:
-      title: Propagation represents the propagation of a mount.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    PodRestartReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    Type:
-      title: Type represents the type of a mount.
-      type: string
-      x-go-package: github.com/moby/moby/api/types/mount
-    PodTopOKBody:
-      properties:
-        Processes:
-          description: 'Each process running in the container, where each process
+    InspectPodInfraConfig:
+      description: 'InspectPodInfraConfig contains the configuration of the pod''s infra
 
-            is an array of values corresponding to the titles.'
-          example: '{"Processes":[["root","13642","882","0","17:03","pts/0","00:00:00","/bin/bash"],["root","13735","13642","0","17:06","pts/0","00:00:00","sleep 10"]]}'
+        container.'
+      properties:
+        DNSOption:
+          description: 'DNSOption is a set of DNS options that will be used by the infra
+
+            container''s resolv.conf and shared with the remainder of the pod.'
           items:
+            type: string
+          type: array
+        DNSSearch:
+          description: 'DNSSearch is a set of DNS search domains that will be used by the
+
+            infra container''s resolv.conf and shared with the remainder of the
+
+            pod.'
+          items:
+            type: string
+          type: array
+        DNSServer:
+          description: 'DNSServer is a set of DNS Servers that will be used by the infra
+
+            container''s resolv.conf and shared with the remainder of the pod.'
+          items:
+            type: string
+          type: array
+        HostAdd:
+          description: 'HostAdd adds a number of hosts to the infra container''s resolv.conf
+
+            which will be shared with the rest of the pod.'
+          items:
+            type: string
+          type: array
+        HostNetwork:
+          description: 'HostNetwork is whether the infra container (and thus the whole pod)
+
+            will use the host''s network and not create a network namespace.'
+          type: boolean
+        HostsFile:
+          description: 'HostsFile is the base file to create the `/etc/hosts` file inside the infra container
+
+            which will be shared with the rest of the pod.'
+          type: string
+        NetworkOptions:
+          additionalProperties:
             items:
               type: string
             type: array
-          type: array
-        Titles:
-          description: The ps column titles
-          example: '{"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}'
+          description: NetworkOptions are additional options for each network
+          type: object
+        Networks:
+          description: Networks is a list of networks the pod will join.
           items:
             type: string
           type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    LinuxPids:
-      description: LinuxPids for Linux cgroup 'pids' resource management (Linux 4.3)
-      properties:
-        limit:
-          description: Maximum number of PIDs. Default is "no limit".
-          format: int64
-          type: integer
-          x-go-name: Limit
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    LinuxMemory:
-      description: LinuxMemory for Linux cgroup 'memory' resource management
-      properties:
-        checkBeforeUpdate:
-          description: 'CheckBeforeUpdate enables checking if a new memory limit is lower
+        NoManageHostname:
+          description: 'NoManageHostname indicates that the pod will not manage /etc/hostname
 
-            than the current usage during update, and if so, rejecting the new
-
-            limit.'
+            and instead each container will handle their own.'
           type: boolean
-          x-go-name: CheckBeforeUpdate
-        disableOOMKiller:
-          description: DisableOOMKiller disables the OOM killer for out of memory conditions
+        NoManageHosts:
+          description: 'NoManageHosts indicates that the pod will not manage /etc/hosts and
+
+            instead each container will handle their own.'
           type: boolean
-          x-go-name: DisableOOMKiller
-        kernel:
-          description: 'Kernel memory limit (in bytes).
+        NoManageResolvConf:
+          description: 'NoManageResolvConf indicates that the pod will not manage resolv.conf
 
+            and instead each container will handle their own.'
+          type: boolean
+        PortBindings:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/InspectHostPort'
+            type: array
+          description: 'PortBindings are ports that will be forwarded to the infra container
 
-            Deprecated: kernel-memory limits are not supported in cgroups v2, and
+            and then shared with the pod.'
+          type: object
+        StaticIP:
+          description: 'StaticIP is a static IPv4 that will be assigned to the infra
 
-            were obsoleted in [kernel v5.4]. This field should no longer be used,
+            container and then used by the pod.'
+          format: ipv4
+          type: string
+          x-go-type: net.IP
+        StaticMAC:
+          description: 'StaticMAC is a static MAC address that will be assigned to the infra
 
-            as it may be ignored by runtimes.
-
-
-            [kernel v5.4]: https://github.com/torvalds/linux/commit/0158115f702b0ba208ab0'
-          format: int64
-          type: integer
-          x-go-name: Kernel
-        kernelTCP:
-          description: Kernel memory limit for tcp (in bytes)
-          format: int64
-          type: integer
-          x-go-name: KernelTCP
-        limit:
-          description: Memory limit (in bytes).
-          format: int64
-          type: integer
-          x-go-name: Limit
-        reservation:
-          description: Memory reservation or soft_limit (in bytes).
-          format: int64
-          type: integer
-          x-go-name: Reservation
-        swap:
-          description: Total memory limit (memory + swap).
-          format: int64
-          type: integer
-          x-go-name: Swap
-        swappiness:
-          description: How aggressive the kernel will swap memory pages.
+            container and then used by the pod.'
+          type: string
+        cpu_period:
+          description: CPUPeriod contains the CPU period of the pod
           format: uint64
           type: integer
-          x-go-name: Swappiness
-        useHierarchy:
-          description: Enables hierarchical memory accounting
-          type: boolean
-          x-go-name: UseHierarchy
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    PerNetworkOptions:
-      properties:
-        aliases:
-          description: 'Aliases contains a list of names which the dns server should resolve
-
-            to this container. Should only be set when DNSEnabled is true on the Network.
-
-            If aliases are set but there is no dns support for this network the
-
-            network interface implementation should ignore this and NOT error.
-
-            Optional.'
-          items:
-            type: string
-          type: array
-          x-go-name: Aliases
-        interface_name:
-          description: 'InterfaceName for this container. Required in the backend.
-
-            Optional in the frontend. Will be filled with ethX (where X is a integer) when empty.'
+          x-go-name: CPUPeriod
+        cpu_quota:
+          description: CPUQuota contains the CPU quota of the pod
+          format: int64
+          type: integer
+          x-go-name: CPUQuota
+        cpuset_cpus:
+          description: CPUSetCPUs contains linux specific CPU data for the container
           type: string
-          x-go-name: InterfaceName
-        options:
-          additionalProperties:
-            type: string
-          description: Driver-specific options for this container.
-          type: object
-          x-go-name: Options
-        static_ips:
-          description: StaticIPs for this container. Optional.
-          items:
-            type: string
-            x-go-type: net.IP
-          type: array
-          x-go-name: StaticIPs
-        static_mac:
-          description: StaticMac for this container. Optional.
-          format: string
+          x-go-name: CPUSetCPUs
+        pid_ns:
+          description: Pid is the PID namespace mode of the pod's infra container
           type: string
-          x-go-name: StaticMAC
-          x-go-type: go.podman.io/common/libnetwork/types.HardwareAddr
-      title: PerNetworkOptions are options which should be set on a per network basis.
+          x-go-name: PidNS
+        userns:
+          description: UserNS is the usernamespace that all the containers in the pod will join.
+          type: string
+          x-go-name: UserNS
+        uts_ns:
+          description: UtsNS is the uts namespace that all containers in the pod will join
+          type: string
+          x-go-name: UtsNS
       type: object
-      x-go-package: go.podman.io/common/libnetwork/types
-    PodPruneReport:
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    PodPauseReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    Mount:
+      properties:
+        BindOptions:
+          $ref: '#/components/schemas/BindOptions'
+        ClusterOptions:
+          $ref: '#/components/schemas/ClusterOptions'
+        Consistency:
+          $ref: '#/components/schemas/Consistency'
+        ImageOptions:
+          $ref: '#/components/schemas/ImageOptions'
+        ReadOnly:
+          type: boolean
+        Source:
+          description: 'Source specifies the name of the mount. Depending on mount type, this
+
+            may be a volume name or a host path, or even ignored.
+
+            Source is not supported for tmpfs (must be an empty value)'
+          type: string
+        Target:
+          type: string
+        TmpfsOptions:
+          $ref: '#/components/schemas/TmpfsOptions'
+        Type:
+          $ref: '#/components/schemas/Type'
+        VolumeOptions:
+          $ref: '#/components/schemas/VolumeOptions'
+      title: Mount represents a mount (volume).
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    IDResponse:
+      properties:
+        Id:
+          description: The id of the newly created object.
+          type: string
+          x-go-name: ID
+      required:
+      - Id
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
     LinuxBlockIO:
       description: LinuxBlockIO for Linux cgroup 'blkio' resource management
       properties:
@@ -2187,177 +2398,64 @@ components:
           x-go-name: WeightDevice
       type: object
       x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    Mount:
+    BindOptions:
       properties:
-        BindOptions:
-          $ref: '#/components/schemas/BindOptions'
-        ClusterOptions:
-          $ref: '#/components/schemas/ClusterOptions'
-        Consistency:
-          $ref: '#/components/schemas/Consistency'
-        ImageOptions:
-          $ref: '#/components/schemas/ImageOptions'
-        ReadOnly:
+        CreateMountpoint:
           type: boolean
-        Source:
-          description: 'Source specifies the name of the mount. Depending on mount type, this
+        NonRecursive:
+          type: boolean
+        Propagation:
+          $ref: '#/components/schemas/Propagation'
+        ReadOnlyForceRecursive:
+          description: ReadOnlyForceRecursive raises an error if the mount cannot be made recursively read-only.
+          type: boolean
+        ReadOnlyNonRecursive:
+          description: 'ReadOnlyNonRecursive makes the mount non-recursively read-only, but still leaves the mount recursive
 
-            may be a volume name or a host path, or even ignored.
-
-            Source is not supported for tmpfs (must be an empty value)'
-          type: string
-        Target:
-          type: string
-        TmpfsOptions:
-          $ref: '#/components/schemas/TmpfsOptions'
-        Type:
-          $ref: '#/components/schemas/Type'
-        VolumeOptions:
-          $ref: '#/components/schemas/VolumeOptions'
-      title: Mount represents a mount (volume).
+            (unless NonRecursive is set to true in conjunction).'
+          type: boolean
+      title: BindOptions defines options specific to mounts of type "bind".
       type: object
       x-go-package: github.com/moby/moby/api/types/mount
-    Namespace:
-      description: Namespace describes the namespace
-      properties:
-        nsmode:
-          $ref: '#/components/schemas/NamespaceMode'
-        value:
-          type: string
-          x-go-name: Value
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/specgen
-    PodStopReport:
+    PodRmReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    PodUnpauseReport:
+    InspectPodContainerInfo:
+      properties:
+        Id:
+          description: ID is the ID of the container.
+          type: string
+          x-go-name: ID
+        Name:
+          description: Name is the name of the container.
+          type: string
+        State:
+          description: State is the current status of the container.
+          type: string
+      title: InspectPodContainerInfo contains information on a container in a pod.
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    InspectHostPort:
+      description: 'InspectHostPort provides information on a port on the host that a container''s
+
+        port is bound to.'
+      properties:
+        HostIp:
+          description: 'IP on the host we are bound to. "" if not specified (binding to all
+
+            IPs).'
+          type: string
+          x-go-name: HostIP
+        HostPort:
+          description: 'Port on the host we are bound to. No special formatting - just an
+
+            integer stuffed into a string.'
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    PodPruneReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    ImageVolume:
-      description: 'ImageVolume is a volume based on a container image.  The container image is
-
-        first mounted on the host and is then bind-mounted into the container.  An
-
-        ImageVolume is always mounted read-only.'
-      properties:
-        Destination:
-          description: Destination is the absolute path of the mount in the container.
-          type: string
-        ReadWrite:
-          description: ReadWrite sets the volume writable.
-          type: boolean
-        Source:
-          description: 'Source is the source of the image volume.  The image can be referred
-
-            to by name and by ID.'
-          type: string
-        subPath:
-          description: 'SubPath mounts a particular path within the image.
-
-            If empty, the whole image is mounted.'
-          type: string
-          x-go-name: SubPath
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/specgen
-    LinuxResources:
-      description: LinuxResources has container runtime resource constraints
-      properties:
-        blockIO:
-          $ref: '#/components/schemas/LinuxBlockIO'
-        cpu:
-          $ref: '#/components/schemas/LinuxCPU'
-        devices:
-          description: Devices configures the device allowlist.
-          items:
-            $ref: '#/components/schemas/LinuxDeviceCgroup'
-          type: array
-          x-go-name: Devices
-        hugepageLimits:
-          description: Hugetlb limits (in bytes). Default to reservation limits if supported.
-          items:
-            $ref: '#/components/schemas/LinuxHugepageLimit'
-          type: array
-          x-go-name: HugepageLimits
-        memory:
-          $ref: '#/components/schemas/LinuxMemory'
-        network:
-          $ref: '#/components/schemas/LinuxNetwork'
-        pids:
-          $ref: '#/components/schemas/LinuxPids'
-        rdma:
-          additionalProperties:
-            $ref: '#/components/schemas/LinuxRdma'
-          description: 'Rdma resource restriction configuration.
-
-            Limits are a set of key value pairs that define RDMA resource limits,
-
-            where the key is device name and value is resource limits.'
-          type: object
-          x-go-name: Rdma
-        unified:
-          additionalProperties:
-            type: string
-          description: Unified resources.
-          type: object
-          x-go-name: Unified
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    LinuxInterfacePriority:
-      description: LinuxInterfacePriority for network interfaces
-      properties:
-        name:
-          description: Name is the name of the network interface
-          type: string
-          x-go-name: Name
-        priority:
-          description: Priority for the interface
-          format: uint32
-          type: integer
-          x-go-name: Priority
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    OverlayVolume:
-      description: 'OverlayVolume holds information about an overlay volume that will be mounted into
-
-        the container.'
-      properties:
-        destination:
-          description: Destination is the absolute path where the mount will be placed in the container.
-          type: string
-          x-go-name: Destination
-        options:
-          description: Options holds overlay volume options.
-          items:
-            type: string
-          type: array
-          x-go-name: Options
-        source:
-          description: Source specifies the source path of the mount.
-          type: string
-          x-go-name: Source
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/specgen
     AutoUserNsOptions:
       properties:
         AdditionalGIDMappings:
@@ -2412,21 +2510,6 @@ components:
           x-go-name: HcaObjects
       type: object
       x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    VolumeOptions:
-      properties:
-        DriverConfig:
-          $ref: '#/components/schemas/Driver'
-        Labels:
-          additionalProperties:
-            type: string
-          type: object
-        NoCopy:
-          type: boolean
-        Subpath:
-          type: string
-      title: VolumeOptions represents the options for a mount of type volume.
-      type: object
-      x-go-package: github.com/moby/moby/api/types/mount
     LinuxThrottleDevice:
       description: LinuxThrottleDevice struct holds a `major:minor rate_per_second` pair
       properties:
@@ -2447,6 +2530,16 @@ components:
           x-go-name: Rate
       type: object
       x-go-package: github.com/opencontainers/runtime-spec/specs-go
+    ImageOptions:
+      properties:
+        Subpath:
+          type: string
+      type: object
+      x-go-package: github.com/moby/moby/api/types/mount
+    Propagation:
+      title: Propagation represents the propagation of a mount.
+      type: string
+      x-go-package: github.com/moby/moby/api/types/mount
     TmpfsOptions:
       properties:
         Mode:
@@ -2483,325 +2576,232 @@ components:
       title: TmpfsOptions defines options specific to mounts of type "tmpfs".
       type: object
       x-go-package: github.com/moby/moby/api/types/mount
-    InspectPodData:
-      description: 'InspectPodData contains detailed information on a pod''s configuration and
-
-        state. It is used as the output of Inspect on pods.'
-      properties:
-        CgroupParent:
-          description: CgroupParent is the parent of the pod's Cgroup.
-          type: string
-        CgroupPath:
-          description: CgroupPath is the path to the pod's Cgroup.
-          type: string
-        Containers:
-          description: 'Containers gives a brief summary of all containers in the pod and
-
-            their current status.'
-          items:
-            $ref: '#/components/schemas/InspectPodContainerInfo'
-          type: array
-        CreateCgroup:
-          description: 'CreateCgroup is whether this pod will create its own Cgroup to group
-
-            containers under.'
-          type: boolean
-        CreateCommand:
-          description: 'CreateCommand is the full command plus arguments of the process the
-
-            container has been created with.'
-          items:
-            type: string
-          type: array
-        CreateInfra:
-          description: 'CreateInfra is whether this pod will create an infra container to
-
-            share namespaces.'
-          type: boolean
-        Created:
-          description: Created is the time when the pod was created.
-          format: date-time
-          type: string
-        ExitPolicy:
-          description: ExitPolicy of the pod.
-          type: string
-        Hostname:
-          description: Hostname is the hostname that the pod will set.
-          type: string
-        Id:
-          description: ID is the ID of the pod.
-          type: string
-          x-go-name: ID
-        InfraConfig:
-          $ref: '#/components/schemas/InspectPodInfraConfig'
-        InfraContainerID:
-          description: 'InfraContainerID is the ID of the pod''s infra container, if one is
-
-            present.'
-          type: string
-        Labels:
-          additionalProperties:
-            type: string
-          description: 'Labels is a set of key-value labels that have been applied to the
-
-            pod.'
-          type: object
-        LockNumber:
-          description: Number of the pod's Libpod lock.
-          format: uint32
-          type: integer
-        Name:
-          description: Name is the name of the pod.
-          type: string
-        Namespace:
-          description: Namespace is the Libpod namespace the pod is placed in.
-          type: string
-        NumContainers:
-          description: 'NumContainers is the number of containers in the pod, including the
-
-            infra container.'
-          format: uint64
-          type: integer
-        RestartPolicy:
-          description: RestartPolicy of the pod.
-          type: string
-        SharedNamespaces:
-          description: 'SharedNamespaces contains a list of namespaces that will be shared by
-
-            containers within the pod. Can only be set if CreateInfra is true.'
-          items:
-            type: string
-          type: array
-        State:
-          description: State represents the current state of the pod.
-          type: string
-        blkio_weight:
-          description: BlkioWeight contains the blkio weight limit for the pod
-          format: uint64
-          type: integer
-          x-go-name: BlkioWeight
-        blkio_weight_device:
-          description: BlkioWeightDevice contains the blkio weight device limits for the pod
-          items:
-            $ref: '#/components/schemas/InspectBlkioWeightDevice'
-          type: array
-          x-go-name: BlkioWeightDevice
-        cpu_period:
-          description: CPUPeriod contains the CPU period of the pod
-          format: uint64
-          type: integer
-          x-go-name: CPUPeriod
-        cpu_quota:
-          description: CPUQuota contains the CPU quota of the pod
-          format: int64
-          type: integer
-          x-go-name: CPUQuota
-        cpu_shares:
-          description: CPUShares contains the cpu shares for the pod
-          format: uint64
-          type: integer
-          x-go-name: CPUShares
-        cpuset_cpus:
-          description: CPUSetCPUs contains linux specific CPU data for the pod
-          type: string
-          x-go-name: CPUSetCPUs
-        cpuset_mems:
-          description: CPUSetMems contains linux specific CPU data for the pod
-          type: string
-          x-go-name: CPUSetMems
-        device_read_bps:
-          description: BlkioDeviceReadBps contains the Read/Access limit for the pod's devices
-          items:
-            $ref: '#/components/schemas/InspectBlkioThrottleDevice'
-          type: array
-          x-go-name: BlkioDeviceReadBps
-        device_write_bps:
-          description: BlkioDeviceReadBps contains the Read/Access limit for the pod's devices
-          items:
-            $ref: '#/components/schemas/InspectBlkioThrottleDevice'
-          type: array
-          x-go-name: BlkioDeviceWriteBps
-        devices:
-          description: Devices contains the specified host devices
-          items:
-            $ref: '#/components/schemas/InspectDevice'
-          type: array
-          x-go-name: Devices
-        memory_limit:
-          description: MemoryLimit contains the specified cgroup memory limit for the pod
-          format: uint64
-          type: integer
-          x-go-name: MemoryLimit
-        memory_swap:
-          description: MemorySwap contains the specified memory swap limit for the pod
-          format: uint64
-          type: integer
-          x-go-name: MemorySwap
-        mounts:
-          description: Mounts contains volume related information for the pod
-          items:
-            $ref: '#/components/schemas/InspectMount'
-          type: array
-          x-go-name: Mounts
-        security_opt:
-          description: SecurityOpt contains the specified security labels and related SELinux information
-          items:
-            type: string
-          type: array
-          x-go-name: SecurityOpts
-        volumes_from:
-          description: VolumesFrom contains the containers that the pod inherits mounts from
-          items:
-            type: string
-          type: array
-          x-go-name: VolumesFrom
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    PortMapping:
-      properties:
-        container_port:
-          description: 'ContainerPort is the port number that will be exposed from the
-
-            container.
-
-            Mandatory.'
-          format: uint16
-          type: integer
-          x-go-name: ContainerPort
-        host_ip:
-          description: 'HostIP is the IP that we will bind to on the host.
-
-            If unset, assumed to be 0.0.0.0 (all interfaces).'
-          type: string
-          x-go-name: HostIP
-        host_port:
-          description: 'HostPort is the port number that will be forwarded from the host into
-
-            the container.
-
-            If omitted, a random port on the host (guaranteed to be over 1024)
-
-            will be assigned.'
-          format: uint16
-          type: integer
-          x-go-name: HostPort
-        protocol:
-          description: 'Protocol is the protocol forward.
-
-            Must be either "tcp", "udp", and "sctp", or some combination of these
-
-            separated by commas.
-
-            If unset, assumed to be TCP.'
-          type: string
-          x-go-name: Protocol
-        range:
-          description: 'Range is the number of ports that will be forwarded, starting at
-
-            HostPort and ContainerPort and counting up.
-
-            This is 1-indexed, so 1 is assumed to be a single port (only the
-
-            Hostport:Containerport mapping will be added), 2 is two ports (both
-
-            Hostport:Containerport and Hostport+1:Containerport+1), etc.
-
-            If unset, assumed to be 1 (a single port).
-
-            Both hostport + range and containerport + range must be less than
-
-            65536.'
-          format: uint16
-          type: integer
-          x-go-name: Range
-      title: PortMapping is one or more ports that will be mapped into the container.
-      type: object
-      x-go-package: go.podman.io/common/libnetwork/types
-    FileMode:
-      description: 'The bits have the same definition on all systems, so that
-
-        information about files can be moved from one system
-
-        to another portably. Not all bits apply to all systems.
-
-        The only required bit is [ModeDir] for directories.'
-      format: uint32
-      title: A FileMode represents a file's mode and permission bits.
-      type: integer
-      x-go-package: os
-    LinuxNetwork:
-      description: LinuxNetwork identification and priority configuration
-      properties:
-        classID:
-          description: Set class identifier for container's network packets
-          format: uint32
-          type: integer
-          x-go-name: ClassID
-        priorities:
-          description: Set priority of network traffic for container
-          items:
-            $ref: '#/components/schemas/LinuxInterfacePriority'
-          type: array
-          x-go-name: Priorities
-      type: object
-      x-go-package: github.com/opencontainers/runtime-spec/specs-go
-    PlayKubeReport:
-      title: PlayKubeReport contains the results of running play kube.
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    PodPauseReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    InspectMount:
-      description: 'InspectMount provides a record of a single mount in a container. It contains
-
-        fields for both named and normal volumes. Only user-specified volumes will be
-
-        included, and tmpfs volumes are not included even if the user specified them.'
-      properties:
-        Destination:
-          description: 'The destination directory for the volume. Specified as a path within
-
-            the container, as it would be passed into the OCI runtime.'
-          type: string
-        Driver:
-          description: The driver used for the named volume. Empty for bind mounts.
-          type: string
-        Mode:
-          description: 'Contains SELinux :z/:Z mount options. Unclear what, if anything, else
-
-            goes in here.'
-          type: string
-        Name:
-          description: The name of the volume. Empty for bind mounts.
-          type: string
-        Options:
-          description: 'All remaining mount options. Additional data, not present in the
-
-            original output.'
-          items:
-            type: string
-          type: array
-        Propagation:
-          description: 'Mount propagation for the mount. Can be empty if not specified, but
-
-            is always printed - no omitempty.'
-          type: string
-        RW:
-          description: Whether the volume is read-write
-          type: boolean
-        Source:
-          description: The source directory for the volume.
-          type: string
-        SubPath:
-          description: 'SubPath object from the volume. Specified as a path within
-
-            the source volume to be mounted at the Destination.'
-          type: string
-        Type:
-          description: 'Whether the mount is a volume or bind mount. Allowed values are
-
-            "volume" and "bind".'
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
+  responses:
+    podStatsResponse:
+      description: Pod Statistics
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/PodStatsReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/PodStatsReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/PodStatsReport'
+            type: array
+    podStopResponse:
+      description: Stop pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodStopReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodStopReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodStopReport'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    podNotFound:
+      description: No such pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    podAlreadyStoppedError:
+      description: Pod already stopped
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    podKillResponse:
+      description: Kill Pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodKillReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodKillReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodKillReport'
+    podRmResponse:
+      description: Rm pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodRmReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodRmReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodRmReport'
+    podStartResponse:
+      description: Start pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodStartReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodStartReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodStartReport'
+    podUnpauseResponse:
+      description: Unpause pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodUnpauseReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodUnpauseReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodUnpauseReport'
+    podRestartResponse:
+      description: Restart pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodRestartReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodRestartReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodRestartReport'
+    podTopResponse:
+      description: List processes in pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodTopOKBody'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodTopOKBody'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodTopOKBody'
+    podsListResponse:
+      description: List pods
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListPodsReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListPodsReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/ListPodsReport'
+            type: array
+    podPruneResponse:
+      description: Prune pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodPruneReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodPruneReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodPruneReport'
+    podInspectResponse:
+      description: Inspect pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InspectPodData'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/InspectPodData'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/InspectPodData'
+    podPauseResponse:
+      description: Pause pod
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PodPauseReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PodPauseReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PodPauseReport'
+    playKubeResponseLibpod:
+      description: PlayKube response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PlayKubeReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/PlayKubeReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/PlayKubeReport'
+    podAlreadyStartedError:
+      description: Pod already started
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'

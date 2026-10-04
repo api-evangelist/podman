@@ -393,84 +393,6 @@ paths:
       - Artifacts
 components:
   responses:
-    artifactPullResponse:
-      description: Artifact Pull
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ArtifactPullReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ArtifactPullReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ArtifactPullReport'
-    inspectArtifactResponse:
-      description: Inspect Artifact
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ArtifactInspectReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ArtifactInspectReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ArtifactInspectReport'
-    artifactAddResponse:
-      description: Artifact Add
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ArtifactAddReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ArtifactAddReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ArtifactAddReport'
-    artifactNotFound:
-      description: No such artifact
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    artifactRemoveResponse:
-      description: Artifact Remove
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ArtifactRemoveReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ArtifactRemoveReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ArtifactRemoveReport'
-    artifactListResponse:
-      description: Artifact list
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ArtifactListReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ArtifactListReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ArtifactListReport'
-            type: array
     badParamError:
       description: Bad parameter in request
       content:
@@ -483,6 +405,18 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
+    artifactPullResponse:
+      description: Artifact Pull
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ArtifactPullReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ArtifactPullReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ArtifactPullReport'
     artifactPushResponse:
       description: Artifact Push
       content:
@@ -507,6 +441,42 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
+    inspectArtifactResponse:
+      description: Inspect Artifact
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ArtifactInspectReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ArtifactInspectReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ArtifactInspectReport'
+    artifactRemoveResponse:
+      description: Artifact Remove
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ArtifactRemoveReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ArtifactRemoveReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ArtifactRemoveReport'
+    artifactNotFound:
+      description: No such artifact
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
     internalError:
       description: Internal server error
       content:
@@ -519,23 +489,44 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
+    artifactListResponse:
+      description: Artifact list
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ArtifactListReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/ArtifactListReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/ArtifactListReport'
+            type: array
+    artifactAddResponse:
+      description: Artifact Add
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ArtifactAddReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ArtifactAddReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ArtifactAddReport'
   schemas:
-    ArtifactPullReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ArtifactListReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ArtifactPushReport:
+    ArtifactAddReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ArtifactRemoveReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ArtifactInspectReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ArtifactAddReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ErrorModel:
@@ -559,3 +550,12 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    ArtifactPushReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ArtifactListReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ArtifactPullReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities

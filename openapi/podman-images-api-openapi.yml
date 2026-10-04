@@ -1733,32 +1733,45 @@ paths:
       - Images
 components:
   schemas:
-    History:
+    PruneReport:
+      description: POST "/volumes/prune"
       properties:
-        author:
-          description: Author is the author of the build point.
+        Err:
           type: string
-          x-go-name: Author
-        comment:
-          description: Comment is a custom message set when creating the layer.
+          x-go-type: error
+        Id:
           type: string
-          x-go-name: Comment
-        created:
-          description: Created is the combined date and time at which the layer was created, formatted as defined by RFC 3339, section 5.6.
-          format: date-time
-          type: string
-          x-go-name: Created
-        created_by:
-          description: CreatedBy is the command which created the layer.
-          type: string
-          x-go-name: CreatedBy
-        empty_layer:
-          description: EmptyLayer is used to mark if the history item created a filesystem diff.
-          type: boolean
-          x-go-name: EmptyLayer
-      title: History describes the history of a layer.
+        Size:
+          format: uint64
+          type: integer
+      title: 'PruneReport contains the response for Engine API:'
       type: object
-      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+    Duration:
+      description: 'A Duration represents the elapsed time between two instants
+
+        as an int64 nanosecond count. The representation limits the
+
+        largest representable duration to approximately 290 years.'
+      format: int64
+      type: integer
+      x-go-package: time
+    ImageTreeReport:
+      description: ImageTreeReport provides results from ImageEngine.Tree()
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    RootFS:
+      properties:
+        Layers:
+          items:
+            $ref: '#/components/schemas/Digest'
+            type: string
+          type: array
+        Type:
+          type: string
+      title: RootFS holds the root fs information of an image.
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/inspect
     Digest:
       description: 'The following is an example of the contents of Digest types:
 
@@ -1778,15 +1791,9 @@ components:
         digest string.'
       type: string
       x-go-package: github.com/opencontainers/go-digest
-    Duration:
-      description: 'A Duration represents the elapsed time between two instants
-
-        as an int64 nanosecond count. The representation limits the
-
-        largest representable duration to approximately 290 years.'
-      format: int64
-      type: integer
-      x-go-package: time
+    ImageLoadReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     Schema2HealthConfig:
       description: 'Schema2HealthConfig is a HealthConfig, which holds configuration settings
 
@@ -1825,6 +1832,137 @@ components:
           $ref: '#/components/schemas/Duration'
       type: object
       x-go-package: go.podman.io/image/v5/manifest
+    ImageImportReport:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    LibpodImagesRemoveReport:
+      allOf:
+      - $ref: '#/components/schemas/ImageRemoveReport'
+      - properties:
+          Errors:
+            description: Image removal requires is to return data and an error.
+            items:
+              type: string
+            type: array
+        type: object
+      description: 'LibpodImagesRemoveReport is the return type for image removal via the rest
+
+        api.'
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    ImageSummary:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ScpReport:
+      properties:
+        Id:
+          type: string
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+    ImageRemoveReport:
+      description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
+
+        and images what was untagged vs actually removed.'
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    DriverData:
+      description: DriverData handles the data for a storage driver
+      properties:
+        Data:
+          additionalProperties:
+            type: string
+          description: 'Low-level storage metadata, provided as key/value pairs.
+
+
+            This information is driver-specific, and depends on the storage-driver
+
+            in use, and should be used for informational purposes only.'
+          example:
+            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
+            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
+            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
+          type: object
+        Name:
+          description: Name of the storage driver.
+          example: overlay2
+          type: string
+      required:
+      - Data
+      - Name
+      type: object
+      x-go-package: go.podman.io/podman/v6/libpod/define
+    HistoryResponse:
+      description: HistoryResponse provides details on image layers
+      properties:
+        Comment:
+          type: string
+        Created:
+          format: int64
+          type: integer
+        CreatedBy:
+          type: string
+        Id:
+          type: string
+          x-go-name: ID
+        Size:
+          format: int64
+          type: integer
+        Tags:
+          items:
+            type: string
+          type: array
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    ImagePullReport:
+      title: ImagePullReport is the response from pulling one or more images.
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    History:
+      properties:
+        author:
+          description: Author is the author of the build point.
+          type: string
+          x-go-name: Author
+        comment:
+          description: Comment is a custom message set when creating the layer.
+          type: string
+          x-go-name: Comment
+        created:
+          description: Created is the combined date and time at which the layer was created, formatted as defined by RFC 3339, section 5.6.
+          format: date-time
+          type: string
+          x-go-name: Created
+        created_by:
+          description: CreatedBy is the command which created the layer.
+          type: string
+          x-go-name: CreatedBy
+        empty_layer:
+          description: EmptyLayer is used to mark if the history item created a filesystem diff.
+          type: boolean
+          x-go-name: EmptyLayer
+      title: History describes the history of a layer.
+      type: object
+      x-go-package: github.com/opencontainers/image-spec/specs-go/v1
     ImageConfig:
       properties:
         ArgsEscaped:
@@ -1887,138 +2025,10 @@ components:
       title: ImageConfig defines the execution parameters which should be used as a base when running a container using an image.
       type: object
       x-go-package: github.com/opencontainers/image-spec/specs-go/v1
-    DriverData:
-      description: DriverData handles the data for a storage driver
-      properties:
-        Data:
-          additionalProperties:
-            type: string
-          description: 'Low-level storage metadata, provided as key/value pairs.
-
-
-            This information is driver-specific, and depends on the storage-driver
-
-            in use, and should be used for informational purposes only.'
-          example:
-            MergedDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/merged
-            UpperDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/diff
-            WorkDir: /var/lib/docker/overlay2/ef749362d13333e65fc95c572eb525abbe0052e16e086cb64bc3b98ae9aa6d74/work
-          type: object
-        Name:
-          description: Name of the storage driver.
-          example: overlay2
-          type: string
-      required:
-      - Data
-      - Name
-      type: object
-      x-go-package: go.podman.io/podman/v6/libpod/define
-    HistoryResponse:
-      description: HistoryResponse provides details on image layers
-      properties:
-        Comment:
-          type: string
-        Created:
-          format: int64
-          type: integer
-        CreatedBy:
-          type: string
-        Id:
-          type: string
-          x-go-name: ID
-        Size:
-          format: int64
-          type: integer
-        Tags:
-          items:
-            type: string
-          type: array
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    ImageRemoveReport:
-      description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
-
-        and images what was untagged vs actually removed.'
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    PruneReport:
-      description: POST "/volumes/prune"
-      properties:
-        Err:
-          type: string
-          x-go-type: error
-        Id:
-          type: string
-        Size:
-          format: uint64
-          type: integer
-      title: 'PruneReport contains the response for Engine API:'
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
     LibpodImagesPullReport:
       allOf:
       - $ref: '#/components/schemas/ImagePullReport'
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    RootFS:
-      properties:
-        Layers:
-          items:
-            $ref: '#/components/schemas/Digest'
-            type: string
-          type: array
-        Type:
-          type: string
-      title: RootFS holds the root fs information of an image.
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/inspect
-    ImagePullReport:
-      title: ImagePullReport is the response from pulling one or more images.
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    LibpodImagesRemoveReport:
-      allOf:
-      - $ref: '#/components/schemas/ImageRemoveReport'
-      - properties:
-          Errors:
-            description: Image removal requires is to return data and an error.
-            items:
-              type: string
-            type: array
-        type: object
-      description: 'LibpodImagesRemoveReport is the return type for image removal via the rest
-
-        api.'
-      x-go-package: go.podman.io/podman/v6/pkg/api/handlers
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    ScpReport:
-      properties:
-        Id:
-          type: string
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
-    ImageLoadReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ImageData:
       properties:
         Annotations:
@@ -2086,95 +2096,7 @@ components:
       title: ImageData holds the inspect information of an image.
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/inspect
-    ImageTreeReport:
-      description: ImageTreeReport provides results from ImageEngine.Tree()
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ImageImportReport:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    ImageSummary:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
   responses:
-    imageListLibpod:
-      description: Image summary for libpod API
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/ImageSummary'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/ImageSummary'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/ImageSummary'
-            type: array
-    conflictError:
-      description: Conflict error in operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    inspectImageResponseLibpod:
-      description: Inspect Image
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImageData'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ImageData'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ImageData'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    imagesPullResponseLibpod:
-      description: Image Pull. Errors may be detected later even if this returns HTTP status 200, and in that case, the error description will be in the `error` field.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesPullReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesPullReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesPullReport'
-    treeResponse:
-      description: Image Tree
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImageTreeReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ImageTreeReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ImageTreeReport'
     history:
       description: Image History
       content:
@@ -2187,8 +2109,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/HistoryResponse'
-    fileNotFound:
-      description: No such file
+    badParamError:
+      description: Bad parameter in request
       content:
         application/json:
           schema:
@@ -2199,6 +2121,36 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    imagesPruneLibpod:
+      description: Image Prune
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
     registrySearchResponse:
       description: Registry Search
       content:
@@ -2286,20 +2238,26 @@ components:
                 description: Tag is the image tag
                 type: string
             type: object
-    imagesLoadResponseLibpod:
-      description: Image Load
+    imageListLibpod:
+      description: Image summary for libpod API
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ImageLoadReport'
+            items:
+              $ref: '#/components/schemas/ImageSummary'
+            type: array
         application/octet-stream:
           schema:
-            $ref: '#/components/schemas/ImageLoadReport'
+            items:
+              $ref: '#/components/schemas/ImageSummary'
+            type: array
         text/plain:
           schema:
-            $ref: '#/components/schemas/ImageLoadReport'
-    internalError:
-      description: Internal server error
+            items:
+              $ref: '#/components/schemas/ImageSummary'
+            type: array
+    conflictError:
+      description: Conflict error in operation
       content:
         application/json:
           schema:
@@ -2310,24 +2268,30 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ErrorModel'
-    imagesPruneLibpod:
-      description: Image Prune
+    inspectImageResponseLibpod:
+      description: Inspect Image
       content:
         application/json:
           schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
+            $ref: '#/components/schemas/ImageData'
         application/octet-stream:
           schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
+            $ref: '#/components/schemas/ImageData'
         text/plain:
           schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
+            $ref: '#/components/schemas/ImageData'
+    imageNotFound:
+      description: No such image
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
     imagesRemoveResponseLibpod:
       description: Image Remove
       content:
@@ -2340,32 +2304,8 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/LibpodImagesRemoveReport'
-    errorFromRegistry:
-      description: Error from registry
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    imagesImportResponseLibpod:
-      description: Image Import
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImageImportReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ImageImportReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ImageImportReport'
-    containerNotFound:
-      description: No such container
+    fileNotFound:
+      description: No such file
       content:
         application/json:
           schema:
@@ -2388,8 +2328,68 @@ components:
         text/plain:
           schema:
             $ref: '#/components/schemas/ScpReport'
-    imageNotFound:
-      description: No such image
+    errorFromRegistry:
+      description: Error from registry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    treeResponse:
+      description: Image Tree
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageTreeReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ImageTreeReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ImageTreeReport'
+    imagesLoadResponseLibpod:
+      description: Image Load
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageLoadReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ImageLoadReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ImageLoadReport'
+    imagesPullResponseLibpod:
+      description: Image Pull. Errors may be detected later even if this returns HTTP status 200, and in that case, the error description will be in the `error` field.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesPullReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesPullReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesPullReport'
+    imagesImportResponseLibpod:
+      description: Image Import
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageImportReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ImageImportReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ImageImportReport'
+    containerNotFound:
+      description: No such container
       content:
         application/json:
           schema:

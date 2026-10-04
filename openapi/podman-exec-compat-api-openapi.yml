@@ -237,6 +237,55 @@ paths:
               type: object
         description: Attributes for start
 components:
+  responses:
+    execSessionInspect:
+      description: Exec Session Inspect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/InspectExecSession'
+    containerNotFound:
+      description: No such container
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    execSessionNotFound:
+      description: No such exec instance
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
   schemas:
     InspectExecProcess:
       description: 'InspectExecProcess contains information about the process in a given exec
@@ -273,6 +322,27 @@ components:
           x-go-name: User
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
     InspectExecSession:
       properties:
         CanRemove:
@@ -330,73 +400,3 @@ components:
       title: InspectExecSession contains information about a given exec session.
       type: object
       x-go-package: go.podman.io/podman/v6/libpod/define
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-  responses:
-    containerNotFound:
-      description: No such container
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    execSessionInspect:
-      description: Exec Session Inspect
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InspectExecSession'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/InspectExecSession'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/InspectExecSession'
-    execSessionNotFound:
-      description: No such exec instance
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'

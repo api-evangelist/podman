@@ -223,6 +223,30 @@ components:
       title: 'PruneReport contains the response for Engine API:'
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/reports
+    VolumeConfigResponse:
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    ErrorModel:
+      description: ErrorModel is used in remote connections with podman
+      properties:
+        cause:
+          description: API root cause formatted for automated parsing
+          example: API root cause
+          type: string
+          x-go-name: Because
+        message:
+          description: human error message, formatted for a human to read
+          example: human error message
+          type: string
+          x-go-name: Message
+        response:
+          description: HTTP response code
+          format: int64
+          minimum: 400
+          type: integer
+          x-go-name: ResponseCode
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
     VolumeCreateOptions:
       properties:
         Driver:
@@ -259,61 +283,7 @@ components:
           type: integer
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    ErrorModel:
-      description: ErrorModel is used in remote connections with podman
-      properties:
-        cause:
-          description: API root cause formatted for automated parsing
-          example: API root cause
-          type: string
-          x-go-name: Because
-        message:
-          description: human error message, formatted for a human to read
-          example: human error message
-          type: string
-          x-go-name: Message
-        response:
-          description: HTTP response code
-          format: int64
-          minimum: 400
-          type: integer
-          x-go-name: ResponseCode
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    VolumeConfigResponse:
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
   responses:
-    volumeNotFound:
-      description: No such volume
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    volumePruneLibpod:
-      description: Volume Prune
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
-        application/octet-stream:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
-        text/plain:
-          schema:
-            items:
-              $ref: '#/components/schemas/PruneReport'
-            type: array
     volumeCreateResponse:
       description: Volume details
       content:
@@ -343,6 +313,36 @@ components:
           schema:
             items:
               $ref: '#/components/schemas/VolumeConfigResponse'
+            type: array
+    volumeNotFound:
+      description: No such volume
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    volumePruneLibpod:
+      description: Volume Prune
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        application/octet-stream:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
+            type: array
+        text/plain:
+          schema:
+            items:
+              $ref: '#/components/schemas/PruneReport'
             type: array
     internalError:
       description: Internal server error

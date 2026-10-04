@@ -162,11 +162,56 @@ paths:
       tags:
       - system (compat)
 components:
+  responses:
+    systemAuthResponse:
+      description: Auth response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/AuthReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/AuthReport'
+    systemDiskUsage:
+      description: Disk usage
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/SystemDfReport'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    versionResponse:
+      description: Version
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ComponentVersion'
   schemas:
-    SystemDfReport:
-      description: ServiceOptions provides the input for starting an API and sidecar pprof services
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     AuthConfig:
       description: AuthConfig contains authorization information for connecting to a Registry
       properties:
@@ -202,11 +247,15 @@ components:
           x-go-name: Username
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
-    AuthReport:
+    SystemDfReport:
+      description: ServiceOptions provides the input for starting an API and sidecar pprof services
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ComponentVersion:
       description: ServiceOptions provides the input for starting an API and sidecar pprof services
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    AuthReport:
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
     ErrorModel:
@@ -230,52 +279,3 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-  responses:
-    versionResponse:
-      description: Version
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ComponentVersion'
-    systemDiskUsage:
-      description: Disk usage
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/SystemDfReport'
-    systemAuthResponse:
-      description: Auth response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/AuthReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/AuthReport'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
