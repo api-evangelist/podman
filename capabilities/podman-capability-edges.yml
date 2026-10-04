@@ -1,0 +1,75 @@
+slug: podman
+provider: Podman
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Containers
+  spec_file: podman-containers-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /libpod/containers/{name}/checkpoint  ContainerCheckpointLibpod  Checkpoint a container;
+    POST /libpod/containers/{name}/kill  ContainerKillLibpod  Kill container
+  reason: Podman's container endpoints create, start, kill, inspect and checkpoint OCI container runtime
+    instances — management of compute runtime, which is IT Infrastructure Management. This is devtool/infrastructure
+    territory, not any industry-specific capability.
+- tag: Networks
+  spec_file: podman-networks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /libpod/networks/create  NetworkCreateLibpod  Create network; POST /libpod/networks/{name}/connect  NetworkConnectLibpod  Connect
+    container to network
+  reason: Creation, inspection, subnet/route configuration and pruning of container networks is network
+    infrastructure provisioning, which maps to IT Infrastructure Management.
+- tag: Pods
+  spec_file: podman-pods-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /libpod/pods/{name}/start  PodStartLibpod  Start a pod; POST /libpod/play/kube  PlayKubeLibpod  Play
+    a Kubernetes YAML file
+  reason: Pod lifecycle operations (start, stop, pause, kill, inspect, stats) plus Kubernetes YAML generation/apply
+    are container workload orchestration on compute infrastructure — IT Infrastructure Management for
+    this devtool vendor.
+- tag: Volumes
+  spec_file: podman-volumes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /libpod/volumes/create VolumeCreateLibpod Create a volume; GET /libpod/volumes/{name}/export
+    Export a volume
+  reason: Container storage volume provisioning and stewardship is IT infrastructure (storage) management,
+    not any business-domain capability.
+- tag: networks (compat)
+  spec_file: podman-networks-compat-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /networks/create NetworkCreate Create network; POST /networks/{name}/connect NetworkConnect
+    Connect container to network
+  reason: Creation and attachment of container networks is network infrastructure management within the
+    container engine.
+- tag: volumes (compat)
+  spec_file: podman-volumes-compat-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /volumes/create VolumeCreate Create a volume; POST /volumes/prune VolumePrune Prune volumes
+  reason: Docker-compatible volume provisioning and cleanup is storage infrastructure management for containers.

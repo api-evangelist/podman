@@ -325,6 +325,9 @@ apis:
   - type: GettingStarted
     url: https://docs.podman.io/en/latest/markdown/podman-system-service.1.html
 common:
+  - type: CapabilityMap
+    url: capabilities/podman-capability-edges.yml
+    name: Podman Business Capability Map
   - type: IssueTracker
     url: https://github.com/containers/podman/issues
   - type: Releases
