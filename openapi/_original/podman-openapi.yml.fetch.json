@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.podman.io/en/latest/_static/swagger.yaml",
+ "requested_url": "https://docs.podman.io/en/latest/_static/swagger.yaml",
+ "status": 200,
+ "content_type": "application/yaml",
+ "bytes": 832729,
+ "sha256": "3aa0f23c4b77f75c1181c46a184498a575f4c7d6057207a74bc919457491c1a1",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.98), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
