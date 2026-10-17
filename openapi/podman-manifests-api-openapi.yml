@@ -363,88 +363,32 @@ paths:
       tags:
       - Manifests
 components:
-  responses:
-    manifestInspect:
-      description: Inspect Manifest
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Schema2List'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/Schema2List'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/Schema2List'
-    badParamError:
-      description: Bad parameter in request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    imagesRemoveResponseLibpod:
-      description: Image Remove
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/LibpodImagesRemoveReport'
-    imageNotFound:
-      description: No such image
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    internalError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-    manifestNotFound:
-      description: No such manifest
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        application/octet-stream:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
-        text/plain:
-          schema:
-            $ref: '#/components/schemas/ErrorModel'
   schemas:
-    IDResponse:
+    ManifestModifyReport:
       properties:
         Id:
-          description: The id of the newly created object.
+          description: Manifest List ID
           type: string
           x-go-name: ID
-      required:
-      - Id
+        errors:
+          description: Errors associated with operation
+          items:
+            type: string
+            x-go-type: error
+          type: array
+          x-go-name: Errors
+        files:
+          description: Files added to manifest list, otherwise not provided.
+          items:
+            type: string
+          type: array
+          x-go-name: Files
+        images:
+          description: Images added to or removed from manifest list, otherwise not provided.
+          items:
+            type: string
+          type: array
+          x-go-name: Images
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
     LibpodImagesRemoveReport:
@@ -461,6 +405,10 @@ components:
 
         api.'
       x-go-package: go.podman.io/podman/v6/pkg/api/handlers
+    Schema2List:
+      title: Schema2List is a list of platform-specific manifests.
+      type: object
+      x-go-package: go.podman.io/image/v5/manifest
     ManifestAddOptions:
       description: ManifestAddOptions provides model for adding digests to manifest list
       properties:
@@ -649,6 +597,16 @@ components:
       title: ManifestModifyOptions provides the model for mutating a manifest
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
+    IDResponse:
+      properties:
+        Id:
+          description: The id of the newly created object.
+          type: string
+          x-go-name: ID
+      required:
+      - Id
+      type: object
+      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
     ErrorModel:
       description: ErrorModel is used in remote connections with podman
       properties:
@@ -670,40 +628,82 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
-    ManifestModifyReport:
-      properties:
-        Id:
-          description: Manifest List ID
-          type: string
-          x-go-name: ID
-        errors:
-          description: Errors associated with operation
-          items:
-            type: string
-            x-go-type: error
-          type: array
-          x-go-name: Errors
-        files:
-          description: Files added to manifest list, otherwise not provided.
-          items:
-            type: string
-          type: array
-          x-go-name: Files
-        images:
-          description: Images added to or removed from manifest list, otherwise not provided.
-          items:
-            type: string
-          type: array
-          x-go-name: Images
-      type: object
-      x-go-package: go.podman.io/podman/v6/pkg/domain/entities/types
     ImageRemoveReport:
       description: 'ImageRemoveReport is the response for removing one or more image(s) from storage
 
         and images what was untagged vs actually removed.'
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/domain/entities
-    Schema2List:
-      title: Schema2List is a list of platform-specific manifests.
-      type: object
-      x-go-package: go.podman.io/image/v5/manifest
+  responses:
+    manifestNotFound:
+      description: No such manifest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    manifestInspect:
+      description: Inspect Manifest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Schema2List'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/Schema2List'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/Schema2List'
+    imagesRemoveResponseLibpod:
+      description: Image Remove
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/LibpodImagesRemoveReport'
+    badParamError:
+      description: Bad parameter in request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    internalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    imageNotFound:
+      description: No such image
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        application/octet-stream:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
