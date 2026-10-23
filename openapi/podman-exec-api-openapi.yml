@@ -310,3 +310,9 @@ components:
           x-go-name: ResponseCode
       type: object
       x-go-package: go.podman.io/podman/v6/pkg/errorhandling
+x-provenance:
+  method: harvested
+  publisher: Podman
+  source: https://docs.podman.io/en/latest/_static/swagger.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
